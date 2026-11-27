@@ -31,6 +31,8 @@ function Routed() {
     );
   }
   if (recovery) return <NewPasswordPage />;
+  // Le rotte dipendono dal ruolo: aspettare il profilo evita che un link diretto (es. #/atleti/:id) finisca sulla Home.
+  if (!profile) return <main className="center muted">Caricamento…</main>;
   const isProfessional = actor.role === "professional" || actor.isMaster;
   return (
     <Routes>
