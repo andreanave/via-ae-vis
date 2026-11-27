@@ -124,3 +124,44 @@ describe("note e promemoria del coach", () => {
     await expect(rows("other", `insert into coach_notes (athlete_id, professional_id, body) values ('${ids.athlete}', '${ids.other}', 'x')`)).rejects.toThrow();
   });
 });
+
+describe("check-in condiviso", () => {
+  it("il coach imposta il check-in, l'atleta lo legge", async () => {
+    await rows("coach", `insert into checkin_settings (athlete_id, config, updated_by)
+      values ('${ids.athlete}', '{"morning":["weight"],"evening":[],"weekly":[],"weekday":0}', '${ids.coach}')`);
+    expect(await rows("athlete", "select * from checkin_settings")).toHaveLength(1);
+  });
+
+  it("un coach senza collegamento non può impostarlo", async () => {
+    await expect(rows("other", `insert into checkin_settings (athlete_id, config, updated_by)
+      values ('${ids.athlete}', '{}', '${ids.other}')`)).rejects.toThrow();
+  });
+
+  it("solo l'atleta scrive le rilevazioni; coach e nutrizionista le leggono", async () => {
+    await rows("athlete", `insert into daily_entries (athlete_id, day, moment, "values")
+      values ('${ids.athlete}', '2026-11-27', 'morning', '{"weight":{"v":72.4,"source":"manual"}}')`);
+    await expect(rows("coach", `insert into daily_entries (athlete_id, day, moment) values ('${ids.athlete}', '2026-11-28', 'morning')`)).rejects.toThrow();
+    expect(await rows("coach", "select * from daily_entries")).toHaveLength(1);
+    expect(await rows("nutri", "select * from daily_entries")).toHaveLength(1);
+    expect(await rows("other", "select * from daily_entries")).toHaveLength(0);
+  });
+
+  it("dopo la conferma il settimanale non si modifica più", async () => {
+    await rows("athlete", `insert into weekly_checkins (athlete_id, week_end, status, confirmed_at)
+      values ('${ids.athlete}', '2026-11-29', 'confirmed', now())`);
+    await rows("athlete", `update weekly_checkins set notes = 'modifica' where athlete_id = '${ids.athlete}'`);
+    expect((await rows("athlete", "select notes from weekly_checkins"))[0].notes).toBe("");
+  });
+
+  it("il coach fa una domanda sulla settimana e l'atleta risponde nello stesso contesto", async () => {
+    const [w] = await rows("athlete", "select id from weekly_checkins");
+    const [q] = await rows("coach", `insert into checkin_comments (weekly_checkin_id, author_id, field_key, kind, body)
+      values ('${w.id}', '${ids.coach}', 'steps', 'question', 'Come mai meno passi?') returning id`);
+    await rows("athlete", `insert into checkin_comments (weekly_checkin_id, author_id, kind, reply_to, body)
+      values ('${w.id}', '${ids.athlete}', 'answer', '${q.id}', 'Ho lavorato da casa')`);
+    await expect(rows("athlete", `insert into checkin_comments (weekly_checkin_id, author_id, kind, body)
+      values ('${w.id}', '${ids.athlete}', 'question', 'x')`)).rejects.toThrow();
+    expect(await rows("nutri", "select * from checkin_comments")).toHaveLength(2);
+    expect(await rows("other", "select * from checkin_comments")).toHaveLength(0);
+  });
+});

@@ -4,6 +4,8 @@ import { supabase } from "../../lib/supabase.js";
 import { useActor } from "../../lib/assist.jsx";
 import { MODULE_LABELS, initials } from "../../lib/format.js";
 import TaskList from "./TaskList.jsx";
+import CheckinSummary from "../checkin/CheckinSummary.jsx";
+import CheckinSettingsEditor from "../checkin/CheckinSettingsEditor.jsx";
 
 // Scheda dell'atleta vista dal professionista: nota generale, promemoria, collegamento Telegram.
 // Check-in, allenamento e alimentazione si aggiungono qui nelle fasi successive.
@@ -17,6 +19,8 @@ export default function AthleteCard() {
   const [telegram, setTelegram] = useState("");
   const savedNote = useRef("");
   const readOnly = actor.assisting;
+  const [checkinTab, setCheckinTab] = useState("summary");
+  const [checkinVersion, setCheckinVersion] = useState(0);
 
   useEffect(() => {
     let active = true;
@@ -77,6 +81,25 @@ export default function AthleteCard() {
           <a className="btn secondary" style={{ marginLeft: "auto" }} href={link.telegram_url} target="_blank" rel="noreferrer">Telegram</a>
         )}
       </div>
+
+      {link.modules.includes("checkin") && (
+        <div className="card">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+            <h2 style={{ margin: 0 }}>Check-in</h2>
+            <div role="tablist" style={{ display: "flex", gap: 4 }}>
+              {[["summary", "Resoconto"], ["settings", "Cosa chiedere"]].map(([key, label]) => (
+                <button key={key} type="button" role="tab" aria-selected={checkinTab === key}
+                  className={checkinTab === key ? "btn secondary" : "btn ghost"} onClick={() => setCheckinTab(key)}>{label}</button>
+              ))}
+            </div>
+          </div>
+          <div style={{ marginTop: "1rem" }}>
+            {checkinTab === "summary"
+              ? <CheckinSummary athleteId={id} refreshKey={checkinVersion} />
+              : <CheckinSettingsEditor athleteId={id} readOnly={readOnly} onSaved={() => setCheckinVersion(v => v + 1)} />}
+          </div>
+        </div>
+      )}
 
       <div className="card">
         <h2>Cose da fare</h2>
