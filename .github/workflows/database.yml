@@ -1,0 +1,31 @@
+name: Aggiorna il database Supabase
+
+# Applica le migrazioni in supabase/migrations al progetto Supabase.
+# Servono due segreti della repository (Settings > Secrets and variables > Actions):
+#   SUPABASE_ACCESS_TOKEN  token personale da supabase.com/dashboard/account/tokens
+#   SUPABASE_DB_PASSWORD   password del database del progetto
+on:
+  push:
+    branches: [main]
+    paths: [supabase/migrations/**]
+  workflow_dispatch:
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      PROJECT_REF: eizgzpfkumigvfzjaudu
+    steps:
+      - uses: actions/checkout@v4
+      - name: Controlla i segreti
+        run: |
+          if [ -z "$SUPABASE_ACCESS_TOKEN" ] || [ -z "$SUPABASE_DB_PASSWORD" ]; then
+            echo "::error::Mancano i segreti SUPABASE_ACCESS_TOKEN e/o SUPABASE_DB_PASSWORD"; exit 1
+          fi
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - run: supabase link --project-ref "$PROJECT_REF" --password "$SUPABASE_DB_PASSWORD"
+      - run: supabase db push --password "$SUPABASE_DB_PASSWORD"
