@@ -10,4 +10,3 @@ do $$ begin
   if not exists (select 1 from pg_roles where rolname = 'anon') then create role anon; end if;
 end $$;
 grant usage on schema public, auth to authenticated, anon;
-alter default privileges in schema public grant all on tables to authenticated, anon;
