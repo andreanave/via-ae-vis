@@ -67,7 +67,7 @@ export default function CheckinSummary({ athleteId, refreshKey }) {
               {weekEnds.map(end => (
                 <th key={end} style={{ padding: 6, textAlign: "right" }}>
                   <button type="button" className="btn ghost" aria-pressed={selected === end}
-                    style={{ minHeight: 36, padding: "0 0.5rem", fontWeight: selected === end ? 700 : 500,
+                    style={{ minHeight: 36, padding: "0 0.5rem", fontWeight: selected === end ? 600 : 400,
                       borderColor: selected === end ? "var(--accent)" : undefined }}
                     onClick={() => setSelected(end)}>
                     {end === currentEnd ? "Questa" : formatDay(end)}
