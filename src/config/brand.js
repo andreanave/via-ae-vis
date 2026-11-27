@@ -4,7 +4,8 @@ export const BRAND = {
   name: "RF Coaching",
   shortName: "RF",
   tagline: "Il tuo percorso di allenamento e alimentazione",
-  // Accento provvisorio. Il resto dell'interfaccia usa toni neutri.
-  accent: { light: "#3b5bdb", dark: "#7c95ff" },
+  // Accento provvisorio (verde bosco), da rivedere con il marchio definitivo.
+  // Il resto dell'interfaccia usa i toni caldi di src/styles/base.css.
+  accent: { light: "#1c3d32", dark: "#a9c7b6" },
   logoText: "RF",
 };
