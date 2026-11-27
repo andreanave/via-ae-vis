@@ -202,3 +202,10 @@ a.row:hover { border-color: var(--border-strong); }
 .back { display: inline-flex; align-items: center; gap: 0.25rem; min-height: 44px; color: var(--text-2); text-decoration: none; font-size: 0.9rem; }
 .back:hover { color: var(--text); }
 .back svg { width: 18px; height: 18px; }
+
+/* Logo completo: una versione per tema. */
+.brand-logo { display: inline-block; width: 168px; }
+.brand-logo img { display: block; width: 100%; height: auto; }
+.brand-logo .on-dark { display: none; }
+:root[data-theme="dark"] .brand-logo .on-light { display: none; }
+:root[data-theme="dark"] .brand-logo .on-dark { display: block; }

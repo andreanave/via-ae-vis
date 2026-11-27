@@ -12,7 +12,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["icon.svg"],
+      includeAssets: ["icon.svg", "brand/icona-512.png"],
       manifest: {
         name: BRAND.name,
         short_name: BRAND.shortName,
@@ -23,7 +23,10 @@ export default defineConfig({
         display: "standalone",
         background_color: "#f8f7f4",
         theme_color: "#f8f7f4",
-        icons: [{ src: "icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any maskable" }],
+        icons: [
+          { src: "brand/icona-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+          { src: "icon.svg", sizes: "any", type: "image/svg+xml", purpose: "maskable" },
+        ],
       },
       workbox: { navigateFallback: "index.html", globPatterns: ["**/*.{js,css,html,svg,woff2}"] },
     }),
