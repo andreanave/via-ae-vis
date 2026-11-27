@@ -82,7 +82,7 @@ export default function CheckinSettingsEditor({ athleteId, readOnly, onSaved }) 
 
       {["morning", "evening"].map(moment => (
         <fieldset key={moment} style={{ border: "1px solid var(--border)", borderRadius: 10, padding: "0.75rem 1rem" }}>
-          <legend style={{ fontWeight: 650, padding: "0 0.25rem" }}>{MOMENT_LABELS[moment]} (tutti facoltativi per l'atleta)</legend>
+          <legend style={{ fontWeight: 600, padding: "0 0.25rem" }}>{MOMENT_LABELS[moment]} (tutti facoltativi per l'atleta)</legend>
           {CHECKIN_FIELDS.filter(f => f.moments.includes(moment)).map(f => (
             <label key={f.key} style={row}>
               <input type="checkbox" style={box} disabled={readOnly} checked={config[moment].includes(f.key)} onChange={() => toggleDaily(moment, f.key)} />
@@ -93,7 +93,7 @@ export default function CheckinSettingsEditor({ athleteId, readOnly, onSaved }) 
       ))}
 
       <fieldset style={{ border: "1px solid var(--border)", borderRadius: 10, padding: "0.75rem 1rem" }}>
-        <legend style={{ fontWeight: 650, padding: "0 0.25rem" }}>Settimanale</legend>
+        <legend style={{ fontWeight: 600, padding: "0 0.25rem" }}>Settimanale</legend>
         <div className="field">
           <label htmlFor="wd">Giorno del resoconto</label>
           <select id="wd" className="input" disabled={readOnly} value={config.weekday}

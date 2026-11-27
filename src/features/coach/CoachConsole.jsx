@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ChevronRight, UserPlus } from "lucide-react";
 import { supabase } from "../../lib/supabase.js";
 import { useActor } from "../../lib/assist.jsx";
 import { initials } from "../../lib/format.js";
@@ -35,28 +36,34 @@ export default function CoachConsole() {
   }, [actor.id]);
 
   return (
-    <section>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-        <h1 style={{ margin: 0 }}>I tuoi atleti</h1>
-        {!actor.assisting && !inviting && <button className="btn" type="button" onClick={() => setInviting(true)}>Invita</button>}
+    <section style={{ maxWidth: 720 }}>
+      <div className="page-head" style={{ marginBottom: "1.5rem" }}>
+        <span className="eyebrow">{athletes ? `${athletes.length} ${athletes.length === 1 ? "atleta" : "atleti"}` : "Atleti"}</span>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "1rem" }}>
+          <h1>I tuoi atleti</h1>
+          {!actor.assisting && !inviting && (
+            <button className="btn ghost" type="button" onClick={() => setInviting(true)}><UserPlus strokeWidth={1.5} aria-hidden="true" />Invita</button>
+          )}
+        </div>
       </div>
-      {inviting && <div className="card" style={{ marginBottom: "1rem" }}><InviteForm onDone={() => setInviting(false)} /></div>}
+      {inviting && <div className="card" style={{ marginBottom: "1.5rem" }}><InviteForm onDone={() => setInviting(false)} /></div>}
       {error && <div className="notice error">{error}</div>}
       {athletes === null && <p className="muted">Caricamento…</p>}
       {athletes?.length === 0 && !error && <p className="muted">Nessun atleta collegato. Invita il primo atleta per iniziare.</p>}
-      <ul className="list">
-        {athletes?.map(a => (
-          <li key={a.id}>
-            <Link className="row" to={`/atleti/${a.id}`}>
-              <span className="avatar" aria-hidden="true">{initials(a.full_name)}</span>
-              <span>{a.full_name || "Atleta"}</span>
-              {a.pending > 0 && (
-                <span className="badge" aria-label={`${a.pending} cose da fare`}>{a.pending}</span>
-              )}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {athletes?.length > 0 && (
+        <ul className="lines">
+          {athletes.map(a => (
+            <li key={a.id} style={{ padding: 0 }}>
+              <Link to={`/atleti/${a.id}`} style={{ display: "flex", alignItems: "center", gap: "1rem", flex: 1, minHeight: 64, color: "inherit", textDecoration: "none" }}>
+                <span className="avatar" aria-hidden="true">{initials(a.full_name)}</span>
+                <span style={{ flex: 1, fontWeight: a.pending > 0 ? 500 : 400 }}>{a.full_name || "Atleta"}</span>
+                {a.pending > 0 && <span className="badge" aria-label={`${a.pending} cose da fare`}>{a.pending}</span>}
+                <ChevronRight strokeWidth={1.5} color="var(--text-2)" aria-hidden="true" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }
