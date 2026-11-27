@@ -3,6 +3,7 @@ import { supabase } from "../../lib/supabase.js";
 import BrandMark from "../../ui/BrandMark.jsx";
 import { BRAND } from "../../config/brand.js";
 import { authErrorMessage } from "./authErrors.js";
+import { appUrl } from "../../lib/format.js";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ export default function LoginPage() {
       const { error: err } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
       if (err) setError(authErrorMessage(err));
     } else {
-      const redirectTo = `${window.location.origin}${import.meta.env.BASE_URL}#/nuova-password`;
+      const redirectTo = appUrl(); // il ritorno dal link apre la scelta della nuova password
       const { error: err } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo });
       if (err) setError(authErrorMessage(err));
       else setInfo("Se l'indirizzo è registrato, riceverai un'e-mail con il link per scegliere una nuova password.");
