@@ -61,6 +61,34 @@ describe("inviti e collegamenti", () => {
   });
 });
 
+describe("inviti: anteprima, professionisti, ruoli", () => {
+  it("l'anteprima dell'invito funziona anche senza account", async () => {
+    const [inv] = await rows("coach", `insert into invites (email, full_name, invited_by) values ('nuovo@test.local', 'Nuovo', '${ids.coach}') returning token`);
+    await db.exec("set role anon;");
+    const res = (await db.query("select * from invite_preview($1)", [inv.token])).rows;
+    await db.exec("reset role;");
+    expect(res[0]).toMatchObject({ email: "nuovo@test.local", kind: "athlete", inviter_name: "coach", status: "valid" });
+  });
+
+  it("un coach non può invitare un professionista, il master sì", async () => {
+    await expect(rows("coach", `insert into invites (email, invited_by, kind) values ('p@test.local', '${ids.coach}', 'professional')`)).rejects.toThrow();
+    const [inv] = await rows("master", `insert into invites (email, invited_by, kind) values ('${email("athlete")}', '${ids.master}', 'professional') returning token`);
+    expect(inv.token).toBeTruthy();
+  });
+
+  it("solo il master cambia i ruoli", async () => {
+    await expect(rows("coach", `select set_user_role('${ids.other}', 'athlete')`)).rejects.toThrow(/forbidden/);
+    await rows("master", `select set_user_role('${ids.other}', 'professional')`);
+  });
+
+  it("il coach vede il numero di promemoria aperti per atleta", async () => {
+    await rows("coach", `insert into coach_tasks (professional_id, athlete_id, title) values ('${ids.coach}', '${ids.athlete}', 'Rivedere il pranzo dei giorni di riposo')`);
+    const r = await rows("coach", "select open_count from coach_open_tasks");
+    expect(r[0].open_count).toBe(1);
+    expect(await rows("nutri", "select * from coach_open_tasks")).toHaveLength(0);
+  });
+});
+
 describe("visibilità", () => {
   it("coach e nutrizionista vedono l'atleta", async () => {
     expect(await rows("coach", `select id from profiles where id = '${ids.athlete}'`)).toHaveLength(1);

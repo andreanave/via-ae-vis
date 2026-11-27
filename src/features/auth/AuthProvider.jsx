@@ -7,6 +7,7 @@ export function AuthProvider({ children }) {
   const [session, setSession] = useState(undefined); // undefined = in caricamento
   const [profile, setProfile] = useState(null);
   const [recovery, setRecovery] = useState(false);
+  const [profileVersion, setProfileVersion] = useState(0);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setSession(data.session ?? null));
@@ -27,7 +28,7 @@ export function AuthProvider({ children }) {
       .maybeSingle()
       .then(({ data }) => { if (active) setProfile(data ?? { id: session.user.id, role: "athlete" }); });
     return () => { active = false; };
-  }, [session?.user?.id]);
+  }, [session?.user?.id, profileVersion]);
 
   const value = {
     session,
@@ -36,6 +37,7 @@ export function AuthProvider({ children }) {
     recovery,
     clearRecovery: () => setRecovery(false),
     signOut: () => supabase.auth.signOut(),
+    refreshProfile: () => setProfileVersion(v => v + 1),
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
