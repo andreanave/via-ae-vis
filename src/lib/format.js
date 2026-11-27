@@ -11,5 +11,9 @@ export const todayIso = () => {
 
 export const MODULE_LABELS = { training: "Allenamento", nutrition: "Alimentazione", checkin: "Check-in" };
 
-export const inviteLink = token =>
-  `${window.location.origin}${import.meta.env.BASE_URL}#/invito/${token}`;
+// Link senza "#": i client di posta e i redirect di Supabase a volte perdono la parte dopo il cancelletto.
+export const appUrl = (params = {}) => {
+  const q = new URLSearchParams(params).toString();
+  return `${window.location.origin}${import.meta.env.BASE_URL}${q ? `?${q}` : ""}`;
+};
+export const inviteLink = token => appUrl({ invito: token });

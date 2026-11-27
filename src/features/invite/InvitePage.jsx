@@ -19,6 +19,17 @@ export default function InvitePage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
+  const [info, setInfo] = useState("");
+
+  // Ritorno dal link di conferma: se il login automatico non è riuscito (per esempio link aperto
+  // in un altro browser), l'e-mail è comunque confermata e basta entrare con la password.
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    if (session === null && (query.has("code") || query.has("error_description"))) {
+      setMode("login");
+      setInfo("La tua e-mail è confermata. Entra con la password che hai scelto per accettare l'invito.");
+    }
+  }, [session]);
 
   useEffect(() => {
     supabase.rpc("invite_preview", { invite_token: token }).then(({ data, error: err }) => {
@@ -48,6 +59,12 @@ export default function InvitePage() {
     });
     setBusy(false);
     if (err) { setError(authErrorMessage(err)); return; }
+    // E-mail già registrata: Supabase non lo dice esplicitamente, restituisce un utente senza identità.
+    if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+      setMode("login");
+      setInfo("Con questa e-mail hai già un account. Entra con la tua password per accettare l'invito.");
+      return;
+    }
     if (!data.session) setSent(true); // serve la conferma dell'e-mail
   };
 
@@ -75,7 +92,7 @@ export default function InvitePage() {
             <p className="muted">
               {invite.status === "expired" ? `Chiedi a ${who} di mandarti un nuovo link.` : "Se è il tuo, accedi normalmente."}
             </p>
-            <a className="btn block" href={`${import.meta.env.BASE_URL}#/`}>Vai all'accesso</a>
+            <a className="btn block" href={import.meta.env.BASE_URL}>Vai all'accesso</a>
           </>
         )}
 
@@ -84,6 +101,7 @@ export default function InvitePage() {
             <h1>{who} ti ha invitato</h1>
             <p className="muted">Ti invita {roleText}. L'invito è per <strong>{invite.email}</strong>.</p>
             {error && <div className="notice error" role="alert">{error}</div>}
+            {info && !error && <div className="notice" role="status">{info}</div>}
 
             {session && (
               <>
