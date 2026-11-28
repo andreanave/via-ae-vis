@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import "@fontsource-variable/inter";
+import "@fontsource-variable/plus-jakarta-sans";
+import "@fontsource-variable/jetbrains-mono";
 import "./styles/base.css";
 import { applyTheme, loadThemePreference } from "./ui/theme.js";
 import App from "./app/App.jsx";
