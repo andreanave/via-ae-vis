@@ -38,14 +38,19 @@ const ACTIVITIES = {
 export default function AthleteHome() {
   const actor = useActor();
   const [team, setTeam] = useState([]);
+  const [modules, setModules] = useState(new Set());
   const [state, setState] = useState(null);
   const firstName = (actor.fullName || "").split(" ")[0];
 
   useEffect(() => {
     let active = true;
-    supabase.from("care_links").select("professional:profiles!care_links_professional_id_fkey(id, full_name)")
+    supabase.from("care_links").select("modules, professional:profiles!care_links_professional_id_fkey(id, full_name)")
       .eq("athlete_id", actor.id).eq("status", "active")
-      .then(({ data }) => active && setTeam((data || []).map(r => r.professional).filter(Boolean)));
+      .then(({ data }) => {
+        if (!active) return;
+        setTeam((data || []).map(r => r.professional).filter(Boolean));
+        setModules(new Set((data || []).flatMap(r => r.modules || [])));
+      });
     (async () => {
       const config = await loadSettings(actor.id);
       if (!config) { if (active) setState({ config: null }); return; }
@@ -85,7 +90,7 @@ export default function AthleteHome() {
       {state && !suggestion && (
         <div className="now">
           <span className="eyebrow">Adesso</span>
-          <p className="muted" style={{ margin: 0 }}>Niente in sospeso. Allenamento e pasti arriveranno qui.</p>
+          <p className="muted" style={{ margin: 0 }}>Niente in sospeso per adesso. Sotto trovi la giornata, in basso le sezioni.</p>
         </div>
       )}
       <div>
@@ -93,8 +98,8 @@ export default function AthleteHome() {
             <h2 className="eyebrow">La giornata</h2>
           </div>
           <ul className="lines">
-            <TrainingTodayCard />
-            <NutritionShortcut athleteId={actor.id} />
+            <TrainingTodayCard showEmpty={modules.has("training")} />
+            <NutritionShortcut athleteId={actor.id} showEmpty={modules.has("nutrition")} />
             {available.map(k => (
               <li key={k} style={{ padding: 0 }}>
                 <Link to={ACTIVITIES[k].to} style={{ display: "flex", alignItems: "center", gap: "1rem", flex: 1, minHeight: 52, color: "inherit", textDecoration: "none" }}>
@@ -105,6 +110,11 @@ export default function AthleteHome() {
                 </Link>
               </li>
             ))}
+            {state && available.length === 0 && modules.has("checkin") && (
+              <li style={{ minHeight: 52 }}>
+                <span style={{ flex: 1 }}>Check-in<span className="muted"> · il coach non li ha ancora attivati</span></span>
+              </li>
+            )}
           </ul>
       </div>
       {team.length > 0 && <p className="muted" style={{ fontSize: "0.9rem" }}>Ti seguono: {team.map(p => p.full_name || "un professionista").join(", ")}.</p>}

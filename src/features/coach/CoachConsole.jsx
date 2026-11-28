@@ -49,7 +49,14 @@ export default function CoachConsole() {
       {inviting && <div className="card" style={{ marginBottom: "1.5rem" }}><InviteForm onDone={() => setInviting(false)} /></div>}
       {error && <div className="notice error">{error}</div>}
       {athletes === null && <p className="muted">Caricamento…</p>}
-      {athletes?.length === 0 && !error && <p className="muted">Nessun atleta collegato. Invita il primo atleta per iniziare.</p>}
+      {athletes?.length === 0 && !error && !actor.isMaster && <p className="muted">Nessun atleta collegato. Invita il primo atleta per iniziare.</p>}
+      {athletes?.length === 0 && !error && actor.isMaster && (
+        <div className="card">
+          <p style={{ marginTop: 0 }}>Come master non segui atleti in prima persona.</p>
+          <p className="muted">Per vedere l'app come un coach o un atleta degli studi apri Gestione e scegli «Vedi come».</p>
+          <Link className="btn" to="/gestione">Apri Gestione</Link>
+        </div>
+      )}
       {athletes?.length > 0 && (
         <ul className="lines">
           {athletes.map(a => (
