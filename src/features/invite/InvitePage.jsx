@@ -6,6 +6,7 @@ import { authErrorMessage } from "../auth/authErrors.js";
 import { rpcErrorMessage } from "../../lib/rpcErrors.js";
 import { inviteLink } from "../../lib/format.js";
 import BrandMark from "../../ui/BrandMark.jsx";
+import { loadInviteBrand } from "../../lib/brand.jsx";
 
 // Link d'invito: l'atleta crea l'account (o entra con quello che ha) e accetta il collegamento.
 export default function InvitePage() {
@@ -30,6 +31,10 @@ export default function InvitePage() {
       setInfo("La tua e-mail è confermata. Entra con la password che hai scelto per accettare l'invito.");
     }
   }, [session]);
+
+  // Marchio dello studio di chi invita (null = marchio della piattaforma).
+  const [studioBrand, setStudioBrand] = useState(null);
+  useEffect(() => { loadInviteBrand(token).then(setStudioBrand).catch(() => {}); }, [token]);
 
   useEffect(() => {
     supabase.rpc("invite_preview", { invite_token: token }).then(({ data, error: err }) => {
@@ -84,7 +89,7 @@ export default function InvitePage() {
   return (
     <main className="center">
       <div className="auth-page">
-        <div className="auth-logo"><BrandMark variant="logo" /></div>
+        <div className="auth-logo"><BrandMark variant="logo" brand={studioBrand} /></div>
         {!invite && <><h1>Invito non trovato</h1><p className="muted">Controlla il link o chiedine uno nuovo.</p></>}
         {invite && invite.status !== "valid" && (
           <>
