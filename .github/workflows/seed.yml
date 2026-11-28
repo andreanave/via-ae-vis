@@ -1,0 +1,39 @@
+name: Carica i dati di prova
+
+# Carica nel progetto Supabase i dati finti di supabase/seed/demo.sql (atleti @test.it, check-in, sedute, chat).
+# Parte quando il file cambia su main, oppure a mano da Actions > "Carica i dati di prova" > Run workflow.
+# Usa lo stesso segreto della migrazione (SUPABASE_ACCESS_TOKEN) e l'API di gestione di Supabase.
+on:
+  push:
+    branches: [main]
+    paths: [supabase/seed/**, .github/workflows/seed.yml]
+  workflow_dispatch:
+
+concurrency: database
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      PROJECT_REF: eizgzpfkumigvfzjaudu
+    steps:
+      - uses: actions/checkout@v4
+      - name: Controlla il segreto
+        run: |
+          if [ -z "$SUPABASE_ACCESS_TOKEN" ]; then echo "::error::Manca il segreto SUPABASE_ACCESS_TOKEN"; exit 1; fi
+      - name: Esegui il seed
+        run: |
+          jq -Rs '{query: .}' supabase/seed/demo.sql > body.json
+          code=$(curl -sS -o out.json -w '%{http_code}' -X POST \
+            "https://api.supabase.com/v1/projects/$PROJECT_REF/database/query" \
+            -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN" -H "Content-Type: application/json" --data @body.json)
+          echo "Risposta HTTP $code"
+          if [ "$code" -ge 300 ]; then cat out.json; exit 1; fi
+      - name: Riepilogo
+        run: |
+          jq -n --arg q "select (select count(*) from public.care_links where status='active') collegamenti,
+            (select count(*) from public.daily_entries) giornalieri, (select count(*) from public.weekly_checkins) settimanali,
+            (select count(*) from public.workout_logs) sedute, (select count(*) from public.messages) messaggi" '{query: $q}' > q.json
+          curl -sS -X POST "https://api.supabase.com/v1/projects/$PROJECT_REF/database/query" \
+            -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN" -H "Content-Type: application/json" --data @q.json
