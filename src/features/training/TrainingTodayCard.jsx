@@ -21,10 +21,10 @@ export default function TrainingTodayCard() {
   if (!text) return null;
   const to = plan.kind === "resume" ? `/allenamento/seduta/${plan.workout.id}` : "/allenamento";
   return (
-    <li style={{ padding: 0 }}>
-      <Link to={to} style={{ display: "flex", alignItems: "center", gap: "1rem", flex: 1, minHeight: 52, color: "inherit", textDecoration: "none" }}>
-        <span style={{ flex: 1 }}>Allenamento</span>
-        <span className="muted" style={{ fontSize: "0.9rem" }}>{text}{data.pending ? " · da inviare" : ""}</span>
+    <li className="link-row">
+      <Link to={to}>
+        <span className="day-name">Allenamento</span>
+        <span className="muted hint">{text}{data.pending ? " · da inviare" : ""}</span>
         <ChevronRight strokeWidth={1.5} color="var(--text-2)" aria-hidden="true" />
       </Link>
     </li>
