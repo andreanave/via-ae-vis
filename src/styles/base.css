@@ -641,3 +641,15 @@ input[type="file"]::file-selector-button:hover { border-color: var(--border-stro
 .gym { grid-template-columns: minmax(0, 1fr); }
 .gym > * { min-width: 0; }
 .gym-steps .btn { white-space: nowrap; }
+
+/* Check-in settimanale a passi, come nel design */
+.wizard-head { display: grid; gap: 1.25rem; }
+.wizard-top { display: flex; align-items: center; justify-content: space-between; }
+.wizard-top .num { font-size: 0.8rem; }
+.sum-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.sum-head > div { display: grid; gap: 0.25rem; min-width: 0; }
+.sum-value { font-size: 1.35rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.sum-value small { font-size: 0.8rem; color: var(--text-2); }
+.wizard-foot { position: sticky; bottom: 0; z-index: 5; display: flex; gap: 0.5rem; padding: 1rem 0 calc(1rem + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--border); }
+.wizard-foot .btn { min-height: var(--tap-gym); }
+.wizard-foot .btn:last-child { flex: 1; }
