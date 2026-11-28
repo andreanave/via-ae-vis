@@ -39,18 +39,23 @@ beforeAll(async () => {
 });
 
 describe("catalogo: lettura e inserimento", () => {
-  it("il master importa un alimento generico con fonte CREA", async () => {
-    await as("master", async () => {
-      const [f] = (await db.query(`insert into foods (kind, name, category, state, edible_part_pct, portion_g, source, source_ref, status)
-        values ('generic', 'Farro perlato, crudo', 'Cereali e derivati', 'raw', 100, 80, 'crea', '000020', 'verified') returning id`)).rows;
-      const [v] = (await db.query(`insert into food_versions (food_id, version, kcal, protein_g, carbs_g, fat_g, fiber_g, provenance)
-        values ($1, 1, 353, 14.6, 69.3, 2.4, 6.5, 'import') returning id`, [f.id])).rows;
-      await db.query("update foods set current_version_id = $1 where id = $2", [v.id, f.id]);
-    });
-    const found = await rows("athlete", "select * from search_foods('farro')");
-    expect(found).toHaveLength(1);
-    expect(found[0]).toMatchObject({ name: "Farro perlato, crudo", source: "crea", status: "verified" });
+  it("le tabelle CREA sono caricate con fonte, stato e valori per 100 g", async () => {
+    const [{ n, senza }] = await rows("athlete", `select count(*)::int n, count(*) filter (where current_version_id is null)::int senza
+      from foods where source = 'crea'`);
+    expect(n).toBe(832);
+    expect(senza).toBe(0);
+    const found = await rows("athlete", "select * from search_foods('farro perlato crudo')");
+    expect(found[0]).toMatchObject({ name: "Farro perlato, crudo", source: "crea", status: "verified", state: "raw", basis: "g" });
     expect(Number(found[0].kcal)).toBe(353);
+    const [tonno] = await rows("athlete", "select state, edible_part_pct from foods where source_ref = '123610'");
+    expect(tonno.state).toBe("drained");
+    // Accenti ripristinati, il nome originale resta come sinonimo.
+    expect((await rows("athlete", "select name from search_foods('babà rhum')"))[0].name).toBe("Babà al rhum");
+    expect((await rows("athlete", "select name from search_foods('baba'' al rhum')"))[0].name).toBe("Babà al rhum");
+    const [v] = await rows("athlete", `select v.provenance, v.note from foods f join food_versions v on v.id = f.current_version_id
+      where f.source_ref = '000020'`);
+    expect(v.provenance).toBe("import");
+    expect(v.note).toMatch(/CREA/);
   });
 
   it("anon non legge il catalogo", async () => {
@@ -62,7 +67,7 @@ describe("catalogo: lettura e inserimento", () => {
   it("un atleta non scrive direttamente nel catalogo", async () => {
     await expect(rows("athlete", `insert into foods (kind, name, source) values ('branded', 'X', 'manual')`)).rejects.toThrow();
     await expect(rows("athlete", "update foods set name = 'Hack'")).resolves.toEqual([]);
-    expect((await rows("master", "select name from foods where source_ref = '000020'"))[0].name).toBe("Farro perlato, crudo");
+    expect((await rows("master", "select name from foods where source = 'crea' and source_ref = '000020'"))[0].name).toBe("Farro perlato, crudo");
   });
 
   it("un prodotto manuale è subito utilizzabile e resta da verificare", async () => {
@@ -85,9 +90,10 @@ describe("catalogo: lettura e inserimento", () => {
 
   it("la ricerca ignora accenti e maiuscole e trova i sinonimi", async () => {
     await as("master", () => db.query(`insert into foods (kind, name, aliases, source, status)
-      values ('generic', 'Caffè, infuso', array['espresso'], 'crea', 'verified')`));
-    expect(await rows("athlete", "select name from search_foods('CAFFE')")).toHaveLength(1);
-    expect(await rows("athlete", "select name from search_foods('espresso')")).toHaveLength(1);
+      values ('generic', 'Tisana zenzero', array['infuso allo zenzero'], 'institutional', 'verified')`));
+    expect(await rows("athlete", "select name from search_foods('TISANA')")).toHaveLength(1);
+    expect(await rows("athlete", "select name from search_foods('infuso zenzero')")).toHaveLength(1);
+    expect((await rows("athlete", "select name from search_foods('CAFFE TOSTATO')"))[0].name).toBe("Caffè tostato");
     expect(await rows("athlete", "select name from search_foods('   ')")).toHaveLength(0);
   });
 });
