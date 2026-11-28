@@ -6,6 +6,7 @@ import { useAuth } from "../auth/AuthProvider.jsx";
 import { initials } from "../../lib/format.js";
 import { rpcErrorMessage } from "../../lib/rpcErrors.js";
 import InviteForm from "../coach/InviteForm.jsx";
+import { UserPlus } from "lucide-react";
 
 const ROLE_LABEL = { athlete: "Atleta", professional: "Professionista" };
 
@@ -36,30 +37,37 @@ export default function MasterConsole() {
   const visible = (people || []).filter(p => p.id !== user.id && (!q || (p.full_name || "").toLowerCase().includes(q)));
 
   return (
-    <section style={{ display: "grid", gap: "1rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem" }}>
-        <h1 style={{ margin: 0 }}>Gestione</h1>
-        {!inviting && <button className="btn" type="button" onClick={() => setInviting(true)}>Invita professionista</button>}
+    <section className="page">
+      <div className="section-head">
+        <div className="page-head">
+          <span className="eyebrow">{people ? `${people.length} account` : "Account"}</span>
+          <h1>Gestione</h1>
+        </div>
+        {!inviting && (
+          <button className="btn ghost" type="button" onClick={() => setInviting(true)}>
+            <UserPlus size={18} strokeWidth={1.5} aria-hidden="true" />Invita professionista
+          </button>
+        )}
       </div>
-      {inviting && <div className="card"><InviteForm kind="professional" onDone={() => setInviting(false)} /></div>}
+      {inviting && <div className="card flat"><InviteForm kind="professional" onDone={() => setInviting(false)} /></div>}
       {error && <div className="notice error" role="alert">{error}</div>}
       <input className="input" type="search" placeholder="Cerca per nome" aria-label="Cerca account" value={query}
         onChange={e => setQuery(e.target.value)} />
       {people === null && <p className="muted">Caricamento…</p>}
-      <ul className="list">
+      <ul className="lines">
         {visible.map(p => (
-          <li key={p.id} className="row" style={{ flexWrap: "wrap" }}>
+          <li key={p.id} className="person">
             <span className="avatar" aria-hidden="true">{initials(p.full_name)}</span>
-            <span style={{ flex: "1 1 160px" }}>
+            <span className="person-name">
               {p.full_name || "Senza nome"}
               <span className="muted"> · {ROLE_LABEL[p.role]}</span>
             </span>
             <select className="input" aria-label={`Ruolo di ${p.full_name}`} value={p.role}
-              onChange={e => changeRole(p, e.target.value)} style={{ minHeight: 40 }}>
+              onChange={e => changeRole(p, e.target.value)}>
               <option value="athlete">Atleta</option>
               <option value="professional">Professionista</option>
             </select>
-            <button className="btn secondary" type="button" onClick={() => assist(p)}>Vedi come</button>
+            <button className="btn ghost" type="button" onClick={() => assist(p)}>Vedi come</button>
           </li>
         ))}
       </ul>

@@ -231,3 +231,72 @@ a.row:hover { border-color: var(--border-strong); }
 .auth-page .btn.ghost { margin-top: 0.5rem; }
 .auth-logo { display: flex; justify-content: center; margin: 0 0 2.5rem; }
 .auth-foot { margin-top: 1rem !important; padding-top: 1.25rem; border-top: 1px solid var(--border); font-size: 0.875rem; }
+
+/* Pagine del coach: agenda, promemoria, inviti, gestione */
+.page { display: grid; gap: 1.5rem; }
+.page > .section-head { align-items: end; }
+.check { appearance: none; -webkit-appearance: none; width: 24px; height: 24px; flex: none; margin: 0; border: 1.5px solid var(--border-strong); border-radius: 7px; background: var(--surface); display: grid; place-items: center; cursor: pointer; transition: background var(--ease), border-color var(--ease); }
+.check:checked { background: var(--text); border-color: var(--text); }
+.check:checked::after { content: ""; width: 10px; height: 5px; border: 1.75px solid var(--bg); border-top: 0; border-right: 0; transform: translateY(-1px) rotate(-45deg); }
+.check:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tasks { display: grid; gap: 1rem; }
+.task-add { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.task-add > .input:first-child { flex: 1 1 220px; }
+.task-add > .input[type="date"] { flex: 0 1 170px; }
+.lines > .task { min-height: 56px; }
+.lines > .task > span:not(.due) { flex: 1; }
+.due { font-size: 0.85rem; color: var(--text-2); white-space: nowrap; }
+.due.late { color: var(--danger); }
+.invite-form { display: grid; gap: 0.25rem; }
+.invite-form .actions, .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.link-box { width: 100%; margin: 0.5rem 0 0.75rem; font-size: 0.85rem; }
+.checks { border: 0; padding: 0; margin: 0 0 1rem; }
+.checks > legend { font-weight: 500; font-size: 0.95rem; margin-bottom: 0.4rem; padding: 0; }
+.checks > label { display: flex; align-items: center; gap: 0.75rem; min-height: var(--tap); border-bottom: 1px solid var(--border); font-weight: 400; }
+.checks > label:first-of-type { border-top: 1px solid var(--border); }
+.lines > .person { flex-wrap: wrap; gap: 0.75rem 1rem; }
+.person-name { flex: 1 1 180px; }
+.lines > .person select.input { min-height: 40px; width: auto; padding: 0 2rem 0 0.75rem; }
+
+/* Riepilogo check-in per il coach */
+.summary { display: grid; gap: 2rem; }
+.table-scroll { overflow-x: auto; }
+.data-table { border-collapse: collapse; width: 100%; min-width: 560px; font-variant-numeric: tabular-nums; }
+.data-table caption { text-align: left; padding-bottom: 0.75rem; font-size: 0.875rem; }
+.data-table th, .data-table td { padding: 0.65rem 0.5rem; text-align: left; border-bottom: 1px solid var(--border); font-weight: 400; }
+.data-table thead th { border-bottom-color: var(--border-strong); }
+.data-table tbody th { font-weight: 500; }
+.data-table .n { text-align: right; font-family: var(--font-mono); font-size: 0.9rem; }
+.data-table td.sel { background: var(--surface-2); }
+.data-table .count { font-size: 0.75rem; }
+.week-tab { min-height: 36px; padding: 0 0.6rem; border: 1px solid transparent; border-radius: 999px; background: none; color: var(--text-2); font: 500 0.8rem var(--font-mono); cursor: pointer; white-space: nowrap; }
+.week-tab:hover { color: var(--text); }
+.week-tab[aria-pressed="true"] { color: var(--bg); background: var(--text); }
+.week-detail { display: grid; gap: 0.4rem; }
+.week-detail h3 { margin: 0; font-size: 1.15rem; }
+.week-detail p { margin: 0.25rem 0 0; }
+
+/* Commenti sulla settimana */
+.comments { display: grid; gap: 1rem; }
+.comments > h2.eyebrow { margin: 0; font-size: 0.7rem; }
+.comment { padding-left: 1rem; border-left: 1.5px solid var(--border-strong); }
+.comment p { margin: 0.3rem 0 0; }
+.comment .meta, .reply .meta { font-size: 0.8rem; }
+.reply { margin-top: 0.6rem; padding: 0.6rem 0.85rem; background: var(--surface-2); border-radius: var(--radius-sm); }
+.comment-form { display: grid; gap: 0.5rem; margin-top: 0.5rem; }
+.comment-form > .btn { justify-self: start; }
+textarea.input { padding: 0.75rem 0.9rem; line-height: 1.5; resize: vertical; }
+
+/* Impostazioni del check-in */
+.settings { display: grid; gap: 1.75rem; }
+.settings .checks { margin: 0; }
+.weekly-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1.25rem; min-height: var(--tap); border-bottom: 1px solid var(--border); }
+.checks > .weekly-row:first-of-type { border-top: 1px solid var(--border); }
+.weekly-row > label { display: flex; align-items: center; gap: 0.6rem; min-height: 44px; font-size: 0.9rem; }
+.weekly-row > label.main { flex: 1 1 220px; font-size: 1rem; }
+.settings-bar { align-items: center; }
+.settings-bar > .input { flex: 0 1 260px; }
+.settings-bar > span[role="status"] { margin-right: auto; }
+.seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--surface-2); }
+.seg-btn { min-height: 40px; padding: 0 1rem; border: 0; border-radius: 999px; background: none; color: var(--text-2); font: 500 0.875rem var(--font); cursor: pointer; transition: background var(--ease), color var(--ease); }
+.seg-btn[aria-selected="true"] { background: var(--surface); color: var(--text); box-shadow: 0 0 0 1px var(--border); }
