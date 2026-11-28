@@ -7,6 +7,7 @@ import FoodDetail from "./FoodDetail.jsx";
 export default function CatalogPage() {
   const [selected, setSelected] = useState(null);
   const [adding, setAdding] = useState(null);
+  const [prefill, setPrefill] = useState(null);
   const [added, setAdded] = useState(false);
 
   return (
@@ -19,13 +20,13 @@ export default function CatalogPage() {
       {adding !== null ? (
         <div className="card">
           <h2 style={{ marginTop: 0 }}>Nuovo prodotto</h2>
-          <AddFoodForm initialName={adding}
+          <AddFoodForm initialName={adding} prefill={prefill}
             onPick={f => { setAdding(null); setSelected(f.id); }}
             onDone={id => { setAdding(null); if (id) { setSelected(id); setAdded(true); } }} />
         </div>
       ) : (
         <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", alignItems: "start" }}>
-          <FoodSearch selectedId={selected} onPick={f => { setSelected(f.id); setAdded(false); }} onAdd={name => { setAdding(name); setAdded(false); }} />
+          <FoodSearch selectedId={selected} onPick={f => { setSelected(f.id); setAdded(false); }} onAdd={(name, data) => { setAdding(name); setPrefill(data || null); setAdded(false); }} />
           {selected && <div className="card"><FoodDetail id={selected} /></div>}
         </div>
       )}

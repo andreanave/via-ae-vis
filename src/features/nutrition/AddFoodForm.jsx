@@ -10,9 +10,16 @@ const num = text => { const v = parseNumber(text); return v === "" || Number.isN
 
 // Nuovo prodotto di marca trascritto dall'etichetta. È subito utilizzabile e resta da verificare per il master.
 // Mentre si scrive marca e nome compaiono i prodotti simili già presenti, per evitare doppioni.
-export default function AddFoodForm({ initialName = "", onDone, onPick }) {
-  const [food, setFood] = useState({ brand: "", name: initialName, variant: "", basis: "g", unit_weight_g: "", portion_g: "", drained_weight_g: "", barcode: "" });
-  const [values, setValues] = useState({});
+const toText = v => (v === null || v === undefined ? "" : String(v).replace(".", ","));
+
+// prefill (facoltativo): dati già letti da Open Food Facts, vedi offToFood().
+export default function AddFoodForm({ initialName = "", prefill, onDone, onPick }) {
+  const [food, setFood] = useState({
+    brand: prefill?.food.brand || "", name: prefill?.food.name || initialName, variant: "", basis: prefill?.food.basis || "g",
+    unit_weight_g: "", portion_g: toText(prefill?.food.portion_g), drained_weight_g: "", barcode: prefill?.food.barcode || "",
+  });
+  const [values, setValues] = useState(() =>
+    Object.fromEntries(Object.entries(prefill?.values || {}).map(([k, v]) => [k, toText(v)])));
   const [similar, setSimilar] = useState([]);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
@@ -37,7 +44,12 @@ export default function AddFoodForm({ initialName = "", onDone, onPick }) {
     try {
       const id = await addFood({
         ...food, unit_weight_g: num(food.unit_weight_g), portion_g: num(food.portion_g), drained_weight_g: num(food.drained_weight_g),
-      }, { ...vals, provenance: "manual" });
+        portion_label: prefill?.food.portion_label || null,
+      }, {
+        ...vals, provenance: "manual",
+        ...(prefill ? { kj: prefill.values.kj, polyols_g: prefill.values.polyols_g, ingredients: prefill.ingredients,
+          allergens: prefill.allergens, note: prefill.note } : {}),
+      });
       onDone?.(id);
     } catch (err) {
       setError(rpcErrorMessage(err));
@@ -55,6 +67,13 @@ export default function AddFoodForm({ initialName = "", onDone, onPick }) {
 
   return (
     <form onSubmit={submit} noValidate>
+      {prefill && (
+        <div className="notice" style={{ fontSize: "0.9rem" }}>
+          Dati letti da Open Food Facts (licenza ODbL). Confrontali con l'etichetta che hai in mano prima di salvare.
+          {prefill.missing.length > 0 && " Mancano alcuni valori: completali dall'etichetta."}
+          {prefill.imageUrl && <> · <a href={prefill.imageUrl} target="_blank" rel="noreferrer">foto della tabella nutrizionale</a></>}
+        </div>
+      )}
       {text("brand", "Marca", { autoComplete: "off" })}
       {text("name", "Nome del prodotto", { autoComplete: "off", required: true })}
       {similar.length > 0 && (
