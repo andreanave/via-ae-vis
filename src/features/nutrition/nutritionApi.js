@@ -68,3 +68,20 @@ export const pdfUrl = async path => {
   const { data } = await supabase.storage.from(BUCKET).createSignedUrl(path, 300);
   return data?.signedUrl || null;
 };
+
+// Intolleranze e allergie dell'atleta (dato sanitario: lo scrive solo chi segue l'alimentazione).
+export const loadDietNotes = async athleteId => {
+  const { data, error } = await supabase.from("athlete_diet_notes")
+    .select("athlete_id, lactose_intolerant, allergens, other, updated_at").eq("athlete_id", athleteId).maybeSingle();
+  if (error) throw error;
+  return data;
+};
+
+export const saveDietNotes = async ({ athleteId, actorId, lactose_intolerant, allergens, other }) => {
+  const { data, error } = await supabase.from("athlete_diet_notes").upsert({
+    athlete_id: athleteId, lactose_intolerant, allergens, other: other?.trim() || null,
+    updated_by: actorId, updated_at: new Date().toISOString(),
+  }).select("athlete_id, lactose_intolerant, allergens, other, updated_at").single();
+  if (error) throw error;
+  return data;
+};

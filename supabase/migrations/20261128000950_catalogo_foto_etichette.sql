@@ -1,3 +1,4 @@
+-- Numero 0950 (non 0810): la 0900 era già applicata e supabase db push non accetta migrazioni con numero più basso.
 -- Catalogo alimentare: foto delle etichette in un bucket privato.
 -- Percorso: food-labels/{user_id}/{nome}.jpg. Ogni utente carica solo nella propria cartella; tutti gli utenti
 -- collegati possono vedere le foto (sono etichette di prodotti, non dati personali), così il master le controlla.
