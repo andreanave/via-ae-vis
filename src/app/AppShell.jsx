@@ -3,6 +3,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import BrandMark from "../ui/BrandMark.jsx";
 import { useAuth } from "../features/auth/AuthProvider.jsx";
 import { useActor, useAssist } from "../lib/assist.jsx";
+import { useBrand } from "../lib/brand.jsx";
 import { LogOut, Moon, Sun, SunMoon } from "lucide-react";
 import { applyTheme, loadThemePreference, nextTheme, themeLabel } from "../ui/theme.js";
 
@@ -12,6 +13,7 @@ export default function AppShell() {
   const { signOut, profile } = useAuth();
   const { viewAs, stop } = useAssist();
   const actor = useActor();
+  const { brand } = useBrand();
   const navigate = useNavigate();
   const [theme, setTheme] = useState(loadThemePreference());
   const cycleTheme = () => { const next = nextTheme(theme); applyTheme(next); setTheme(next); };
@@ -27,7 +29,7 @@ export default function AppShell() {
         </div>
       )}
       <header className="topbar">
-        <BrandMark />
+        <BrandMark brand={brand} />
         {isProfessional && (
           <nav aria-label="Sezioni" className="topnav">
             <NavLink to="/" end>Atleti</NavLink>

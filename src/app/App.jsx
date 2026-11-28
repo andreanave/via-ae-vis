@@ -1,6 +1,7 @@
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider, useAuth } from "../features/auth/AuthProvider.jsx";
 import { AssistProvider, useActor } from "../lib/assist.jsx";
+import { BrandProvider } from "../lib/brand.jsx";
 import LoginPage from "../features/auth/LoginPage.jsx";
 import NewPasswordPage from "../features/auth/NewPasswordPage.jsx";
 import InvitePage from "../features/invite/InvitePage.jsx";
@@ -67,7 +68,9 @@ export default function App() {
     <HashRouter>
       <AuthProvider>
         <AssistProvider>
-          <Routed />
+          <BrandProvider>
+            <Routed />
+          </BrandProvider>
         </AssistProvider>
       </AuthProvider>
     </HashRouter>
