@@ -18,18 +18,18 @@ export default function FoodSearch({ onPick, onAdd, autoFocus, selectedId }) {
   }, [q]);
 
   return (
-    <div style={{ display: "grid", gap: "0.75rem" }}>
+    <div className="stack">
       <input className="input" type="search" placeholder="Cerca un alimento o una marca" aria-label="Cerca nel catalogo"
         autoFocus={autoFocus} value={q} onChange={e => setQ(e.target.value)} />
       {error && <div className="notice error" role="alert">{error}</div>}
       {results && results.length === 0 && <p className="muted">Nessun risultato per «{q.trim()}».</p>}
       {results?.length > 0 && (
-        <ul className="list">
+        <ul className="lines">
           {results.map(f => <FoodRow key={f.id} food={f} active={f.id === selectedId} onClick={onPick ? () => onPick(f) : undefined} />)}
         </ul>
       )}
       {onAdd && q.trim().length >= 2 && (
-        <button className="btn secondary" type="button" onClick={() => onAdd(q.trim())}>Non c'è: aggiungi un prodotto</button>
+        <button className="btn link" type="button" onClick={() => onAdd(q.trim())}>Non c'è: aggiungi un prodotto</button>
       )}
     </div>
   );

@@ -404,3 +404,46 @@ fieldset.plain > legend { padding: 0; margin-bottom: 0.5rem; font-weight: 500; f
 .btn.link.danger { color: var(--danger); }
 .editor > p.muted { margin: 0; }
 .page > .seg { justify-self: start; }
+
+/* Catalogo alimenti, verifica del master, studi e marchi */
+.page-head > p.muted { margin: 0; }
+.split { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); align-items: start; }
+.split-detail { position: sticky; top: 1rem; }
+.narrow-card { max-width: 640px; }
+.food-row { padding: 0 !important; }
+.food-row > button, .food-row > div { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1rem; width: 100%; min-height: 56px; padding: 0.6rem 0.5rem; margin: 0 -0.5rem; border: 0; border-radius: var(--radius-sm); background: none; font: inherit; color: inherit; text-align: left; cursor: pointer; transition: background var(--ease); }
+.food-row > div { cursor: default; }
+.food-row > button:hover, .food-row.active > button { background: var(--surface-2); }
+.food-name { flex: 1 1 200px; display: grid; gap: 2px; }
+.food-macros { display: grid; justify-items: end; gap: 2px; font-size: 0.85rem; }
+.food-detail { display: grid; gap: 1.25rem; }
+.food-detail h2 { margin: 0; font-size: 1.4rem; }
+.data-table.compact { min-width: 0; }
+.data-table.compact th, .data-table.compact td { padding: 0.45rem 0; }
+.data-table tr.sub th { padding-left: 1rem; color: var(--text-2); font-weight: 400; }
+.facts { display: grid; grid-template-columns: auto 1fr; gap: 0.35rem 1.25rem; margin: 0; font-size: 0.9rem; }
+.facts dd { margin: 0; }
+.source a { color: inherit; text-underline-offset: 3px; }
+.values-form > legend { font-weight: 500; margin-bottom: 0.5rem; }
+.value-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.value-row > label:first-child { flex: 1 1 140px; }
+.value-row.sub > label:first-child { padding-left: 1rem; color: var(--text-2); }
+.value-row > .input { width: 110px; text-align: right; }
+.value-row > .unit { width: 36px; font-size: 0.85rem; }
+.add-food { display: grid; gap: 0.25rem; }
+.add-food .label { font-weight: 500; font-size: 0.95rem; }
+.add-food .seg { justify-self: start; }
+.similar { display: grid; gap: 0.25rem; }
+.label-grid { gap: 0 1rem; margin-top: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.master-section { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); gap: 1rem; }
+.master-section h2 { margin: 0; }
+.color-pick { flex-wrap: nowrap; }
+.swatch { width: 48px; height: 48px; flex: none; padding: 0; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); background: none; cursor: pointer; }
+.swatch::-webkit-color-swatch-wrapper { padding: 4px; }
+.swatch::-webkit-color-swatch { border: 0; border-radius: 8px; }
+.logo-preview { max-height: 64px; max-width: 240px; object-fit: contain; padding: 8px; border-radius: var(--radius-sm); background: #f8f7f4; border: 1px solid var(--border); }
+.logo-preview.on-dark { background: #141413; }
+.brand-preview { margin-top: 0.5rem; padding: 1.25rem; border-radius: var(--radius-sm); background: var(--bg); border: 1px solid var(--border); display: flex; justify-content: center; }
+input[type="file"] { font: inherit; font-size: 0.875rem; color: var(--text-2); }
+input[type="file"]::file-selector-button { min-height: 40px; margin-right: 0.75rem; padding: 0 1rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); font: 500 0.875rem var(--font); cursor: pointer; }
+input[type="file"]::file-selector-button:hover { border-color: var(--border-strong); }
