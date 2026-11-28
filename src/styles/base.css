@@ -555,3 +555,6 @@ input[type="file"]::file-selector-button:hover { border-color: var(--border-stro
 .subnav::-webkit-scrollbar { display: none; }
 .subnav button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .subnav button:hover { color: var(--text); }
+
+/* Icona dello studio al posto del monogramma nella barra in alto */
+.brand-icon { object-fit: cover; padding: 0; background: #f8f7f4; }

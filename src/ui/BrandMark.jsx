@@ -10,6 +10,7 @@ const resolve = brand => ({
   monogram: BRAND.logoText,
   onLight: brand?.logo_light_url || (brand ? null : BRAND.logo?.onLight),
   onDark: brand?.logo_dark_url || brand?.logo_light_url || (brand ? null : BRAND.logo?.onDark),
+  icon: brand?.icon_url || null,
 });
 
 // variant="logo": logo completo (login, inviti), con la versione giusta per il tema.
@@ -26,7 +27,9 @@ export default function BrandMark({ showName = true, variant, brand }) {
   }
   return (
     <span className="brand">
-      <span className="brand-mark" aria-hidden="true">{b.monogram}</span>
+      {b.icon
+        ? <img className="brand-mark brand-icon" src={asset(b.icon)} alt="" aria-hidden="true" />
+        : <span className="brand-mark" aria-hidden="true">{b.monogram}</span>}
       {showName && <span>{b.name}</span>}
     </span>
   );
