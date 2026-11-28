@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { ChevronLeft, Send } from "lucide-react";
 import { supabase } from "../../lib/supabase.js";
 import { useActor } from "../../lib/assist.jsx";
-import { MODULE_LABELS, initials } from "../../lib/format.js";
+import { MODULE_LABELS } from "../../lib/format.js";
 import TaskList from "./TaskList.jsx";
 import CheckinSummary from "../checkin/CheckinSummary.jsx";
 import CheckinSettingsEditor from "../checkin/CheckinSettingsEditor.jsx";
@@ -69,17 +70,18 @@ export default function AthleteCard() {
   }
 
   return (
-    <section style={{ display: "grid", gap: "1rem" }}>
-      <Link to="/" className="muted" style={{ textDecoration: "none" }}>← Atleti</Link>
-      <div style={{ display: "flex", alignItems: "center", gap: "0.9rem" }}>
-        <span className="avatar" aria-hidden="true" style={{ width: 52, height: 52, fontSize: "1.1rem" }}>{initials(athlete.full_name)}</span>
-        <div>
-          <h1 style={{ margin: 0 }}>{athlete.full_name || "Atleta"}</h1>
-          <span className="muted">{link.modules.map(m => MODULE_LABELS[m]).join(" · ")}</span>
+    <section className="stack" style={{ gap: "2rem" }}>
+      <div>
+        <Link to="/" className="back"><ChevronLeft strokeWidth={1.5} aria-hidden="true" />Atleti</Link>
+        <div style={{ display: "flex", alignItems: "flex-end", gap: "1rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
+          <div className="page-head" style={{ flex: 1, minWidth: 220, marginBottom: 0 }}>
+            <span className="eyebrow">{link.modules.map(m => MODULE_LABELS[m]).join(" · ")}</span>
+            <h1 style={{ fontSize: "2.5rem" }}>{athlete.full_name || "Atleta"}</h1>
+          </div>
+          {link.telegram_url && (
+            <a className="btn ghost" href={link.telegram_url} target="_blank" rel="noreferrer"><Send strokeWidth={1.5} aria-hidden="true" />Telegram</a>
+          )}
         </div>
-        {link.telegram_url && (
-          <a className="btn secondary" style={{ marginLeft: "auto" }} href={link.telegram_url} target="_blank" rel="noreferrer">Telegram</a>
-        )}
       </div>
 
       {link.modules.includes("training") && (
@@ -108,14 +110,14 @@ export default function AthleteCard() {
         </div>
       )}
 
-      <div className="card">
-        <h2>Cose da fare</h2>
+      <div>
+        <h2 className="eyebrow">Promemoria</h2>
         <TaskList professionalId={actor.id} athleteId={id} readOnly={readOnly} />
       </div>
 
-      <div className="card">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-          <h2>Nota generale</h2>
+      <div>
+        <div className="section-head">
+          <h2 className="eyebrow">Nota generale</h2>
           <span className="muted" role="status" style={{ fontSize: "0.9rem" }}>
             {noteState === "saving" ? "Salvataggio…" : noteState === "saved" ? "Salvata" : noteState === "error" ? "Non salvata, riprova" : ""}
           </span>
@@ -126,8 +128,8 @@ export default function AthleteCard() {
           onChange={e => { setNote(e.target.value); setNoteState("idle"); }} onBlur={saveNote} />
       </div>
 
-      <div className="card">
-        <h2>Chat Telegram per i video</h2>
+      <div>
+        <h2 className="eyebrow">Chat Telegram per i video</h2>
         <div className={`field${telegramValid ? "" : " invalid"}`} style={{ marginBottom: 0 }}>
           <label htmlFor="tg">Link alla chat (facoltativo)</label>
           <input id="tg" className="input" placeholder="https://t.me/…" value={telegram} readOnly={readOnly}

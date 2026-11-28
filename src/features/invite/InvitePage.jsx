@@ -84,7 +84,7 @@ export default function InvitePage() {
   return (
     <main className="center">
       <div className="card auth-card">
-        <div style={{ marginBottom: "1.5rem" }}><BrandMark /></div>
+        <div style={{ display: "flex", justifyContent: "center", margin: "0.5rem 0 2rem" }}><BrandMark variant="logo" /></div>
         {!invite && <><h1>Invito non trovato</h1><p className="muted">Controlla il link o chiedine uno nuovo.</p></>}
         {invite && invite.status !== "valid" && (
           <>

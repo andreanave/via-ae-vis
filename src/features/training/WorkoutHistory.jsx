@@ -21,7 +21,7 @@ export default function WorkoutHistory({ athleteId }) {
   if (!data.workouts.length) return <div className="notice">Nessuna seduta registrata finora.</div>;
 
   return (
-    <ul className="list">
+    <ul className="lines">
       {data.workouts.map(w => {
         const sets = data.sets.filter(s => s.workout_id === w.id).sort((a, b) => a.set_index - b.set_index);
         const byExercise = [];
@@ -33,14 +33,14 @@ export default function WorkoutHistory({ athleteId }) {
         }
         const isOpen = open[w.id];
         return (
-          <li key={w.id} style={{ display: "grid" }}>
-            <button type="button" className="row" aria-expanded={Boolean(isOpen)} onClick={() => setOpen({ ...open, [w.id]: !isOpen })}
-              style={{ width: "100%", textAlign: "left", background: "none", border: 0, font: "inherit", color: "inherit", cursor: "pointer" }}>
+          <li key={w.id} style={{ display: "grid", padding: 0 }}>
+            <button type="button" aria-expanded={Boolean(isOpen)} onClick={() => setOpen({ ...open, [w.id]: !isOpen })}
+              style={{ display: "flex", alignItems: "center", gap: "1rem", minHeight: 52, width: "100%", textAlign: "left", background: "none", border: 0, padding: 0, font: "inherit", color: "inherit", cursor: "pointer" }}>
               <span style={{ flex: 1 }}>{formatDay(w.performed_on)} · {w.session_name || "Seduta"}</span>
               <span className="muted">{STATUS[w.status]}{w.notes ? " · nota" : ""}</span>
             </button>
             {isOpen && (
-              <div style={{ padding: "0 1rem 1rem", display: "grid", gap: "0.75rem" }}>
+              <div style={{ padding: "0 0 1rem", display: "grid", gap: "0.75rem" }}>
                 {w.notes && <p style={{ margin: 0 }}><strong>Nota della seduta:</strong> {w.notes}</p>}
                 {byExercise.length === 0 && <span className="muted">Nessuna serie registrata.</span>}
                 {byExercise.map(g => (

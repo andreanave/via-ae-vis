@@ -119,13 +119,13 @@ export default function TrainingHome() {
         <h2>Prossimi giorni</h2>
         <p className="muted" style={{ marginTop: 0 }}>Tocca un giorno per renderlo di allenamento o di riposo: le sedute si riorganizzano da sole.</p>
         {calendarError && <div className="notice error" role="alert">{calendarError}</div>}
-        <ul className="list">
+        <ul className="lines">
           {days.map(d => (
-            <li key={d.day}>
-              <button type="button" className="row" disabled={readOnly || d.kind === "done" || d.kind === "skipped"}
+            <li key={d.day} style={{ padding: 0 }}>
+              <button type="button" disabled={readOnly || d.kind === "done" || d.kind === "skipped"}
                 aria-label={`${formatDay(d.day)}: ${d.kind === "rest" ? "riposo" : d.session?.name}. Cambia`}
                 onClick={() => toggleDay(d.day)}
-                style={{ width: "100%", minHeight: 48, textAlign: "left", font: "inherit", cursor: readOnly ? "default" : "pointer" }}>
+                style={{ display: "flex", alignItems: "center", width: "100%", minHeight: 52, textAlign: "left", font: "inherit", color: "inherit", background: "none", border: 0, padding: 0, cursor: readOnly ? "default" : "pointer" }}>
                 <span style={{ flex: 1 }}>{d.day === today ? "Oggi" : formatDay(d.day)}</span>
                 <span className={d.kind === "rest" || d.kind === "skipped" ? "muted" : ""}>
                   {d.kind === "rest" ? "Riposo" : d.kind === "skipped" ? "Saltato" : d.kind === "done" ? `${d.session?.name || "Seduta"} ✓` : d.session?.name}

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
 import { useActor } from "../../lib/assist.jsx";
 import { todayIso } from "../../lib/format.js";
 import { planForDay } from "../../lib/trainingRotation.js";
@@ -20,10 +21,11 @@ export default function TrainingTodayCard() {
   if (!text) return null;
   const to = plan.kind === "resume" ? `/allenamento/seduta/${plan.workout.id}` : "/allenamento";
   return (
-    <li>
-      <Link to={to} className="row" style={{ textDecoration: "none", color: "inherit" }}>
+    <li style={{ padding: 0 }}>
+      <Link to={to} style={{ display: "flex", alignItems: "center", gap: "1rem", flex: 1, minHeight: 52, color: "inherit", textDecoration: "none" }}>
         <span style={{ flex: 1 }}>Allenamento</span>
-        <span className="muted">{text}{data.pending ? " · da inviare" : ""}</span>
+        <span className="muted" style={{ fontSize: "0.9rem" }}>{text}{data.pending ? " · da inviare" : ""}</span>
+        <ChevronRight strokeWidth={1.5} color="var(--text-2)" aria-hidden="true" />
       </Link>
     </li>
   );
