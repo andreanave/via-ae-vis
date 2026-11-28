@@ -71,13 +71,14 @@ insert into storage.buckets (id, name, public) values ('nutrition-pdfs', 'nutrit
 
 -- Atleta indicato dalla prima cartella del percorso; null se il percorso non è valido.
 create or replace function public.nutrition_pdf_athlete(object_name text) returns uuid
-language plpgsql immutable as $$
+language plpgsql immutable set search_path = '' as $$
 begin
   return (storage.foldername(object_name))[1]::uuid;
 exception when others then
   return null;
 end;
 $$;
+revoke all on function public.nutrition_pdf_athlete(text) from public, anon;
 grant execute on function public.nutrition_pdf_athlete(text) to authenticated;
 
 create policy nutrition_pdfs_read on storage.objects for select to authenticated
