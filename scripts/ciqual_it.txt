@@ -1,0 +1,1457 @@
+1027|Alternativa vegetale al formaggio spalmabile, a base di soia
+1028|Alternativa vegetale al formaggio, a base di anacardi
+1029|Alternativa vegetale al formaggio, senza soia
+4000|Tapioca, cruda
+4002|Patate, pelate, al forno
+4003|Patate, bollite
+4004|Patatine in sacchetto, classiche, anche aromatizzate
+4007|Patate novelle, bollite
+4008|Patate, pelate, crude
+4011|Patate, in scatola, sgocciolate
+4013|Patate noisette, surgelate, crude
+4014|Patate, al vapore, sottovuoto
+4015|Patate, saltate in padella con grassi
+4016|Fiocchi di patate disidratati, con latte o panna
+4017|Purè di patate da fiocchi, con latte intero e grassi
+4018|Purè di patate con latte e burro, senza sale aggiunto
+4019|Purè di patate da fiocchi, con latte parzialmente scremato e acqua, senza sale
+4020|Patate duchessa fritte (dauphine), surgelate, crude
+4021|Patate duchessa fritte (dauphine), surgelate, cotte
+4022|Fiocchi di patate disidratati, semplici
+4023|Patate novelle, crude
+4025|Spicchi di patate speziati, surgelati, cotti
+4026|Patate, al forno
+4027|Patate saltate, prefritte, surgelate, cotte
+4028|Patate a pasta soda, pelate, bollite
+4029|Patate primaticce, pelate, bollite
+4030|Patatine fritte surgelate, cotte al forno
+4032|Patatine fritte surgelate, fritte in olio
+4034|Patate duchessa, surgelate, cotte
+4035|Patate noisette, surgelate, cotte
+4036|Patate saltate nel grasso d'oca
+4037|Patatine in sacchetto, tipo artigianale
+4038|Patatine in sacchetto, light
+4039|Rösti di patate
+4040|Purè di patate con latte e burro, salato
+4042|Patate duchessa, surgelate, crude
+4043|Patate saltate, prefritte, surgelate, crude
+4044|Patatine fritte surgelate, prefritte, crude, da forno
+4045|Patatine fritte surgelate, prefritte, crude, da microonde
+4046|Patatine fritte surgelate, prefritte, crude, da friggere
+4047|Purè di patate (media)
+4048|Patate, cotte (media)
+4049|Crocchette di patate, surgelate, crude
+4050|Patatine in sacchetto, senza sale aggiunto
+4052|Spicchi di patate speziati, surgelati, crudi
+4053|Patate novelle piccole, prefritte, surgelate, crude
+4090|Fecola di patate
+4101|Patata dolce (batata), cruda
+4102|Patata dolce (batata), cotta
+4103|Purè di patata dolce con panna
+6001|Manzo, costata, cruda
+6002|Manzo, spalla, cruda
+6003|Manzo, sottospalla, cruda
+6100|Manzo, costata magra, alla griglia o in padella
+6101|Manzo, brasato
+6102|Manzo, girello, crudo
+6103|Manzo, costata, cruda
+6104|Manzo, girello, cotto
+6105|Manzo, controfiletto, al forno
+6106|Manzo, girello di spalla, crudo
+6110|Manzo, controfiletto, alla griglia o in padella
+6111|Manzo, controfiletto, crudo
+6116|Manzo, filetto, crudo
+6122|Manzo, biancostato, crudo
+6123|Manzo, biancostato, brasato o bollito
+6130|Manzo, pancia, cruda
+6131|Manzo, pancia, alla griglia o in padella
+6140|Manzo, guancia, cruda
+6141|Manzo, guancia, brasata o bollita
+6150|Manzo, muscolo, crudo
+6151|Manzo, muscolo, bollito
+6160|Manzo, fesa, cruda
+6161|Manzo, fesa, alla griglia o in padella
+6162|Manzo, fesa, al forno
+6200|Bistecca di manzo, alla griglia o in padella
+6201|Bistecca di manzo, cruda
+6202|Manzo, reale, crudo
+6204|Manzo, onglet, crudo
+6205|Manzo, onglet, alla griglia o in padella
+6206|Manzo, scamone, crudo
+6207|Manzo, scamone, alla griglia o in padella
+6208|Manzo, reale, alla griglia o in padella
+6210|Roast beef, al forno
+6211|Manzo, bavetta, alla griglia o in padella
+6212|Manzo, bavetta, cruda
+6214|Manzo, reale, al forno
+6230|Manzo, spezzatino, cotto
+6231|Manzo, spezzatino, crudo
+6240|Manzo, collo, crudo
+6241|Manzo, collo, brasato
+6250|Macinato di manzo 5% grassi, crudo
+6251|Macinato di manzo 5% grassi, cotto
+6252|Macinato di manzo 10% grassi, crudo
+6253|Macinato di manzo 10% grassi, cotto
+6254|Macinato di manzo 15% grassi, crudo
+6255|Macinato di manzo 15% grassi, cotto
+6256|Macinato di manzo 20% grassi, crudo
+6257|Macinato di manzo 20% grassi, cotto
+6259|Macinato di manzo, cotto (media)
+6270|Manzo, spalla (cappello del prete), cruda
+6271|Manzo, spalla, brasata o bollita
+6310|Coda di manzo, bollita
+6311|Coda di manzo, cruda
+6510|Vitello, costoletta, cruda
+6511|Vitello, costoletta, alla griglia o in padella
+6512|Vitello, lombata, alla griglia o in padella
+6513|Vitello, lombata, cruda
+6520|Vitello, scaloppina, cotta
+6521|Vitello, scaloppina, cruda
+6522|Vitello, filetto, crudo
+6523|Vitello, filetto, alla griglia o in padella
+6524|Vitello, filetto, al forno
+6530|Vitello, noce, cruda
+6531|Vitello, noce, al forno
+6535|Macinato di vitello 20% grassi, crudo
+6536|Macinato di vitello 15% grassi, crudo
+6540|Vitello, petto, crudo
+6550|Vitello, arrosto, crudo
+6551|Vitello, arrosto
+6560|Vitello, spalla, cruda
+6562|Vitello, spalla, alla griglia o in padella
+6563|Vitello, spalla, brasata o bollita
+6564|Vitello, carne, cotta (media)
+6580|Piedino di vitello, crudo
+6581|Vitello, stinco o ossobuco, brasato o bollito
+6582|Testina di vitello, bollita
+6583|Vitello, stinco o ossobuco, crudo
+6584|Carne bianca, cotta (media)
+6585|Carne rossa, cotta (media)
+6590|Vitello, collo, crudo
+6591|Vitello, collo, brasato o bollito
+6900|Cavallo, carne, cruda
+6901|Cavallo, bistecca, cruda
+6902|Cavallo, carne, al forno
+6903|Cavallo, fesa, cruda
+6904|Cavallo, controfiletto, crudo
+6905|Cavallo, costata, cruda
+6906|Cavallo, fesa, alla griglia o in padella
+6907|Cavallo, controfiletto, alla griglia o in padella
+6908|Cavallo, costata, alla griglia o in padella
+6909|Cavallo, controfiletto, al forno
+6910|Cavallo, fesa, al forno
+6999|Carne, cotta (media)
+9001|Farro, crudo
+9003|Grano khorasan, crudo
+9060|Grano duro integrale, crudo
+9080|Grano integrale precotto, crudo
+9081|Grano duro precotto integrale, cotto, senza sale
+9100|Riso bianco, crudo
+9101|Riso bianco parboiled, crudo
+9102|Riso integrale, crudo
+9103|Riso integrale, cotto, senza sale
+9104|Riso bianco, cotto, senza sale
+9105|Riso bianco parboiled, cotto, senza sale
+9107|Riso bianco precotto o istantaneo, cotto, senza sale
+9108|Riso selvatico, crudo
+9109|Riso rosso, crudo
+9110|Riso rosso, cotto, senza sale
+9111|Riso selvatico, cotto, senza sale
+9113|Riso semintegrale, cotto, senza sale
+9119|Riso basmati, crudo
+9121|Riso misto (bianco, integrale, selvatico, rosso), crudo
+9124|Riso thai, cotto, senza sale
+9125|Riso basmati, cotto, senza sale
+9310|Avena, cruda
+9313|Fiocchi d'avena, cotti in acqua
+9320|Orzo integrale, crudo
+9321|Orzo perlato, crudo
+9322|Orzo perlato, bollito, senza sale
+9330|Miglio, crudo
+9331|Miglio, cotto, senza sale
+9340|Quinoa, cruda
+9341|Quinoa, bollita, senza sale
+9345|Amaranto, crudo
+9360|Sorgo integrale, crudo
+9380|Grano saraceno, crudo
+9390|Segale integrale, cruda
+9410|Farina di grano tenero tipo 2 (T110)
+9415|Farina di grano tenero integrale (T150)
+9435|Farina di grano tenero tipo 0 (T65)
+9436|Farina di grano tenero per pane (T55)
+9437|Farina autolievitante
+9440|Farina di grano tenero 00 per dolci (T45)
+9445|Farina di grano tenero tipo 1 (T80)
+9480|Farina di farro
+9510|Amido di mais
+9520|Farina di riso
+9530|Farina di segale integrale (T170)
+9532|Farina di segale chiara (T85)
+9533|Farina di segale semintegrale (T130)
+9540|Farina di grano saraceno
+9545|Farina di mais
+9550|Farina d'orzo
+9555|Farina di miglio
+9570|Farina di castagne
+9580|Farina di ceci
+9610|Semola di grano duro, cruda
+9612|Mix di cereali e legumi, crudo
+9614|Polenta precotta, cruda
+9615|Polenta, cotta, senza sale
+9681|Cuscus (semola di grano duro precotta), crudo
+9683|Cuscus, cotto, senza sale
+9685|Cuscus integrale, cotto, senza sale
+9686|Cuscus semintegrale, cotto, senza sale
+9690|Bulgur, crudo
+9691|Bulgur, cotto, senza sale
+9810|Pasta di semola, cruda
+9811|Pasta di semola, cotta, senza sale
+9815|Pasta fresca all'uovo, cruda
+9816|Pasta fresca all'uovo, cotta, senza sale
+9821|Pasta secca all'uovo, cruda
+9822|Pasta secca all'uovo, cotta, senza sale
+9824|Pasta senza glutine, cotta, senza sale
+9863|Noodles all'uovo, secchi, crudi
+9870|Pasta integrale, cruda
+9871|Pasta integrale, cotta, senza sale
+9874|Pasta senza glutine, cruda
+9875|Pasta senza glutine di riso e mais, cotta, senza sale
+9876|Pasta di lenticchie rosse, cotta, senza sale
+9877|Pasta semintegrale, cotta, senza sale
+9900|Vermicelli di riso, crudi
+9901|Vermicelli di riso, cotti, senza sale
+9902|Vermicelli di soia, crudi
+9903|Vermicelli di soia, cotti, senza sale
+10000|Lumachine di mare, cotte
+10001|Calamari, crudi
+10003|Capesante con corallo, crude
+10004|Capesante con corallo, cotte
+10006|Gamberetti grigi, bolliti
+10007|Gamberi, bolliti
+10008|Lumache, crude
+10009|Astice, bollito
+10010|Astice, crudo
+10011|Ostriche, crude
+10013|Cozze, bollite
+10014|Cozze, crude
+10015|Aragosta, cruda
+10016|Seppia, cruda
+10017|Vongole, crude
+10018|Polpo, crudo
+10020|Buccina, cotta
+10021|Gamberi, crudi
+10022|Aragosta, bollita
+10024|Scampi, crudi
+10025|Granchio, bollito
+10026|Cozze mediterranee, crude
+10027|Vongole, bollite
+10030|Gamberi di fiume, crudi
+10031|Gamberi di fiume, cotti
+10034|Cuori di mare (cardium), cotti
+10035|Ostriche concave (del Pacifico), crude
+10036|Ostriche piatte, crude
+10037|Calamari, bolliti
+10038|Gamberi surgelati, crudi
+10039|Granchio, crudo
+10041|Abalone (orecchia di mare), crudo
+10043|Crostacei o molluschi (media)
+10044|Scampi, bolliti
+10045|Capesante senza corallo, crude
+10057|Grancevola, bollita
+10061|Gamberi tropicali rosa, bolliti
+10062|Gamberoni tigre, bolliti
+10074|Lumachine di mare, crude
+10079|Polpo, cotto
+10080|Frutti di mare cotti, surgelati
+10084|Calamari fritti
+10086|Gamberi sgusciati, bolliti, confezionati
+10088|Gamberi di fiume sgusciati, cotti, confezionati
+10089|Gamberetti grigi sgusciati, bolliti, confezionati
+10099|Lumache, cotte senza grassi
+10100|Gamberi selvatici, bolliti
+10101|Gamberi d'allevamento, bolliti (media)
+11000|Aglio, crudo
+11002|Cerfoglio, fresco
+11003|Erba cipollina, fresca
+11004|Cetriolini sott'aceto
+11005|Curry in polvere
+11006|Zenzero in polvere
+11013|Senape
+11014|Prezzemolo, fresco
+11015|Pepe nero macinato
+11016|Rafano, crudo
+11018|Aceto
+11019|Pepe bianco macinato
+11021|Senape in grani
+11023|Aglio in polvere
+11024|Prezzemolo, essiccato
+11025|Cannella in polvere
+11026|Coriandolo, semi
+11027|Menta, fresca
+11029|Menta, essiccata
+11032|Basilico, essiccato
+11033|Basilico, fresco
+11034|Maggiorana, essiccata
+11035|Origano, essiccato
+11036|Rosmarino, essiccato
+11037|Salvia, essiccata
+11038|Timo, essiccato
+11039|Zafferano
+11040|Capperi sott'aceto
+11042|Cumino, semi
+11048|Noce moscata
+11049|Paprika in polvere
+11050|Dragoncello, essiccato
+11052|Chiodi di garofano
+11053|Alloro, foglie
+11055|Cipolline sott'aceto
+11056|Miscela di quattro spezie, in polvere
+11057|Vaniglia, bacca
+11060|Erbe di Provenza, essiccate
+11061|Semi di papavero
+11062|Santoreggia, essiccata
+11063|Aneto, essiccato
+11064|Carvi, semi
+11066|Finocchio, semi
+11068|Rosmarino, fresco
+11069|Salvia, fresca
+11070|Timo, fresco
+11074|Zenzero fresco
+11075|Cardamomo in polvere
+11077|Fieno greco, semi
+11080|Erbe aromatiche fresche (media)
+11081|Spezie (media)
+11084|Alga agar, cruda
+11085|Alga agar, essiccata
+11086|Spirulina, essiccata
+11088|Pepe di Caienna in polvere
+11089|Curcuma in polvere
+11090|Aceto di mele
+11091|Aceto balsamico
+11092|Dragoncello, fresco
+11093|Aneto, fresco
+11094|Coriandolo, foglie fresche
+11095|Erba cipollina, essiccata
+11097|Cetriolini in agrodolce
+11220|Aceto di vino rosso
+11306|Aglio, al forno
+11509|Aspartame in polvere
+11510|Codette colorate (zuccherini)
+12001|Camembert
+12020|Brie
+12034|Formaggio a crosta lavata (media)
+12039|Munster
+12045|Reblochon
+12059|Brocciu (ricotta corsa di capra o pecora)
+12060|Formaggio tipo feta, di latte vaccino
+12061|Feta di latte di pecora
+12066|Feta (pecora e capra)
+12068|Formaggio fresco spalmabile, bianco
+12069|Formaggio fresco spalmabile, a ridotto contenuto di grassi
+12070|Formaggio fresco spalmabile, aglio ed erbe
+12072|Burrata
+12100|Formaggio a pasta dura (media)
+12105|Beaufort
+12110|Comté
+12113|Gruviera francese IGP
+12114|Groviera (Gruyère)
+12115|Emmental
+12116|Formaggio tipo emmental, a ridotto contenuto di grassi
+12118|Emmental grattugiato
+12120|Parmigiano
+12121|Fontina
+12122|Pecorino
+12123|Grana Padano
+12300|Formaggio fuso a fette
+12303|Formaggino fuso a triangolo
+12305|Formaggio fuso, a ridotto contenuto di grassi
+12500|Roquefort
+12520|Formaggio erborinato vaccino
+12524|Gorgonzola
+12716|Provolone
+12726|Cheddar
+12729|Edam
+12736|Gouda
+12740|Mimolette
+12741|Formaggio tipo Maasdam
+12749|Raclette
+12758|Toma vaccina
+12760|Toma, a ridotto contenuto di grassi, circa 13%
+12761|Asiago
+12764|Tête de Moine DOP
+12775|Formaggio grattugiato misto, vaccino
+12803|Formaggio di capra a coagulazione lattica, stagionato
+12805|Formaggio fresco di capra
+12810|Formaggio di capra semistagionato
+12812|Formaggio di capra a tronchetto (bûche)
+12814|Formaggio di capra a pasta molle
+12815|Formaggio di capra stagionato
+12816|Formaggio vaccino a pasta dura
+12819|Formaggio di capra spalmabile, bianco
+12824|Formaggio di pecora a pasta molle con crosta fiorita
+12828|Ricotta di pecora
+12850|Formaggio di capra a pasta semidura
+12999|Formaggio (media)
+13000|Albicocca, denocciolata, cruda
+13001|Albicocche secche, denocciolate
+13002|Ananas, polpa senza buccia, crudo
+13004|Avocado, polpa senza buccia e nocciolo, crudo
+13005|Banana, polpa senza buccia, cruda
+13007|Ribes nero, crudo
+13008|Ciliegia, denocciolata, cruda
+13009|Limone, polpa senza buccia e semi, crudo
+13010|Mela cotogna, cruda
+13011|Datteri secchi, denocciolati
+13012|Fico, crudo
+13013|Fichi secchi
+13014|Fragola, cruda
+13015|Lampone, crudo
+13016|Frutto della passione, polpa con semi, crudo
+13018|Melagrana, arilli con semi, cruda
+13019|Ribes rosso, crudo
+13020|Uva spina, cruda
+13021|Kiwi, polpa senza buccia, crudo
+13023|Litchi, polpa senza buccia e nocciolo, crudo
+13024|Clementina o mandarino, polpa senza buccia e semi, crudo
+13025|Mango, polpa senza buccia e nocciolo, crudo
+13026|Melone cantalupo, polpa senza buccia e semi, crudo
+13027|Mirabella, denocciolata, cruda
+13028|Mirtillo, crudo
+13029|Mora, cruda
+13032|Olive nere in salamoia
+13033|Olive verdi in salamoia
+13034|Arancia, polpa senza buccia e semi, cruda
+13035|Papaya, polpa senza buccia, cruda
+13036|Anguria, polpa senza buccia e semi, cruda
+13037|Pera, polpa e buccia, cruda
+13038|Composta di mele, confezionata
+13039|Mela, polpa e buccia, cruda
+13040|Pompelmo, polpa senza buccia e semi, crudo
+13041|Susina Regina Claudia, denocciolata, cruda
+13042|Prugne secche, denocciolate
+13043|Pesca, polpa e buccia, denocciolata, cruda
+13044|Uva bianca, cruda
+13045|Uva nera, cruda
+13046|Uvetta (uva passa)
+13047|Rabarbaro, gambo, crudo
+13051|Frutta tropicale essiccata zuccherata, snack
+13054|Carambola, cruda
+13055|Acerola, denocciolata, cruda
+13056|Cherimoya (annona), polpa, cruda
+13061|Feijoa, polpa, cruda
+13063|Fico d'India, crudo
+13066|Cachi (loto), crudo
+13067|Lime, polpa senza buccia e semi, crudo
+13071|Gelso nero, crudo
+13077|Rambutan, polpa, crudo
+13080|Tamarindo, polpa con semi, crudo
+13083|Guava, polpa, cruda
+13085|Mela renetta, polpa senza buccia, cruda
+13086|Mela Golden, polpa senza buccia, cruda
+13089|Banana essiccata
+13100|Susina, polpa e buccia, denocciolata, cruda
+13101|Uva Chasselas, cruda
+13110|Amarena, cruda
+13111|Mela essiccata
+13113|Mirtillo rosso americano (cranberry), crudo
+13118|Pesca essiccata
+13119|Prugne, denocciolate, cotte
+13121|Mela Granny Smith, polpa senza buccia, cruda
+13122|Mela Granny Smith, polpa e buccia, cruda
+13125|Scorza di limone, cruda
+13126|Sambuco, bacche, crude
+13128|Chayote (zucchina spinosa), cruda
+13129|Composta di frutta mista, a ridotto contenuto di zuccheri, confezionata, refrigerata
+13131|Olive nere in olio (greche)
+13132|Mirtilli, surgelati, crudi
+13134|Macedonia di frutta fresca
+13136|Lamponi, surgelati, crudi
+13147|Olive verdi farcite
+13148|Pesca noce gialla, polpa e buccia, cruda
+13149|Pesca noce bianca, polpa e buccia, cruda
+13150|More, surgelate, crude
+13151|Composta di mele, con meno zuccheri, confezionata
+13153|Composta di frutta senza zuccheri aggiunti, confezionata
+13175|Mela, polpa senza buccia, al forno
+13176|Mele, senza buccia, bollite
+13177|Chayote, bollita
+13178|Mirtilli rossi essiccati, zuccherati
+13179|Pompelmo giallo, polpa senza buccia e semi, crudo
+13180|Pompelmo rosa, polpa senza buccia e semi, crudo
+13183|Bacche di goji essiccate
+13184|Olive (media)
+13185|Composta di frutta, qualsiasi frutto (media)
+13188|Pera Conference, polpa senza buccia, cruda
+13189|Pera Williams, polpa senza buccia, cruda
+13190|Mela Chanteclerc, polpa senza buccia, cruda
+13191|Mela Gala, polpa senza buccia, cruda
+13192|Mela Pink Lady, polpa senza buccia, cruda
+13193|Pesca a polpa bianca, polpa e buccia, cruda
+13194|Pesca a polpa bianca, polpa senza buccia, cruda
+13195|Pesca a polpa gialla, polpa senza buccia, cruda
+13203|Rabarbaro, gambo, cotto
+13204|Composta di pesche, confezionata
+13205|Composta di albicocche, confezionata
+13206|Composta di rabarbaro, confezionata
+13211|Composta di frutta varia, confezionata
+13212|Composta di mele, confezionata (media)
+13214|Composta di frutta senza zuccheri aggiunti, confezionata (media)
+13395|Uva, cruda (media)
+13396|Mela, polpa senza buccia, cruda (media)
+13397|Pera, polpa senza buccia, cruda (media)
+13398|Pesca, polpa senza buccia, cruda (media)
+13399|Pesca noce, polpa e buccia, cruda (media)
+13499|Jackfruit, polpa, crudo
+13529|Durian, polpa, crudo
+13549|Kumquat, crudo
+13552|Longan, polpa, crudo
+13564|Nespola, cruda
+13614|Pomelo, polpa senza buccia e semi, crudo
+13620|Mela Golden, polpa e buccia, cruda
+13621|Uva moscato nera, cruda
+13623|Albicocche secche reidratate (35-45% acqua)
+13704|Albicocche sciroppate, sgocciolate (media)
+13705|Macedonia sciroppata, sgocciolata (media)
+13706|Macedonia sciroppata, in scatola, sgocciolata
+13707|Macedonia sciroppata, in scatola, con lo sciroppo
+13708|Macedonia allo sciroppo leggero, sgocciolata
+13709|Macedonia allo sciroppo leggero, con lo sciroppo
+13712|Albicocche allo sciroppo leggero, sgocciolate
+13713|Albicocche allo sciroppo leggero, con lo sciroppo
+13714|Albicocche sciroppate, in scatola, sgocciolate
+13715|Albicocche sciroppate, in scatola, con lo sciroppo
+13716|Ananas al naturale nel suo succo, sgocciolato
+13717|Ananas al naturale nel suo succo, con il succo
+13718|Ananas allo sciroppo leggero, sgocciolato
+13719|Ananas allo sciroppo leggero, con lo sciroppo
+13724|Litchi allo sciroppo leggero, sgocciolati
+13730|Pesche allo sciroppo leggero, sgocciolate
+13731|Pesche allo sciroppo leggero, con lo sciroppo
+13734|Pere allo sciroppo leggero, sgocciolate
+13735|Pere allo sciroppo leggero, con lo sciroppo
+13742|Melone bianco (honeydew), polpa, crudo
+13996|Frutta essiccata (media)
+13997|Frutti rossi misti (lamponi, fragole, ribes), crudi
+13999|Frutta fresca, cruda (media)
+14000|Capriolo, al forno
+14002|Cinghiale, crudo
+14003|Cinghiale, al forno
+14004|Lepre, carne, cruda
+14005|Capriolo, crudo
+14006|Cervo, crudo
+14007|Cervo, al forno
+14008|Selvaggina, cotta (media)
+15000|Mandorle con pellicina, senza sale aggiunto
+15001|Arachidi, senza sale aggiunto
+15002|Arachidi tostate, salate
+15004|Nocciole, senza sale aggiunto
+15005|Noci, gherigli, secche
+15006|Cocco, polpa fresca
+15007|Cocco, polpa essiccata (rapè)
+15008|Noci del Brasile, senza sale aggiunto
+15009|Pistacchi tostati, salati
+15010|Semi di sesamo
+15011|Semi di girasole
+15014|Cocco acerbo, polpa fresca
+15015|Purea di castagne, in scatola
+15017|Mix di frutta secca salata e frutta essiccata
+15018|Mix di frutta secca salata e uvetta
+15019|Anacardi tostati, salati
+15020|Castagne, bollite
+15021|Caldarroste
+15024|Castagne, crude
+15025|Pinoli
+15026|Noci pecan, senza sale aggiunto
+15027|Noci macadamia, senza sale aggiunto
+15029|Germogli di erba medica
+15030|Germogli di ravanello, freschi, crudi
+15032|Semi di erba medica
+15033|Nocciole tostate, senza sale aggiunto
+15034|Semi di lino
+15035|Semi di sesamo decorticati
+15037|Arachidi tostate a secco, salate
+15038|Semi di sesamo tostati, decorticati
+15039|Castagne, in scatola
+15041|Mandorle pelate, senza sale aggiunto
+15042|Mandorle tostate, salate
+15043|Noci macadamia tostate, salate
+15044|Pistacchi tostati, senza sale aggiunto
+15045|Semi di girasole tostati, salati
+15046|Noci pecan, salate
+15047|Semi di chia, secchi
+15048|Mix di frutta secca ed essiccata, senza sale aggiunto
+15049|Mix di frutta secca e uvetta, senza sale aggiunto
+15050|Nocciole tostate, salate
+15052|Semi di lino scuri
+15053|Arachidi tostate, senza sale aggiunto
+15054|Anacardi tostati, senza sale aggiunto
+15055|Anacardi tostati a secco, senza sale aggiunto
+15057|Arachidi tostate, aromatizzate
+15059|Mix di frutta secca tostata, salata
+15062|Mandorle tostate, salate, affumicate
+15063|Semi di canapa decorticati
+15064|Semi di zucca, secchi
+15065|Semi misti e arachidi, salati (media)
+15066|Semi misti e arachidi, non salati (media)
+15202|Burro di arachidi
+15203|Tahina (pasta di sesamo)
+16030|Burro di cacao
+16040|Olio o grasso di cocco
+16050|Olio di cocco vergine
+16060|Olio di cocco raffinato
+16080|Grasso vegetale solido per frittura
+16110|Burro di karité
+16128|Olio per frittura
+16150|Olio di palma raffinato
+16200|Grasso di palmisto
+16400|Burro (minimo 80% grassi), non salato
+16401|Burro chiarificato (burro concentrato)
+16402|Burro semisalato (minimo 80% grassi)
+16403|Burro salato (minimo 80% grassi)
+16404|Burro spalmabile (minimo 82% grassi), non salato
+16410|Burro leggero 60-62% grassi, non salato
+16414|Burro, grassi non specificati, non salato (media)
+16415|Burro leggero 39-41% grassi, non salato
+16520|Strutto
+16530|Grasso di maiale, crudo
+16540|Grasso di pollo
+16550|Grasso d'anatra
+16560|Grasso d'oca
+17001|Olio vegetale (media)
+17020|Olio di semi di albicocca
+17030|Olio di mandorle
+17040|Olio di arachidi
+17100|Olio di avocado
+17110|Olio di germe di grano
+17130|Olio di colza
+17170|Olio di semi di cotone
+17180|Olio di lino
+17190|Olio di mais
+17210|Olio di nocciole
+17220|Olio di noci
+17270|Olio extravergine d'oliva
+17325|Olio di semi di papavero
+17350|Olio di vinaccioli
+17390|Olio di crusca di riso
+17400|Olio di sesamo
+17420|Olio di soia
+17440|Olio di girasole
+17700|Olio di semi vari (miscela)
+17701|Miscela di olio d'oliva e olio di semi
+17800|Olio di camelina
+17850|Olio di canapa
+17900|Olio di argan
+19010|Latte intero crudo
+19016|Latte intero (media)
+19021|Latte intero in polvere
+19023|Latte intero UHT
+19024|Latte intero pastorizzato
+19026|Latte condensato intero, non zuccherato
+19027|Latte condensato intero, zuccherato
+19033|Latte parzialmente scremato (media)
+19039|Latte UHT, grassi non specificati (media)
+19041|Latte parzialmente scremato UHT
+19042|Latte parzialmente scremato pastorizzato
+19044|Latte parzialmente scremato in polvere
+19050|Latte scremato UHT
+19051|Latte scremato pastorizzato
+19054|Latte scremato in polvere
+19060|Latte parzialmente scremato UHT, ad alta digeribilità (ridotto in lattosio)
+19200|Latte di capra intero UHT
+19201|Latte di capra parzialmente scremato UHT
+19202|Latte di capra intero crudo
+19225|Latte d'asina o di cavalla, intero
+19250|Latte di pecora intero
+19270|Latte di bufala intero
+19402|Panna, grassi non specificati (media)
+19410|Panna acida densa 30% grassi, refrigerata
+19415|Panna semidensa 30% grassi, UHT
+19417|Panna da cucina liquida 30% grassi, UHT
+19420|Panna montata spray, UHT
+19430|Panna leggera 12-25% grassi, semidensa, UHT
+19432|Preparazione a base di panna, leggera, 5% grassi
+19436|Panna leggera fresca liquida 12-20% grassi, refrigerata
+19501|Quark, bianco o alla frutta (media)
+19508|Latte fermentato da bere, aromatizzato, zuccherato
+19535|Latte fermentato da bere, alla frutta, zuccherato
+19544|Latte fermentato con bifidus, bianco, 0% grassi
+19546|Latte fermentato con bifidus, bianco
+19550|Yogurt greco di pecora
+19552|Yogurt greco su strato di frutta, zuccherato
+19553|Yogurt di pecora, aromatizzato, zuccherato
+19554|Yogurt di pecora, bianco, circa 3% grassi
+19556|Yogurt di capra, bianco
+19557|Yogurt su strato di frutta, zuccherato
+19559|Yogurt aromatizzato, 0% grassi, con edulcoranti
+19575|Yogurt aromatizzato, zuccherato
+19577|Yogurt cremoso aromatizzato, zuccherato
+19579|Yogurt con cereali
+19581|Yogurt alla frutta, 0% grassi, con edulcoranti
+19584|Mascarpone
+19585|Ricotta vaccina
+19587|Yogurt alla frutta, zuccherato
+19589|Yogurt cremoso alla frutta, zuccherato
+19590|Mozzarella vaccina (fior di latte)
+19591|Mozzarella di bufala
+19593|Yogurt bianco intero
+19594|Yogurt bianco magro, 0% grassi
+19598|Yogurt bianco cremoso
+19599|Yogurt bianco zuccherato
+19600|Yogurt bianco (media)
+19628|Yogurt alla frutta (media)
+19639|Formaggio fresco spalmabile sgocciolato, 0% grassi
+19641|Formaggio fresco spalmabile sgocciolato, circa 6% grassi
+19644|Quark bianco, 0% grassi
+19646|Quark bianco, 2-3% grassi
+19650|Quark con panna montata, bianco
+19656|Quark alla frutta, 0% grassi, zuccherato
+19657|Quark alla frutta, 2-3% grassi, zuccherato
+19663|Formaggino fresco tipo petit-suisse, bianco, 0% grassi
+19664|Formaggino fresco tipo petit-suisse, bianco, circa 4% grassi
+19669|Yogurt proteico su strato di frutta, zuccherato
+19671|Yogurt alla frutta o aromatizzato, 0% grassi (media)
+19674|Flan all'uovo, refrigerato
+19680|Budino al latte aromatizzato, refrigerato
+19682|Yogurt alla frutta o aromatizzato (media)
+19684|Crema all'uovo, refrigerata
+19685|Panna cotta con frutta o caramello, refrigerata
+19693|Yogurt di soia bianco, senza zuccheri aggiunti, non arricchito
+19694|Yogurt di soia bianco, senza zuccheri aggiunti, con calcio
+19695|Yogurt di soia alla frutta, zuccherato
+19698|Tiramisù al caffè, refrigerato
+19699|Tiramisù alla frutta, refrigerato
+19711|Quark bianco, 7-8% grassi
+19712|Quark di pecora, bianco, circa 5% grassi
+19713|Quark di capra, bianco, circa 7% grassi
+19714|Quark aromatizzato, 0% grassi, zuccherato
+19724|Yogurt proteico, bianco
+19727|Yogurt di capra alla frutta, zuccherato
+19801|Latte fermentato da bere, bianco, da latte scremato
+19805|Latte fermentato da bere, bianco, da latte intero
+19860|Yogurt greco, bianco
+19862|Yogurt greco, aromatizzato, zuccherato
+19865|Kefir di latte
+19882|Yogurt di pecora, bianco, circa 6% grassi
+19999|Peperone verde, giallo o rosso, cotto (media)
+20000|Carciofo, cotto
+20002|Melanzana, cotta
+20003|Barbabietola rossa, cotta
+20004|Bietola, coste senza foglie, cruda
+20005|Bietola, coste senza foglie, cotta
+20007|Carote, in scatola, sgocciolate
+20009|Carota, cruda
+20010|Funghi, tutti i tipi, crudi
+20011|Funghi, tutti i tipi, in scatola, sgocciolati
+20012|Indivia riccia, cruda
+20014|Cavolo rosso, crudo
+20015|Cavolo verza, cotto
+20016|Cavolfiore, crudo
+20017|Cavolfiore, bollito
+20018|Cuori di palma, in scatola, sgocciolati
+20019|Cetriolo, polpa e buccia, crudo
+20020|Zucchina, polpa e buccia, cruda
+20021|Zucchina, polpa e buccia, cotta
+20022|Crescione d'acqua, crudo
+20023|Sedano, coste, crudo
+20025|Sedano rapa, cotto
+20026|Cicoria belga, cruda
+20027|Spinaci, cotti
+20028|Finocchio, crudo
+20029|Germogli di soia, in scatola, sgocciolati
+20030|Fagiolini, cotti
+20031|Lattuga, cruda
+20033|Rapa, cotta
+20034|Cipolla, cruda
+20035|Cipolla, cotta
+20036|Piselli, in scatola, sgocciolati
+20037|Piselli, cotti
+20038|Tarassaco, crudo
+20039|Porro, crudo
+20040|Porro, cotto
+20041|Peperone verde, giallo o rosso, crudo
+20044|Zucca, cruda
+20045|Ravanello, crudo
+20046|Scorzonera, cotta
+20048|Pomodori pelati, in scatola, sgocciolati
+20049|Mais, pannocchia, cotto
+20050|Topinambur, cotto
+20051|Verdure miste a cubetti, in scatola, sgocciolate
+20052|Carciofo, crudo
+20053|Melanzana, cruda
+20054|Cardo, crudo
+20055|Sedano rapa, crudo
+20056|Champignon, crudi
+20057|Broccolo, crudo
+20058|Cavolini di Bruxelles, crudi
+20059|Spinaci, crudi
+20060|Spinaci, in scatola, sgocciolati
+20061|Fagiolini, crudi
+20062|Fagiolini, in scatola, sgocciolati
+20063|Fagiolini gialli, in scatola, sgocciolati
+20064|Rapa, pelata, cruda
+20065|Cavolo rapa, crudo
+20066|Mais dolce, in scatola, sgocciolato
+20067|Carciofi, in scatola, sgocciolati
+20068|Concentrato di pomodoro, in scatola
+20069|Cavolo verza, crudo
+20070|Fagiolini, surgelati, crudi
+20071|Fagiolini, surgelati, cotti
+20072|Piselli, crudi
+20074|Carciofo, al vapore
+20076|Asparagi, in scatola, sgocciolati
+20077|Cavolini di Bruxelles, in scatola, sgocciolati
+20078|Sedano, coste, in scatola, sgocciolato
+20079|Champignon, in scatola, sgocciolati
+20081|Scorzonera, in scatola, sgocciolata
+20082|Cavolfiore, surgelato, crudo
+20083|Spinaci, surgelati, crudi
+20084|Piselli, surgelati, crudi
+20085|Peperone verde, crudo
+20086|Peperone verde, cotto
+20087|Peperone rosso, crudo
+20088|Peperone rosso, cotto
+20089|Ravanello nero, crudo
+20090|Scarola, cruda
+20091|Barbabietola rossa, cruda
+20092|Carote, disidratate
+20093|Piselli e carote, in scatola, sgocciolati
+20094|Cavolo rapa, bollito
+20095|Cavolo rosso, bollito
+20096|Zucca, cotta
+20097|Scalogno, crudo
+20099|Valerianella (songino), cruda
+20101|Verdure miste, surgelate, crude
+20102|Champignon, bolliti
+20103|Finferli (gallinacci), crudi
+20105|Spugnole, crude
+20106|Tartufo nero, crudo
+20108|Mais, pannocchia, surgelato, crudo
+20111|Acetosa, cruda
+20114|Pleurotus (orecchioni), crudi
+20116|Cavolo cappuccio bianco, crudo
+20118|Finocchio, bollito
+20119|Pomodoro verde, crudo
+20123|Lattuga batavia, cruda
+20124|Piselli, surgelati, cotti
+20125|Champignon, saltati in padella senza grassi
+20127|Portulaca, foglie, cruda
+20128|Zucca moscata, polpa senza buccia, cruda
+20132|Zucca Hokkaido rossa, polpa senza buccia, cruda
+20134|Zucca Hokkaido verde, polpa senza buccia, cruda
+20135|Porri stufati, confezionati
+20136|Zucca melonnette della Vandea, polpa senza buccia, cruda
+20137|Pomodori pelati, in scatola, con il succo
+20138|Zucca butternut, polpa senza buccia, cruda
+20139|Zucca, tutti i tipi, cruda
+20141|Zucca butternut, polpa senza buccia, bollita
+20143|Zucca spaghetti, polpa senza buccia, cotta
+20145|Zucca spaghetti, polpa senza buccia, cruda
+20151|Peperoncino, crudo
+20155|Cuori di carciofo, in scatola, sgocciolati
+20156|Fondi di carciofo, in scatola, sgocciolati
+20158|Spinacio della Nuova Zelanda, cotto
+20159|Ovolo buono, crudo
+20160|Porcini, crudi
+20161|Prataioli, crudi
+20162|Radicchio rosso, crudo
+20163|Indivia, cruda
+20165|Rutabaga, cotta
+20166|Zucca, polpa senza buccia, cruda
+20167|Cavolo cinese, crudo
+20168|Peperone giallo, crudo
+20169|Polpa di pomodoro, in scatola
+20170|Passata di pomodoro, in scatola
+20171|Lattuga romana, cruda
+20172|Pomodorini ciliegia, crudi
+20173|Taccole, crude
+20180|Cipolla, essiccata
+20181|Pastinaca, cruda
+20183|Germogli di soia (fagiolo mungo), crudi
+20188|Germogli di bambù, in scatola, sgocciolati
+20189|Pomodori secchi
+20192|Pomodoro cuore di bue, crudo
+20195|Fagiolini gialli (cornetti), crudi
+20196|Topinambur, crudo
+20197|Scorzonera, cruda
+20198|Germogli di bambù, crudi
+20199|Crescione inglese, crudo
+20200|Lattuga iceberg, cruda
+20201|Rutabaga (navone), cruda
+20202|Funghi orecchio di Giuda, secchi
+20203|Fagiolini gialli, surgelati, crudi
+20204|Broccolo, surgelato, crudo
+20206|Cavolini di Bruxelles, surgelati, crudi
+20208|Carote, surgelate, crude
+20210|Cetriolo, polpa senza buccia, crudo
+20211|Shiitake, secchi
+20212|Shiitake, cotti
+20214|Piselli e carote, surgelati, crudi
+20216|Taccole, bollite
+20217|Rucola, cruda
+20218|Cavolo riccio, crudo
+20219|Cavolo riccio, cotto
+20221|Cavolo cinese, saltato in padella senza grassi
+20228|Champignon, surgelati, crudi
+20230|Zucchina, polpa e buccia, surgelata, cruda
+20231|Tuberi di stachys (carciofi cinesi), surgelati, crudi
+20232|Fondi di carciofo, surgelati, crudi
+20233|Mais, chicchi, surgelato, crudo
+20234|Rapa, surgelata, cruda
+20235|Cipolla, surgelata, cruda
+20236|Porro, surgelato, crudo
+20237|Scorzonera, surgelata, cruda
+20238|Cipolla rossa, cruda
+20239|Cipolla dorata, cruda
+20241|Cardo, cotto
+20242|Pomodoro, polpa e buccia, bollito
+20243|Taccole, cotte
+20255|Scalogno, cotto
+20256|Pomodori secchi sott'olio
+20257|Fagiolini, purè
+20258|Purè di verdure miste (3-4 tipi)
+20259|Broccoli, purè
+20260|Sugo di pomodoro (passata semiridotta 11%), in scatola
+20261|Carote, purè
+20263|Verdure miste per minestrone, surgelate, crude
+20264|Zucchine, purè
+20265|Verdure a julienne o a cubetti, surgelate, crude
+20266|Verdure miste per ratatouille, surgelate
+20267|Verdure primavera, surgelate, crude (piselli, patate, fagiolini, carote, cipolle)
+20268|Doppio concentrato di pomodoro, in scatola
+20269|Fagiolini piattoni, crudi
+20270|Spinacini da insalata, crudi
+20271|Verdure miste a cubetti, precotte, surgelate
+20272|Misticanza, insalata di foglie giovani
+20275|Peperoni rossi, in scatola, sgocciolati
+20276|Pomodoro tondo, crudo
+20277|Asparagi bianchi, bolliti
+20278|Sedano rapa, purè
+20279|Asparagi verdi, crudi
+20280|Cavolo romanesco, crudo
+20282|Asparagi bianchi o viola, pelati, crudi
+20283|Salicornia, fresca, cruda
+20284|Piselli, purè
+20288|Lattuga sucrine, cruda
+20289|Pomodoro, polpa e buccia, al forno
+20290|Cavolo romanesco, cotto
+20291|Zucca Hokkaido rossa, polpa senza buccia, brasata
+20292|Zucca moscata, polpa senza buccia, cotta
+20293|Fagioli coco, bolliti
+20295|Lattuga foglia di quercia, cruda
+20298|Purè di carote con panna, condito, confezionato
+20299|Asparagi verdi, bolliti
+20300|Melanzana, polpa e buccia, al forno
+20301|Bietola, foglie e coste, bollita
+20302|Broccoli, bolliti, croccanti
+20303|Broccoli, bolliti, teneri
+20304|Broccoli, al vapore
+20305|Carote, bollite, croccanti
+20306|Carote, bollite, tenere
+20307|Carote, al vapore
+20308|Cavolo cappuccio bianco, bollito
+20309|Cavolini di Bruxelles, bolliti
+20310|Cavolo rosso, brasato
+20311|Cavolo verza, bollito
+20312|Cavolfiore, al vapore
+20313|Zucchina, polpa e buccia, al forno
+20314|Sedano, coste, brasato
+20315|Sedano rapa, bollito
+20316|Cicoria belga, al forno
+20317|Finocchio, brasato
+20318|Fagiolini gialli, bolliti
+20320|Fagiolini, bolliti
+20321|Rapa, bollita
+20322|Cipolla bianca o dorata, saltata in padella senza grassi
+20323|Cipollotto, saltato in padella senza grassi
+20324|Cipolla rossa, saltata in padella senza grassi
+20325|Pastinaca, brasata
+20326|Piselli, bolliti
+20327|Porro, bollito
+20328|Peperone giallo, saltato in padella senza grassi
+20329|Peperone rosso, saltato in padella senza grassi
+20330|Peperone verde, saltato in padella senza grassi
+20331|Zucca Hokkaido rossa, polpa senza buccia, bollita
+20332|Zucca, al forno
+20333|Scorzonera, bollita
+20335|Scalogno, saltato in padella senza grassi
+20336|Spinaci, bolliti
+20339|Pak choi, cotto
+20340|Pak choi, crudo
+20343|Pomodoro marmande, crudo
+20344|Pomodoro nero di Crimea, crudo
+20345|Pomodoro allungato, crudo
+20346|Cavolo nero (kale), crudo
+20347|Moringa, baccelli, crudi
+20348|Moringa, foglie, crude
+20349|Asparagi, bolliti (media)
+20350|Broccoli, bolliti (media)
+20351|Broccoli, cotti (media)
+20352|Carote, bollite (media)
+20353|Carote, cotte (media)
+20354|Sedano, coste, cotto (media)
+20355|Cavolo rosso, cotto (media)
+20356|Finocchio, cotto (media)
+20357|Zucca Hokkaido rossa, polpa senza buccia, cotta (media)
+20358|Pomodoro, polpa e buccia, cotto (media)
+20359|Lenticchie, secche (media)
+20360|Lenticchie, bollite (media)
+20385|Pomodoro, crudo (media)
+20496|Verdure miste per cuscus, surgelate, crude
+20497|Verdure miste per cuscus, cotte
+20499|Verdure, cotte (media)
+20500|Fave, bollite
+20501|Fagioli bianchi, secchi
+20502|Fagioli bianchi, bolliti
+20503|Fagioli rossi, bolliti
+20506|Piselli spezzati, bolliti
+20507|Ceci, bolliti
+20508|Fagioli flageolet, in scatola, sgocciolati
+20510|Lenticchie condite, in scatola, sgocciolate
+20511|Fagioli bianchi, in scatola, sgocciolati
+20513|Fagioli flageolet, bolliti
+20515|Piselli spezzati, secchi
+20516|Ceci, secchi
+20517|Fave fresche da sgranare, crude
+20518|Fave, secche
+20521|Germogli di lenticchie, freschi, crudi
+20524|Fagioli rossi, in scatola, sgocciolati
+20525|Fagioli rossi, secchi
+20529|Fagioli di Lima, crudi
+20530|Fagioli mungo, secchi
+20531|Fagioli mungo freschi, bolliti
+20532|Ceci, in scatola, sgocciolati
+20534|Lupini, semi secchi
+20535|Lenticchie rosse decorticate, secche
+20537|Fagioli flageolet, surgelati, crudi
+20539|Fagioli flageolet, secchi
+20540|Fagioli flageolet, bolliti
+20541|Fave sgusciate, surgelate, crude
+20542|Fave sgusciate, surgelate, bollite
+20543|Fave, surgelate, bollite
+20584|Pomodoro a grappolo, crudo
+20585|Lenticchie verdi, secche
+20586|Lenticchie bionde, secche
+20587|Lenticchie verdi, bollite
+20588|Lenticchie bionde, bollite
+20589|Lenticchie rosse decorticate, bollite
+20590|Tuberi di stachys (carciofi cinesi), cotti
+20700|Legumi, cotti (media)
+20901|Soia, semi interi
+20915|Farina di soia integrale
+20916|Miso
+20921|Dessert di soia aromatizzato, zuccherato
+20927|Dessert vegetale (mandorla, avena, cocco, riso), bianco, senza zuccheri aggiunti
+20929|Dessert di soia, refrigerato (media)
+20985|Lattuga di mare (Ulva), essiccata
+20987|Alga nori (Porphyra), essiccata
+20988|Alga dulse, essiccata
+20990|Alga kombu, essiccata
+20997|Clorella, essiccata
+20999|Alga wakame atlantica, essiccata
+21001|Montone, carne, cruda
+21003|Montone, spalla, cruda
+21006|Montone, cosciotto, crudo
+21007|Montone, cosciotto, al forno
+21500|Agnello, costoletta, cruda
+21501|Agnello, costoletta, alla griglia o in padella
+21502|Agnello, cosciotto, crudo
+21503|Agnello, cosciotto, al forno
+21504|Agnello, spalla, cruda
+21505|Agnello, spalla magra, cruda
+21506|Agnello, spalla, al forno
+21507|Agnello, spalla magra, al forno
+21508|Agnello, collo, brasato o bollito
+21509|Agnello, nodino, alla griglia o in padella
+21512|Agnello, costoletta di carré, alla griglia o in padella
+21513|Agnello, sella magra, al forno
+21514|Agnello, collo, crudo
+21515|Agnello, sella, cruda
+21516|Agnello, nodino, crudo
+21517|Agnello, costoletta di carré, cruda
+21518|Agnello, cosciotto, alla griglia o in padella
+21519|Agnello, cosciotto, brasato
+21520|Agnello, sella magra, alla griglia o in padella
+21521|Agnello, costolette, crude (media)
+21522|Agnello, costolette, cotte (media)
+21523|Agnello, carne, cotta (media)
+21524|Agnello, costolette, alla griglia o in padella (media)
+21525|Agnello, puntine, crude
+21800|Capretto, carne, cruda
+21801|Capretto, carne, cotta
+22000|Uovo di gallina, crudo
+22001|Albume d'uovo, crudo
+22002|Tuorlo d'uovo, crudo
+22003|Tuorlo d'uovo in polvere
+22004|Albume d'uovo in polvere
+22008|Albume d'uovo, cotto
+22009|Tuorlo d'uovo, cotto
+22010|Uovo sodo
+22011|Uovo in camicia
+22013|Uovo intero in polvere
+22014|Uovo alla coque
+22050|Uovo di quaglia, crudo
+22060|Uovo d'anatra, crudo
+22070|Uovo d'oca, crudo
+22080|Uovo di tacchina, crudo
+22500|Frittata semplice, fatta in casa
+22502|Uova strapazzate, con grassi
+22505|Uovo fritto senza grassi aggiunti
+22506|Frittata al formaggio, fatta in casa
+22507|Frittata con pancetta, fatta in casa
+22508|Frittata ai funghi, fatta in casa
+22509|Frittata alle erbe, fatta in casa
+22510|Tortilla spagnola di patate e cipolle, confezionata
+22511|Frittata con verdure, formaggio o carne (media)
+23474|Profiteroles con crema e cioccolato, refrigerati
+23536|Budino di riso al caramello, refrigerato
+25510|Gnocchi di patate, cotti
+25604|Insalata verde, cruda, senza condimento
+25616|Verdure crude, senza condimento (media)
+25990|Lampuga, filetto, cotta
+25991|Lampuga, filetto, cruda
+25996|Salmone, cotto (media)
+25997|Merluzzo, cotto (media)
+26003|Platessa, al vapore
+26006|Merluzzo d'Alaska, crudo
+26008|Eglefino, al vapore
+26009|Halibut atlantico, crudo
+26011|Aringa, cruda
+26012|Aringa, fritta
+26014|Aringa, alla griglia senza grassi aggiunti
+26015|Merluzzo nero (carbonaro), cotto
+26017|Sogliola limanda, al vapore
+26018|Rana pescatrice, cruda
+26019|Sgombro, al forno
+26020|Sgombro, fritto
+26021|Merlano, fritto
+26022|Merlano, al vapore
+26023|Merluzzo, al forno
+26024|Baccalà, bollito
+26025|Merluzzo, al vapore
+26026|Muggine, al forno
+26031|Razza, al forno
+26033|Gattuccio, cotto
+26036|Salmone d'allevamento, crudo
+26038|Salmone, al vapore
+26041|Tonno, al forno
+26042|Rombo selvatico, crudo
+26043|Merluzzo, crudo
+26044|Nasello, crudo
+26047|Merluzzo nero (carbonaro), surgelato, crudo
+26048|Nasello, filetto, surgelato, crudo
+26051|Sgombro, crudo
+26052|Razza, cruda
+26053|Tonno, crudo
+26055|Platessa, cruda
+26057|Limanda, cruda
+26058|Sogliola, cruda
+26059|Sogliola, al vapore
+26060|Sogliola, al forno
+26061|Sogliola, bollita
+26062|Sogliola, fritta
+26063|Scorfano, crudo
+26064|Tonno pinna gialla, crudo
+26065|Sardina, cruda
+26068|Tonnetto striato, crudo
+26069|Tonno rosso, crudo
+26072|Spigola, cruda
+26073|Razza, cotta in brodo aromatico
+26074|Gattuccio, crudo
+26076|Tonno bianco (alalunga), crudo
+26079|Acciuga, cruda
+26080|Orata selvatica, cruda
+26081|Rana pescatrice, alla griglia senza grassi aggiunti
+26082|Pesce spada, crudo
+26084|Rombo giallo, crudo
+26085|Triglia, cruda
+26088|Orata d'allevamento, cruda
+26091|Muggine, crudo
+26092|Trota di mare, cruda
+26093|Pesce spada, al forno
+26094|Rombo, al forno
+26095|Merlano, crudo
+26099|Tanuta, cruda
+26100|Boga, cruda
+26101|Palamita, cruda
+26102|Lanzardo, crudo
+26103|Dentice, crudo
+26104|Pesce San Pietro, crudo
+26106|Gallinella, cruda
+26107|Corvina, cruda
+26109|Pagello, crudo
+26110|Triglia, al vapore
+26111|Salpa, cruda
+26113|Sugarello, crudo
+26120|Nasello, brasato
+26122|Eglefino, crudo
+26125|Merluzzo del Pacifico, crudo
+26126|Eglefino, alla griglia senza grassi aggiunti
+26127|Grongo, crudo
+26129|Merluzzo giallo, crudo
+26130|Molva, cruda
+26134|Merluzzo nero (carbonaro), crudo
+26135|Sogliola limanda, cruda
+26136|Sardina, alla griglia senza grassi aggiunti
+26141|Fegato di merluzzo, crudo
+26146|Dentice tropicale (snapper), crudo
+26147|Dentice tropicale (snapper), cotto
+26148|Scorfano, al vapore
+26153|Pesce sciabola, crudo
+26154|Halibut di Groenlandia, crudo
+26161|Salmone selvatico, crudo
+26162|Squalo, crudo
+26166|Aguglia, cruda
+26171|Salmerino, crudo
+26173|Spratto, crudo
+26174|Rombo, crudo
+26175|Coregone, crudo
+26178|Cernia, cruda
+26192|Merluzzo d'Alaska, cotto
+26201|Rombo d'allevamento, crudo
+26205|Spigola selvatica, cruda
+26206|Spigola d'allevamento, cruda
+26208|Rana pescatrice (Lophius budegassa), cruda
+26210|Scorfano di fondale, crudo
+26211|Salmone d'allevamento, al microonde
+26217|Salmone d'allevamento, bollito
+26219|Gallinella (Chelidonichthys lucerna), cruda
+26222|Tanuta, al forno
+26223|Salmone coho, crudo
+26229|Salmone, alla griglia senza grassi aggiunti
+26230|Salmone d'allevamento, al forno
+26234|Molva, cotta
+26237|Aringa magra, cruda
+26238|Aringa grassa, cruda
+26240|Latterini, da friggere, crudi
+26241|Verdesca, filetto senza pelle, crudo
+26247|Halibut di Groenlandia, al vapore
+26248|Sogliola, alla griglia senza grassi aggiunti
+26264|Gnocchi di patate, crudi
+26265|Gnocchi di semolino, crudi
+26998|Trota salmonata, in padella senza grassi aggiunti
+26999|Anguilla, cotta (media)
+27000|Anguilla, al forno
+27001|Anguilla, bollita
+27002|Luccio, al forno
+27003|Carpa d'allevamento, cruda
+27004|Carpa, al forno
+27005|Pesce persico, al forno
+27006|Trota, al forno
+27007|Trota, al vapore
+27008|Trota d'allevamento, cruda
+27009|Trota iridea d'allevamento, cruda
+27010|Pesce persico, crudo
+27011|Luccio, crudo
+27012|Storione, crudo
+27014|Trota iridea d'allevamento, al forno
+27015|Trota iridea d'allevamento, al vapore
+27016|Anguilla, cruda
+27018|Pangasio, filetti, cotti
+27019|Tilapia, cruda
+27021|Trota salmonata, cruda
+27024|Lucioperca, crudo
+27025|Persico del Nilo, crudo
+27030|Spigola, al forno
+27031|Orata, al forno
+28001|Maiale, spalla, cruda
+28002|Pancetta di maiale fresca, cruda
+28009|Maiale, spalla (variante), cruda
+28010|Maiale, spalla, cotta
+28100|Maiale, braciola, cruda
+28101|Maiale, braciola, alla griglia o in padella
+28102|Maiale, fesa, cruda
+28103|Maiale, fesa, cotta
+28104|Maiale, carré, crudo
+28105|Maiale, carré, cotto
+28202|Maiale, arista, cotta
+28203|Maiale, filetto, cotto
+28204|Maiale, filetto, crudo
+28205|Maiale, carne, cotta (media)
+28300|Maiale, arrosto, crudo
+28301|Maiale, arrosto
+28302|Maiale, lonza, cruda
+28400|Maiale, costine, crude
+28401|Maiale, costine, brasate
+28451|Maiale, lonza, al forno
+28460|Maiale, fettina di coscia, cruda
+28461|Maiale, fettina di coscia, cotta
+28470|Lardo di maiale senza cotenna, crudo
+28471|Guanciale fresco senza cotenna, crudo
+28472|Maiale, spalla parte bassa, magra, cruda
+28473|Maiale, coscia, magra, cruda
+28474|Maiale, noce di coscia, magra, cruda
+28475|Maiale, rifilatura 90/10, cruda
+28476|Maiale, rifilatura 80/20, cruda
+28477|Maiale, spalla parte alta, magra, cruda
+28479|Maiale, pancia senza fianco, cruda
+28480|Maiale, noce di lombo, cruda
+31008|Miele
+31016|Zucchero bianco
+31017|Zucchero di canna
+31034|Sciroppo d'acero
+31044|Zucchero vanigliato
+31046|Caramello liquido
+31064|Dolcificante alla saccarina
+31067|Melassa di canna
+31077|Fruttosio
+31087|Dolcificante alla stevia
+31089|Sciroppo d'agave
+34000|Coniglio, carne, brasata
+34001|Coniglio, carne, cruda
+34002|Coniglio, carne, cotta
+34003|Coniglio selvatico, carne, cruda
+34004|Coniglio selvatico, carne, cotta
+34500|Cosce di rana, crude
+34501|Cosce di rana, alla griglia senza grassi
+36000|Gallina, carne con pelle, cruda
+36001|Gallina, carne, cruda
+36002|Pollo, coscia con pelle, cruda
+36003|Pollo, carne, cruda
+36004|Pollo, coscia con pelle, al forno
+36005|Pollo, carne con pelle, al forno
+36006|Pollo, coscia senza pelle, al forno
+36007|Pollo bianco, carne con pelle, crudo
+36008|Pollo ruspante, carne con pelle, crudo
+36014|Gallina, coscia, cruda
+36016|Pollo, carne con pelle, cruda
+36017|Pollo, petto senza pelle, crudo
+36018|Pollo, petto senza pelle, alla griglia o in padella
+36019|Pollo, sovracoscia, carne, cruda
+36020|Pollo intero eviscerato, crudo
+36022|Pollo, fusello, crudo
+36023|Pollo, ali con pelle, crude
+36024|Pollo, coscia senza pelle, cruda
+36029|Pollo, petto con pelle, crudo
+36030|Pollo, coscia senza pelle, bollita
+36031|Pollo, coscia con pelle, bollita
+36032|Pollo, petto con pelle, al forno
+36033|Pollo, ali con pelle, al forno
+36037|Pollo biologico, coscia con pelle, cruda
+36039|Pollo biologico, petto senza pelle, crudo
+36041|Pollo biologico, petto senza pelle, alla griglia o in padella
+36042|Pollame, carne, cotta (media)
+36050|Cappone, carne con pelle, cruda
+36051|Cappone, carne con pelle, al forno
+36100|Quaglia, carne con pelle, cruda
+36101|Quaglia, carne, cruda
+36102|Quaglia, carne con pelle, cotta
+36200|Anatra, carne con pelle, al forno
+36201|Anatra, carne, cruda
+36202|Anatra, carne, al forno
+36203|Anatra, coscia con pelle, cruda
+36204|Anatra, carne con pelle, cruda
+36205|Anatra, petto (magret), alla griglia o in padella
+36206|Anatra, petto, crudo
+36300|Tacchino, carne con pelle, cruda
+36301|Tacchino, carne, cruda
+36302|Tacchino, carne, al forno
+36304|Tacchino, fesa a fette, cruda
+36305|Tacchino, coscia con pelle, cruda
+36306|Tacchino, fesa a fette, alla griglia o in padella
+36307|Tacchino, coscia senza pelle, cruda
+36308|Tacchino, fesa a fette, al forno
+36310|Tacchino, ali, crude
+36311|Tacchino, coscia, cruda
+36401|Fagiano, carne, cruda
+36402|Fagiano, carne, al forno
+36403|Fagiano, carne con pelle, cruda
+36500|Oca, carne, cruda
+36501|Oca, carne con pelle, cruda
+36502|Oca, carne, al forno
+36503|Oca, carne con pelle, al forno
+36600|Piccione, carne, cruda
+36602|Piccione, carne, al forno
+36603|Selvaggina da piuma, carne, cotta (media)
+36700|Faraona, carne, cruda
+36702|Faraona, petto, crudo
+36703|Faraona, coscia, cruda
+36800|Struzzo, carne, cruda
+36801|Struzzo, carne, cotta
+39001|Frappè da fast food
+39200|Budino al cioccolato, refrigerato
+39206|Mousse al cioccolato (a base di latte), refrigerata
+39209|Crème caramel, refrigerato
+39210|Mousse al cioccolato tradizionale, refrigerata
+39212|Budino di riso, refrigerato
+39213|Crème brûlée, refrigerata
+39218|Budino di semolino, refrigerato
+39229|Budino alla vaniglia, refrigerato
+39230|Budino, refrigerato (media)
+39234|Tortino al cioccolato con cuore morbido, refrigerato
+39236|French toast
+39246|Budino al caffè, refrigerato
+39247|Budino al caramello, refrigerato
+39248|Mousse al cioccolato vegetale, refrigerata
+39710|Crema pasticcera istantanea, preparata
+40002|Cervello di agnello, crudo
+40003|Cervello di agnello, cotto
+40004|Cervello di maiale, brasato
+40005|Cervello di maiale, crudo
+40006|Cervello di vitello, crudo
+40007|Cervello di vitello, cotto
+40052|Cuore di manzo, crudo
+40053|Cuore di manzo, cotto
+40054|Cuore di pollo, crudo
+40055|Cuore di tacchino, crudo
+40056|Cuore di pollo, cotto
+40057|Cuore di tacchino, cotto
+40058|Cuore di agnello, crudo
+40059|Cuore di agnello, cotto
+40060|Cuore di maiale, crudo
+40062|Cuore di vitello, crudo
+40102|Fegato di agnello, crudo
+40103|Fegato di agnello, cotto
+40104|Fegato di manzo (giovenca), crudo
+40105|Fegato di manzo (giovenca), cotto
+40106|Fegato di vitello, crudo
+40107|Fegato di vitello, cotto
+40108|Fegato di pollame, crudo
+40109|Fegato di pollame, cotto
+40110|Fegato di coniglio, crudo
+40111|Fegato di pollo, crudo
+40113|Fegato di maiale, cotto
+40115|Fegato di tacchino, crudo
+40116|Fegato di pollo, cotto
+40118|Fegato di tacchino, cotto
+40119|Fegato di maiale, crudo
+40120|Fegato d'oca, crudo
+40121|Fegato d'anatra, crudo
+40201|Lingua di vitello, cotta
+40202|Lingua di manzo, cruda
+40203|Lingua di manzo, cotta
+40204|Lingua di vitello, cruda
+40205|Lingua di maiale, cruda
+40207|Lingua di agnello, cruda
+40302|Animelle di agnello, crude
+40303|Animelle di agnello, cotte
+40304|Animelle di vitello, crude
+40305|Animelle di vitello, brasate o alla griglia
+40401|Rognone, cotto (media)
+40402|Rognone di manzo, crudo
+40403|Rognone di manzo, cotto
+40404|Rognone di maiale, crudo
+40405|Rognone di maiale, cotto
+40406|Rognone di agnello, brasato
+40407|Rognone di agnello, crudo
+40408|Rognone di vitello, brasato o alla griglia
+40409|Rognone di vitello, crudo
+40502|Trippa di manzo, cruda
+40600|Sangue di manzo, crudo
+40601|Frattaglie, cotte (media)
+40700|Ventriglio di pollo, crudo
+40701|Ventrigli d'anatra conservati, in scatola
+51510|Freekeh, crudo
+51511|Freekeh, cotto, senza sale
+53100|Banana platano, cruda
+53101|Banana platano, cotta
+53200|Taro, tubero, crudo
+53201|Taro, tubero, cotto
+53502|Igname, pelato, crudo
+53503|Igname, pelato, bollito
+53672|Igname, crudo
+54031|Manioca, radice, cruda
+54034|Manioca, radice, cotta
+54500|Frutto dell'albero del pane, crudo
+58100|Gombo (okra), crudo
+58103|Gombo (okra), cotto
+96781|Amido di riso

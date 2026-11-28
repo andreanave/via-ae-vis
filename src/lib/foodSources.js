@@ -10,6 +10,11 @@ export const FOOD_SOURCES = {
     citation: "Gnagnarella P, Salvini S, Parpinel M. Banca Dati di Composizione degli Alimenti per Studi Epidemiologici in Italia",
     url: "https://bda.ieo.it",
   },
+  ciqual: {
+    label: "Tabella Ciqual",
+    citation: "ANSES, Table de composition nutritionnelle des aliments Ciqual 2025 (licenza Ouverte Etalab 2.0), nomi tradotti in italiano",
+    url: "https://ciqual.anses.fr",
+  },
   institutional: { label: "Fonte istituzionale" },
   label: { label: "Etichetta del prodotto" },
   manufacturer: { label: "Scheda del produttore" },
