@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import BrandMark from "../ui/BrandMark.jsx";
+import ProfileMenu from "../ui/ProfileMenu.jsx";
 import { useAuth } from "../features/auth/AuthProvider.jsx";
 import { useActor, useAssist } from "../lib/assist.jsx";
 import { useBrand } from "../lib/brand.jsx";
@@ -45,8 +46,9 @@ export default function AppShell() {
   const exitAssist = () => { stop(); navigate("/gestione"); };
   const modules = useAthleteModules(actor.id, !isProfessional);
   const { pathname } = useLocation();
-  // In palestra lo schermo resta tutto alla seduta.
-  const showTabs = !isProfessional && !pathname.startsWith("/allenamento/seduta/");
+  // In palestra e nei check-in lo schermo resta tutto all'attività: niente barra in basso.
+  const focused = ["/allenamento/seduta/", "/checkin/", "/settimanale"].some(p => pathname.startsWith(p));
+  const showTabs = !isProfessional && !focused;
   const tabs = TABS.filter(t => !t.module || !modules || modules.has(t.module));
 
   return (
@@ -57,7 +59,7 @@ export default function AppShell() {
           <button className="btn secondary" type="button" onClick={exitAssist}>Esci dall'assistenza</button>
         </div>
       )}
-      <header className="topbar">
+      <header className={isProfessional ? "topbar" : "topbar athlete-topbar"}>
         <BrandMark brand={brand} />
         {isProfessional && (
           <nav aria-label="Sezioni" className="topnav">
@@ -82,7 +84,9 @@ export default function AppShell() {
           </button>
         </div>
       </header>
-      <main className={showTabs ? "content with-tabs" : "content"}>
+      <main className={`content${showTabs ? " with-tabs" : ""}${isProfessional ? "" : " athlete-content"}`}>
+        {/* Su telefono l'atleta non ha la barra in alto: notifiche, tema ed esci stanno nel cerchio della Home. */}
+        {!isProfessional && pathname === "/" && <div className="home-profile"><ProfileMenu unread={unread} /></div>}
         <Outlet />
       </main>
       {showTabs && (
