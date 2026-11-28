@@ -37,7 +37,7 @@ const readHidden = planKey => {
 };
 
 // Suggerimenti per il coach sul piano: indicazioni generali, il coach decide se seguirle.
-export default function PlanSuggestions({ content, planKey }) {
+export default function PlanSuggestions({ content, planKey, diet }) {
   const names = useMemo(() => namesToResolve(content), [content]);
   const [values, setValues] = useState(null);
   const [hidden, setHidden] = useState(() => readHidden(planKey));
@@ -52,7 +52,7 @@ export default function PlanSuggestions({ content, planKey }) {
   useEffect(() => { setHidden(readHidden(planKey)); }, [planKey]);
 
   if (!values) return <p className="muted hint">Preparo i suggerimenti sul piano…</p>;
-  const { suggestions, coverage } = planSuggestions(content, values);
+  const { suggestions, coverage } = planSuggestions(content, values, diet);
   const visible = suggestions.filter(s => !hidden.has(s.id));
   const hide = id => {
     const next = new Set(hidden).add(id);
