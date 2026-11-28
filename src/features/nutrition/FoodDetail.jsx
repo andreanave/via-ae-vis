@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { foodVersions, getFood } from "../../lib/foodApi.js";
 import { NUTRIENTS, formatAmount } from "../../lib/foodMath.js";
+import { CLAIMS_SOURCE, nutritionClaims } from "../../lib/nutritionClaims.js";
 import { FOOD_SOURCES, FOOD_STATES, FOOD_STATUS } from "../../lib/foodSources.js";
 
 // Scheda di una voce: valori per 100 g/ml della versione corrente, fonte con citazione, storico delle etichette.
@@ -20,6 +21,7 @@ export default function FoodDetail({ id, reloadKey, children }) {
   if (!food) return <p className="muted">Caricamento…</p>;
   const v = food.current || {};
   const src = FOOD_SOURCES[food.source] || {};
+  const claims = nutritionClaims(v, food.basis);
   const facts = [
     food.state && ["Stato", FOOD_STATES[food.state]],
     food.edible_part_pct && food.edible_part_pct < 100 && ["Parte edibile", `${formatAmount(food.edible_part_pct, 0)} %`],
@@ -51,6 +53,14 @@ export default function FoodDetail({ id, reloadKey, children }) {
           ))}
         </tbody>
       </table>
+      {claims.length > 0 && (
+        <div className="food-claims">
+          <ul className="claim-list" aria-label="Diciture nutrizionali rispettate">
+            {claims.map(c => <li key={c.key} className="claim" title={c.rule}>{c.label}</li>)}
+          </ul>
+          <p className="muted hint">Calcolate sui valori per 100 {food.basis} con le soglie del {CLAIMS_SOURCE}.</p>
+        </div>
+      )}
       {v.is_estimate && <div className="notice warning">Valori stimati: {v.estimate_note}</div>}
       {facts.length > 0 && (
         <dl className="facts">

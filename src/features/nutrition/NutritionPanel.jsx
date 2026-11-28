@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FileUp } from "lucide-react";
 import { formatDay } from "../../lib/format.js";
+import PlanSuggestions from "./PlanSuggestions.jsx";
 import PlanView from "./PlanView.jsx";
 import { activatePlan, deleteDraft, listPlans, pdfUrl, readFiberPdf, saveDraft } from "./nutritionApi.js";
 
@@ -81,6 +82,7 @@ export default function NutritionPanel({ athleteId, actorId, readOnly }) {
             Settimana: {["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"].map((d, i) => `${d} ${plan.weekPattern[i]}`).join(" · ")}
           </p>
         )}
+        <PlanSuggestions content={plan} planKey={`bozza:${draft.file?.name || ""}`} />
         <PlanView content={plan} />
         {error && <p className="notice error" role="alert">{error}</p>}
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
@@ -126,7 +128,12 @@ export default function NutritionPanel({ athleteId, actorId, readOnly }) {
           ))}
         </ul>
       )}
-      {open && <PlanView key={open.id} content={open.content} />}
+      {open && (
+        <>
+          <PlanSuggestions key={`s-${open.id}`} content={open.content} planKey={open.id} />
+          <PlanView key={open.id} content={open.content} />
+        </>
+      )}
     </div>
   );
 }
