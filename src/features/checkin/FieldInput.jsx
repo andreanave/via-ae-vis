@@ -9,9 +9,10 @@ export const parseNumber = text => {
 };
 
 const scaleBtn = active => ({
-  minWidth: 44, minHeight: 44, borderRadius: 10, font: "inherit", fontWeight: 650, cursor: "pointer",
-  border: `1px solid ${active ? "var(--accent)" : "var(--border)"}`,
-  background: active ? "var(--accent)" : "var(--surface)", color: active ? "var(--on-accent)" : "var(--text)",
+  minWidth: 48, minHeight: 48, borderRadius: 10, fontFamily: "var(--font-mono)", fontSize: "1rem", cursor: "pointer",
+  fontVariantNumeric: "tabular-nums", transition: "background-color var(--ease), color var(--ease)",
+  border: "1px solid transparent",
+  background: active ? "var(--text)" : "var(--surface-2)", color: active ? "var(--bg)" : "var(--text)",
 });
 
 // Un campo di check-in, con controlli grandi per il telefono.
@@ -21,7 +22,7 @@ export default function FieldInput({ field, value, onChange, id, invalid, descri
     for (let n = field.min; n <= field.max; n += 1) options.push(n);
     return (
       <div role="radiogroup" aria-labelledby={`${id}-label`} aria-describedby={describedBy} aria-invalid={invalid || undefined}>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(48px, 1fr))", gap: 6 }}>
           {options.map(n => (
             <button key={n} type="button" role="radio" aria-checked={value === n} disabled={readOnly}
               title={field.type === "bristol" ? BRISTOL_TYPES[n] : undefined}

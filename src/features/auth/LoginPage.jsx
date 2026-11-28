@@ -31,7 +31,7 @@ export default function LoginPage() {
   return (
     <main className="center">
       <div className="card auth-card">
-        <div style={{ marginBottom: "1.5rem" }}><BrandMark /></div>
+        <div style={{ display: "flex", justifyContent: "center", margin: "0.5rem 0 2rem" }}><BrandMark variant="logo" /></div>
         <h1>{mode === "login" ? "Accedi" : "Recupera la password"}</h1>
         <p className="muted">{mode === "login" ? BRAND.tagline : "Ti mandiamo un link per sceglierne una nuova."}</p>
         {error && <div className="notice error" role="alert">{error}</div>}
