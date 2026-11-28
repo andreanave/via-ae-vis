@@ -506,3 +506,22 @@ input[type="file"]::file-selector-button:hover { border-color: var(--border-stro
 .chip { min-height: 44px; padding: 0 0.9rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-size: 0.9rem; cursor: pointer; }
 .chip[aria-pressed="true"] { background: var(--warning-bg); border-color: var(--warning); color: var(--warning); }
 .food-detail .label-thumb { max-width: 100%; max-height: 320px; object-fit: contain; border-radius: var(--radius-sm); }
+
+/* Panoramica del master in Gestione */
+.overview { display: grid; gap: 2rem; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: 0; }
+.kpi { border-top: 1px solid var(--border); padding-top: 0.75rem; }
+.kpi dt { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.kpi dd { margin: 0.25rem 0 0; font-size: 2rem; line-height: 1.1; }
+.overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.pair, .invite-row, .activity { display: flex; align-items: center; gap: 0.75rem; min-height: 56px; flex-wrap: wrap; }
+.pair { justify-content: space-between; }
+.pair-names { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 500; }
+.pair-names svg { color: var(--muted); }
+.pair .hint { flex: 1 1 100%; margin-top: -0.5rem; }
+.invite-row { justify-content: space-between; }
+.activity svg { color: var(--accent); flex: none; }
+.activity .day-name { flex: 1; min-width: 0; }
+@media (max-width: 640px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.overview-grid > .stack { align-content: start; }
+.overview .section-head { flex-wrap: wrap; row-gap: 0.25rem; }
