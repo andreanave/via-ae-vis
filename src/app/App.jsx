@@ -23,6 +23,9 @@ import Conversations from "../features/messages/Conversations.jsx";
 import Chat from "../features/messages/Chat.jsx";
 import NotificationsPage from "../features/messages/NotificationsPage.jsx";
 import AthletePlan from "../features/nutrition/AthletePlan.jsx";
+import MealPage from "../features/nutrition/MealPage.jsx";
+import DayTimes from "../features/athlete/DayTimes.jsx";
+import ProgressPage from "../features/progress/ProgressPage.jsx";
 
 function Home() {
   const actor = useActor();
@@ -61,6 +64,9 @@ function Routed() {
         <Route path="/messaggi/:linkId" element={<Chat />} />
         <Route path="/notifiche" element={<NotificationsPage />} />
         <Route path="/alimentazione" element={<AthletePlan />} />
+        <Route path="/alimentazione/pasto/:mealKey" element={<MealPage />} />
+        <Route path="/orari" element={<DayTimes />} />
+        <Route path="/andamento" element={<ProgressPage />} />
         {isProfessional && <Route path="/atleti/:id" element={<AthleteCard />} />}
         {isProfessional && <Route path="/atleti/:id/allenamento" element={<ProgramEditor />} />}
         {isProfessional && <Route path="/esercizi" element={<ExerciseCatalog />} />}
