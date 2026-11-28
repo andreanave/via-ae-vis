@@ -167,3 +167,23 @@ describe("pezzi di base", () => {
     expect(empty.warnings.map(w => w.code)).toContain("nessun_giorno");
   });
 });
+
+describe("giorno del piano", async () => {
+  const { dayTypeFor, formatQty, supplementsFor } = await import("../src/lib/fiber/planDay.js");
+  it("sceglie il tipo di giorno dalla distribuzione settimanale", () => {
+    // 2027-03-02 è un martedì: nel piano finto è un giorno B.
+    expect(dayTypeFor(plan, new Date("2027-03-02T09:00:00")).key).toBe("B");
+    expect(dayTypeFor(plan, new Date("2027-03-01T09:00:00")).key).toBe("A");
+  });
+  it("gli integratori a giorni alterni si alternano dall'inizio del piano", () => {
+    const d3 = date => supplementsFor(plan, new Date(date)).find(s => s.name === "Vitamina D3").today;
+    expect([d3("2027-03-02T08:00:00"), d3("2027-03-03T08:00:00"), d3("2027-03-04T22:00:00")]).toEqual([true, false, true]);
+    expect(supplementsFor(plan, new Date("2027-03-03T08:00:00")).find(s => s.name === "Omega 3").today).toBe(true);
+  });
+  it("scrive le quantità in italiano", () => {
+    expect(formatQty({ qty: 1.5, unit: "g" })).toBe("1,5 g");
+    expect(formatQty({ qty: 2, unit: "pezzo", size: "grande" })).toBe("2 grandi");
+    expect(formatQty({ qty: 1, unit: "porzione" })).toBe("1 porzione");
+    expect(formatQty({ qty: 5, unit: "capsula" })).toBe("5 capsule");
+  });
+});

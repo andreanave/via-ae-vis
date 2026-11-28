@@ -6,6 +6,7 @@ import { useActor } from "../../lib/assist.jsx";
 import { weekEndFor } from "../../lib/checkinMath.js";
 import { todayIso } from "../../lib/format.js";
 import { loadEntries, loadSettings, loadWeekly } from "../checkin/checkinApi.js";
+import NutritionShortcut from "../nutrition/NutritionShortcut.jsx";
 
 const greeting = (date = new Date()) => {
   const h = date.getHours();
@@ -105,6 +106,7 @@ export default function AthleteHome() {
           </ul>
         </div>
       )}
+      <NutritionShortcut athleteId={actor.id} />
       {team.length > 0 && <p className="muted" style={{ fontSize: "0.9rem" }}>Ti seguono: {team.map(p => p.full_name || "un professionista").join(", ")}.</p>}
     </section>
   );
