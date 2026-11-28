@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import BrandMark from "../ui/BrandMark.jsx";
 import { useAuth } from "../features/auth/AuthProvider.jsx";
 import { useActor, useAssist } from "../lib/assist.jsx";
 import { useBrand } from "../lib/brand.jsx";
-import { LogOut, Moon, Sun, SunMoon } from "lucide-react";
-import { applyTheme, loadThemePreference, nextTheme, themeLabel } from "../ui/theme.js";
+import { Bell, LogOut, MessageCircle, Moon, Sun, SunMoon } from "lucide-react";
+import { useUnreadCount } from "../features/messages/useNotifications.js";
+import { applyTheme, loadThemePreference, nextTheme, setStudioAccent, themeLabel } from "../ui/theme.js";
 
 const ThemeIcon = { dark: Moon, light: Sun, system: SunMoon };
 
@@ -14,8 +15,10 @@ export default function AppShell() {
   const { viewAs, stop } = useAssist();
   const actor = useActor();
   const { brand } = useBrand();
+  const unread = useUnreadCount(actor.id, !actor.assisting);
   const navigate = useNavigate();
   const [theme, setTheme] = useState(loadThemePreference());
+  useEffect(() => { setStudioAccent(brand?.accent); return () => setStudioAccent(null); }, [brand?.accent]);
   const cycleTheme = () => { const next = nextTheme(theme); applyTheme(next); setTheme(next); };
   const isProfessional = actor.role === "professional" || actor.isMaster;
   const exitAssist = () => { stop(); navigate("/gestione"); };
@@ -39,6 +42,13 @@ export default function AppShell() {
           </nav>
         )}
         <div style={{ display: "flex", gap: "0.25rem" }}>
+          <NavLink className="icon-btn" to="/messaggi" aria-label="Messaggi" title="Messaggi">
+            <MessageCircle strokeWidth={1.5} aria-hidden="true" />
+          </NavLink>
+          <NavLink className="icon-btn" to="/notifiche" aria-label={unread ? `Notifiche, ${unread} da leggere` : "Notifiche"} title="Notifiche" style={{ position: "relative" }}>
+            <Bell strokeWidth={1.5} aria-hidden="true" />
+            {unread > 0 && <span className="badge" aria-hidden="true" style={{ position: "absolute", top: 2, right: 2, minWidth: 18, height: 18, padding: "0 4px", fontSize: "0.65rem" }}>{unread > 9 ? "9+" : unread}</span>}
+          </NavLink>
           <button className="icon-btn" type="button" onClick={cycleTheme} aria-label={themeLabel[theme]} title={themeLabel[theme]}>
             {(() => { const I = ThemeIcon[theme]; return <I strokeWidth={1.5} aria-hidden="true" />; })()}
           </button>

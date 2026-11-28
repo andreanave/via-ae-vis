@@ -28,7 +28,7 @@ export default function NewPasswordPage() {
 
   return (
     <main className="center">
-      <form className="card auth-card" onSubmit={submit} noValidate>
+      <form className="auth-page" onSubmit={submit} noValidate>
         <h1>Scegli la password</h1>
         <p className="muted">Almeno 8 caratteri.</p>
         {error && <div className="notice error" role="alert">{error}</div>}
@@ -44,7 +44,7 @@ export default function NewPasswordPage() {
             value={confirm} onChange={e => setConfirm(e.target.value)} />
           {mismatch && <span id="pw2-err" className="error">Le due password non coincidono.</span>}
         </div>
-        <button className="btn block" type="submit" disabled={busy || !password || !confirm}>
+        <button className="btn lg block" type="submit" disabled={busy || !password || !confirm}>
           {busy ? "Salvataggio…" : "Salva e continua"}
         </button>
       </form>

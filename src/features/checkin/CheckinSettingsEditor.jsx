@@ -62,16 +62,13 @@ export default function CheckinSettingsEditor({ athleteId, readOnly, onSaved }) 
     if (t) change(normalizeConfig(t.config));
   };
 
-  const box = { width: 20, height: 20, flex: "none" };
-  const row = { display: "flex", alignItems: "center", gap: "0.6rem", minHeight: 40 };
-
   return (
-    <div style={{ display: "grid", gap: "1rem" }}>
+    <div className="settings">
       {error && <div className="notice error" role="alert">{error}</div>}
       {!exists && <div className="notice">Check-in non ancora attivo per questo atleta. Ti propongo una configurazione di partenza: modificala e salva.</div>}
 
       {templates.length > 0 && !readOnly && (
-        <div className="field" style={{ marginBottom: 0 }}>
+        <div className="field">
           <label htmlFor="tpl">Parti da un tuo modello</label>
           <select id="tpl" className="input" defaultValue="" onChange={e => applyTemplate(e.target.value)}>
             <option value="" disabled>Scegli un modello</option>
@@ -81,19 +78,19 @@ export default function CheckinSettingsEditor({ athleteId, readOnly, onSaved }) 
       )}
 
       {["morning", "evening"].map(moment => (
-        <fieldset key={moment} style={{ border: "1px solid var(--border)", borderRadius: 10, padding: "0.75rem 1rem" }}>
-          <legend style={{ fontWeight: 600, padding: "0 0.25rem" }}>{MOMENT_LABELS[moment]} (tutti facoltativi per l'atleta)</legend>
+        <fieldset key={moment} className="checks">
+          <legend>{MOMENT_LABELS[moment]} <span className="muted">· tutti facoltativi per l'atleta</span></legend>
           {CHECKIN_FIELDS.filter(f => f.moments.includes(moment)).map(f => (
-            <label key={f.key} style={row}>
-              <input type="checkbox" style={box} disabled={readOnly} checked={config[moment].includes(f.key)} onChange={() => toggleDaily(moment, f.key)} />
+            <label key={f.key}>
+              <input type="checkbox" className="check" disabled={readOnly} checked={config[moment].includes(f.key)} onChange={() => toggleDaily(moment, f.key)} />
               {f.label}
             </label>
           ))}
         </fieldset>
       ))}
 
-      <fieldset style={{ border: "1px solid var(--border)", borderRadius: 10, padding: "0.75rem 1rem" }}>
-        <legend style={{ fontWeight: 600, padding: "0 0.25rem" }}>Settimanale</legend>
+      <fieldset className="checks">
+        <legend>Settimanale</legend>
         <div className="field">
           <label htmlFor="wd">Giorno del resoconto</label>
           <select id="wd" className="input" disabled={readOnly} value={config.weekday}
@@ -104,20 +101,20 @@ export default function CheckinSettingsEditor({ athleteId, readOnly, onSaved }) 
         {CHECKIN_FIELDS.filter(f => f.moments.includes("weekly")).map(f => {
           const item = weeklyItem(f.key);
           return (
-            <div key={f.key} style={{ ...row, flexWrap: "wrap" }}>
-              <label style={{ ...row, flex: "1 1 220px" }}>
-                <input type="checkbox" style={box} disabled={readOnly} checked={Boolean(item)} onChange={() => toggleWeekly(f.key)} />
+            <div key={f.key} className="weekly-row">
+              <label className="main">
+                <input type="checkbox" className="check" disabled={readOnly} checked={Boolean(item)} onChange={() => toggleWeekly(f.key)} />
                 {f.label}
               </label>
               {item && (
                 <>
-                  <label style={row} className="muted">
-                    <input type="checkbox" style={box} disabled={readOnly || item.locked} checked={item.required}
+                  <label className="muted">
+                    <input type="checkbox" className="check" disabled={readOnly || item.locked} checked={item.required}
                       onChange={e => setWeeklyFlag(f.key, "required", e.target.checked)} />
                     Obbligatorio
                   </label>
-                  <label style={row} className="muted" title="L'obbligatorietà resta quella del modello">
-                    <input type="checkbox" style={box} disabled={readOnly} checked={item.locked}
+                  <label className="muted" title="L'obbligatorietà resta quella del modello">
+                    <input type="checkbox" className="check" disabled={readOnly} checked={item.locked}
                       onChange={e => setWeeklyFlag(f.key, "locked", e.target.checked)} />
                     Vincolato
                   </label>
@@ -126,24 +123,24 @@ export default function CheckinSettingsEditor({ athleteId, readOnly, onSaved }) 
             </div>
           );
         })}
-        <p className="muted" style={{ fontSize: "0.9rem", marginBottom: 0 }}>
+        <p className="muted hint">
           L'atleta ha sempre un campo note libero e facoltativo alla fine. Dati scelti al mattino o alla sera vengono proposti come media nel settimanale.
         </p>
       </fieldset>
 
       {!readOnly && (
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
+        <div className="actions settings-bar">
           <button className="btn" type="button" onClick={save} disabled={state === "saving" || (exists && state !== "dirty")}>
             {state === "saving" ? "Salvataggio…" : exists ? "Salva le modifiche" : "Attiva il check-in"}
           </button>
           {state === "saved" && <span className="muted" role="status">Salvato</span>}
           <span style={{ flex: 1 }} />
           <input className="input" placeholder="Nome del modello (solo per te)" aria-label="Nome del modello"
-            value={templateName} onChange={e => setTemplateName(e.target.value)} style={{ maxWidth: 240 }} />
+            value={templateName} onChange={e => setTemplateName(e.target.value)} />
           <button className="btn secondary" type="button" disabled={!templateName.trim()} onClick={saveTemplate}>Salva come modello</button>
         </div>
       )}
-      <span className="muted" style={{ fontSize: "0.85rem" }}>
+      <span className="muted hint">
         Campi scelti: {config.morning.length} al mattino, {config.evening.length} alla sera, {config.weekly.length} nel settimanale
         {config.weekly.some(w => w.required) ? ` (${config.weekly.filter(w => w.required).map(w => FIELD_BY_KEY[w.key].label.toLowerCase()).length} obbligatori)` : ""}.
       </span>

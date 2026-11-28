@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { supabase } from "../../lib/supabase.js";
 import { useActor } from "../../lib/assist.jsx";
 import { loadCatalog } from "./trainingApi.js";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 
 const blank = { name: "", instructions: "", video_url: "", bodyweight: false };
 
@@ -42,41 +43,44 @@ export default function ExerciseCatalog() {
   const shown = (list || []).filter(e => e.name.toLowerCase().includes(query.trim().toLowerCase()));
 
   return (
-    <section style={{ display: "grid", gap: "1rem", maxWidth: 720 }}>
-      <Link to="/" className="muted" style={{ textDecoration: "none" }}>← Atleti</Link>
-      <h1 style={{ margin: 0 }}>Catalogo esercizi</h1>
-      <p className="muted" style={{ margin: 0 }}>Gli esercizi che crei qui si scelgono velocemente quando scrivi una scheda. Gli atleti che segui vedono istruzioni e video.</p>
-      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-        <input className="input" style={{ minWidth: 0, flex: 1 }} placeholder="Cerca" aria-label="Cerca un esercizio" value={query} onChange={e => setQuery(e.target.value)} />
-        {!readOnly && <button className="btn" type="button" onClick={() => open(null)}>Nuovo esercizio</button>}
+    <section className="page narrow editor">
+      <Link to="/" className="back"><ChevronLeft size={18} strokeWidth={1.5} aria-hidden="true" />Atleti</Link>
+      <div className="page-head">
+        <span className="eyebrow">{list ? `${list.length} esercizi` : "Libreria"}</span>
+        <h1>Catalogo esercizi</h1>
+      </div>
+      <p className="muted">Gli esercizi che crei qui si scelgono velocemente quando scrivi una scheda. Gli atleti che segui vedono istruzioni e video.</p>
+      <div className="actions">
+        <input className="input" data-grow type="search" placeholder="Cerca" aria-label="Cerca un esercizio" value={query} onChange={e => setQuery(e.target.value)} />
+        {!readOnly && <button className="btn ghost" type="button" onClick={() => open(null)}><Plus size={18} strokeWidth={1.5} aria-hidden="true" />Nuovo esercizio</button>}
       </div>
 
       {editing && (
-        <form className="card" onSubmit={save} noValidate style={{ display: "grid", gap: "0.75rem" }}>
-          <h2 style={{ margin: 0 }}>{editing === "new" ? "Nuovo esercizio" : "Modifica esercizio"}</h2>
+        <form className="editor-card" onSubmit={save} noValidate>
+          <h2>{editing === "new" ? "Nuovo esercizio" : "Modifica esercizio"}</h2>
           {error && <div className="notice error" role="alert">{error}</div>}
           <div className="field">
             <label htmlFor="ex-name">Nome</label>
-            <input id="ex-name" className="input" style={{ width: "100%", minWidth: 0 }} value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+            <input id="ex-name" className="input" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
           </div>
           <div className="field">
             <label htmlFor="ex-instr">Istruzioni</label>
-            <textarea id="ex-instr" className="input" rows={4} style={{ minWidth: 0, padding: "0.75rem" }} value={form.instructions}
+            <textarea id="ex-instr" className="input" rows={4} value={form.instructions}
               onChange={e => setForm({ ...form, instructions: e.target.value })} />
           </div>
           <div className="field">
             <label htmlFor="ex-video">Link al video (facoltativo)</label>
-            <input id="ex-video" className="input" style={{ width: "100%", minWidth: 0 }} inputMode="url" placeholder="https://" value={form.video_url}
+            <input id="ex-video" className="input" inputMode="url" placeholder="https://" value={form.video_url}
               aria-invalid={!urlOk} onChange={e => setForm({ ...form, video_url: e.target.value })} />
           </div>
-          <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <input type="checkbox" checked={form.bodyweight} onChange={e => setForm({ ...form, bodyweight: e.target.checked })} />
+          <label className="inline-check">
+            <input type="checkbox" className="check" checked={form.bodyweight} onChange={e => setForm({ ...form, bodyweight: e.target.checked })} />
             A corpo libero (il carico registrato è la zavorra aggiuntiva)
           </label>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+          <div className="actions">
             <button className="btn" type="submit">Salva</button>
             <button className="btn ghost" type="button" onClick={() => setEditing(null)}>Annulla</button>
-            {editing !== "new" && <button className="btn ghost" type="button" onClick={() => remove(editing)}>Elimina</button>}
+            {editing !== "new" && <button className="btn link danger" type="button" onClick={() => remove(editing)}>Elimina</button>}
           </div>
         </form>
       )}
@@ -84,14 +88,14 @@ export default function ExerciseCatalog() {
       {list === undefined && <p className="muted">Caricamento…</p>}
       {list && list.length === 0 && <div className="notice">Il catalogo è vuoto. Puoi anche scrivere gli esercizi direttamente nella scheda.</div>}
       {shown.length > 0 && (
-        <ul className="list">
+        <ul className="lines">
           {shown.map(ex => (
-            <li key={ex.id}>
-              <button type="button" className="row" style={{ width: "100%", textAlign: "left", background: "none", border: 0, font: "inherit", color: "inherit", cursor: "pointer" }}
-                onClick={() => !readOnly && open(ex)} disabled={readOnly}>
-                <span style={{ flex: 1 }}>{ex.name}</span>
-                {ex.bodyweight && <span className="muted">Corpo libero</span>}
-                {ex.video_url && <span className="muted">Video</span>}
+            <li key={ex.id} className="day-row">
+              <button type="button" onClick={() => !readOnly && open(ex)} disabled={readOnly}>
+                <span className="day-name">{ex.name}</span>
+                {ex.bodyweight && <span className="muted hint">Corpo libero</span>}
+                {ex.video_url && <span className="muted hint">Video</span>}
+                {!readOnly && <ChevronRight size={18} strokeWidth={1.5} aria-hidden="true" />}
               </button>
             </li>
           ))}

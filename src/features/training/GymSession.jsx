@@ -9,6 +9,8 @@ import { parseNumber } from "../checkin/FieldInput.jsx";
 import { useTrainingData } from "./useTrainingData.js";
 import RestTimer, { readRest, writeRest } from "./RestTimer.jsx";
 import SyncNotice from "./SyncNotice.jsx";
+import { Check, ChevronLeft, Play, Info } from "lucide-react";
+import { setGymMode } from "../../ui/theme.js";
 
 const num = v => (v === null || v === undefined || v === "" ? "" : String(v).replace(".", ","));
 
@@ -51,6 +53,7 @@ export default function GymSession() {
     timer.current = setTimeout(() => data.sync(), 800);
   };
   useEffect(() => () => clearTimeout(timer.current), []);
+  useEffect(() => { setGymMode(true); return () => setGymMode(false); }, []);
 
   const session = useMemo(() => data.program?.sessions.find(s => s.id === entry?.workout?.session_id), [data.program, entry]);
   const catalog = useMemo(() => Object.fromEntries((data.catalog || []).map(c => [c.id, c])), [data.catalog]);
@@ -107,19 +110,23 @@ export default function GymSession() {
   const totalSets = (session?.exercises || []).reduce((n, e) => n + e.sets, 0);
 
   return (
-    <section style={{ display: "grid", gap: "1rem", maxWidth: 720 }}>
-      <Link to="/allenamento" className="muted" style={{ textDecoration: "none" }}>← Allenamento</Link>
-      <div>
-        <h1 style={{ marginBottom: 4 }}>{w.session_name}</h1>
-        <p className="muted" style={{ margin: 0 }}>{formatDay(w.performed_on)} · {doneCount} di {totalSets} serie</p>
+    <section className="gym">
+      <Link to="/allenamento" className="back"><ChevronLeft size={18} strokeWidth={1.5} aria-hidden="true" />Allenamento</Link>
+      <div className="page-head">
+        <span className="eyebrow">{formatDay(w.performed_on)}</span>
+        <h1>{w.session_name}</h1>
+        <div className="gym-progress">
+          <span className="num">{doneCount}/{totalSets}</span> serie
+          <div className="progress thin" aria-hidden="true"><span style={{ "--value": `${totalSets ? Math.round((doneCount / totalSets) * 100) : 0}%` }} /></div>
+        </div>
       </div>
       <SyncNotice pending={data.pending} offline={data.offline} onSync={() => data.sync()} />
       {!session && <div className="notice">Questa seduta non è più nella scheda attiva: puoi vedere le serie registrate nello storico.</div>}
-      {session?.notes && <div className="notice" style={{ whiteSpace: "pre-wrap" }}>{session.notes}</div>}
+      {session?.notes && <div className="notice pre">{session.notes}</div>}
 
       {blocks.map((block, bi) => (
-        <div key={bi} className="card" style={{ display: "grid", gap: "1rem", marginBottom: 0 }}>
-          {block.items.length > 1 && <span className="muted" style={{ fontSize: "0.85rem", fontWeight: 600 }}>JUMP SET {block.letter}: alterna gli esercizi, recupera alla fine del giro</span>}
+        <div key={bi} className={`gym-block${block.items.length > 1 ? " jump" : ""}`}>
+          {block.items.length > 1 && <span className="eyebrow">Jump set {block.letter} · alterna gli esercizi, recupera alla fine del giro</span>}
           {block.items.map(ex => {
             const prev = previousSets({ exercise: ex, workouts: data.workouts, sets: data.sets, excludeWorkoutId: workoutId });
             const info = catalog[ex.exercise_id];
@@ -129,27 +136,27 @@ export default function GymSession() {
               ex.rest_seconds ? `recupero ${Math.floor(ex.rest_seconds / 60)}:${String(ex.rest_seconds % 60).padStart(2, "0")}` : null,
             ].filter(Boolean).join(" · ");
             return (
-              <div key={ex.id} style={{ display: "grid", gap: "0.5rem" }}>
-                <div>
-                  <h2 style={{ margin: 0 }}>{ex.group_label ? `${ex.group_label} · ` : ""}{ex.name}</h2>
-                  <div className="muted">{prescription}</div>
-                  {prev && <div className="muted" style={{ fontSize: "0.9rem" }}>Ultima volta ({formatDay(prev.workout.performed_on)}): {prev.sets.map(s => `${num(s.load)}×${s.reps ?? "—"}`).join(", ")}</div>}
+              <div key={ex.id} className="gym-ex">
+                <div className="gym-ex-head">
+                  <h2>{ex.group_label && <span className="num tag">{ex.group_label}</span>}{ex.name}</h2>
+                  <div className="num prescription">{prescription}</div>
+                  {prev && <div className="muted prev">Ultima volta, {formatDay(prev.workout.performed_on)}: <span className="num">{prev.sets.map(s => `${num(s.load)}×${s.reps ?? "—"}`).join("  ")}</span></div>}
                 </div>
-                {ex.notes && <p style={{ margin: 0 }}>{ex.notes}</p>}
-                {ex.film && <p style={{ margin: 0 }}><strong>Da filmare:</strong> {ex.film}</p>}
+                {ex.notes && <p className="pre">{ex.notes}</p>}
+                {ex.film && <p><strong>Da filmare:</strong> {ex.film}</p>}
                 {(info?.instructions || video) && (
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                  <div className="actions">
                     {info?.instructions && (
-                      <button type="button" className="btn ghost" aria-expanded={Boolean(infoOpen[ex.id])} onClick={() => setInfoOpen({ ...infoOpen, [ex.id]: !infoOpen[ex.id] })}>
-                        {infoOpen[ex.id] ? "Nascondi istruzioni" : "Istruzioni"}
+                      <button type="button" className="btn ghost sm" aria-expanded={Boolean(infoOpen[ex.id])} onClick={() => setInfoOpen({ ...infoOpen, [ex.id]: !infoOpen[ex.id] })}>
+                        <Info size={16} strokeWidth={1.5} aria-hidden="true" />{infoOpen[ex.id] ? "Nascondi istruzioni" : "Istruzioni"}
                       </button>
                     )}
-                    {video && <a className="btn ghost" href={video} target="_blank" rel="noreferrer">Video</a>}
+                    {video && <a className="btn ghost sm" href={video} target="_blank" rel="noreferrer"><Play size={16} strokeWidth={1.5} aria-hidden="true" />Video</a>}
                   </div>
                 )}
-                {infoOpen[ex.id] && <p style={{ margin: 0, whiteSpace: "pre-wrap" }}>{info.instructions}</p>}
+                {infoOpen[ex.id] && <p className="pre muted">{info.instructions}</p>}
 
-                <div style={{ display: "grid", gap: "0.5rem" }}>
+                <div className="sets">
                   {Array.from({ length: ex.sets }, (_, i) => {
                     const s = findSet(ex, i);
                     const target = setTarget(ex, i);
@@ -157,35 +164,35 @@ export default function GymSession() {
                     const id = `set-${ex.id}-${i}`;
                     const done = Boolean(s?.done_at);
                     return (
-                      <div key={i} style={{ display: "grid", gap: "0.35rem" }}>
-                        <div style={{ display: "flex", gap: "0.5rem", alignItems: "end" }}>
-                          <span style={{ width: 28, fontVariantNumeric: "tabular-nums" }} aria-hidden="true">{i + 1}</span>
-                          <div className="field" style={{ margin: 0, flex: 1, minWidth: 0 }}>
-                            <label htmlFor={`${id}-load`} style={{ fontSize: "0.8rem" }}>{ex.bodyweight ? "Zavorra kg" : "kg"}</label>
-                            <input id={`${id}-load`} className="input" style={{ width: "100%", minWidth: 0 }} inputMode="decimal" readOnly={readOnly}
+                      <div key={i} className={`set${done ? " done" : ""}`}>
+                        <div className="set-row">
+                          <span className="num set-n" aria-hidden="true">{i + 1}</span>
+                          <div className="set-field">
+                            <label htmlFor={`${id}-load`}>{ex.bodyweight ? "Zavorra kg" : "kg"}</label>
+                            <input id={`${id}-load`} className="input gym-input" inputMode="decimal" readOnly={readOnly}
                               placeholder={prevSet ? num(prevSet.load) : ex.bodyweight ? "0" : target.load}
                               value={s?.loadText ?? num(s?.load)}
                               onChange={e => { const v = parseNumber(e.target.value); writeSet(ex, i, { loadText: e.target.value, load: v === "" || Number.isNaN(v) ? null : v }); }} />
                           </div>
-                          <div className="field" style={{ margin: 0, flex: 1, minWidth: 0 }}>
-                            <label htmlFor={`${id}-reps`} style={{ fontSize: "0.8rem" }}>Rip.{target.reps ? ` (${target.reps})` : ""}</label>
-                            <input id={`${id}-reps`} className="input" style={{ width: "100%", minWidth: 0 }} inputMode="numeric" readOnly={readOnly}
+                          <div className="set-field">
+                            <label htmlFor={`${id}-reps`}>Rip.{target.reps ? ` (${target.reps})` : ""}</label>
+                            <input id={`${id}-reps`} className="input gym-input" inputMode="numeric" readOnly={readOnly}
                               placeholder={prevSet?.reps != null ? String(prevSet.reps) : ""}
                               value={s?.reps ?? ""}
                               onChange={e => { const v = e.target.value.replace(/[^\d]/g, ""); writeSet(ex, i, { reps: v === "" ? null : Number(v) }); }} />
                           </div>
-                          <button type="button" className={`btn${done ? "" : " ghost"}`} aria-pressed={done} disabled={readOnly}
+                          <button type="button" className="set-done" aria-pressed={done} disabled={readOnly}
                             aria-label={`Serie ${i + 1} ${done ? "fatta, tocca per annullare" : "da fare, segna come fatta"}`}
-                            style={{ minWidth: 64 }} onClick={() => complete(ex, i, block.items)}>
-                            {done ? "✓" : "Fatta"}
+                            onClick={() => complete(ex, i, block.items)}>
+                            <Check size={22} strokeWidth={done ? 2 : 1.5} aria-hidden="true" />
                           </button>
                         </div>
-                        {(target.rir || target.note) && <span className="muted" style={{ fontSize: "0.85rem", paddingLeft: 36 }}>{[target.rir && `RIR ${target.rir}`, target.note].filter(Boolean).join(" · ")}</span>}
+                        {(target.rir || target.note) && <span className="muted set-sub">{[target.rir && `RIR ${target.rir}`, target.note].filter(Boolean).join(" · ")}</span>}
                         {noteOpen[id] || s?.note ? (
-                          <input className="input" aria-label={`Nota serie ${i + 1}`} placeholder="Nota sulla serie" readOnly={readOnly} style={{ minWidth: 0, marginLeft: 36, width: "calc(100% - 36px)" }}
+                          <input className="input set-sub set-note" aria-label={`Nota serie ${i + 1}`} placeholder="Nota sulla serie" readOnly={readOnly}
                             value={s?.note || ""} onChange={e => writeSet(ex, i, { note: e.target.value })} />
                         ) : !readOnly && (
-                          <button type="button" className="btn ghost" style={{ justifySelf: "start", marginLeft: 36, minHeight: 36, padding: "0 0.75rem" }}
+                          <button type="button" className="btn link set-sub"
                             onClick={() => setNoteOpen({ ...noteOpen, [id]: true })}>Aggiungi nota</button>
                         )}
                       </div>
@@ -198,17 +205,17 @@ export default function GymSession() {
         </div>
       ))}
 
-      <div className="card field" style={{ marginBottom: 0 }}>
+      <div className="qfield field">
         <label htmlFor="w-notes">Note sulla seduta</label>
-        <textarea id="w-notes" className="input" rows={3} style={{ minWidth: 0, padding: "0.75rem" }} readOnly={readOnly}
+        <textarea id="w-notes" className="input" rows={3} readOnly={readOnly}
           placeholder="Come è andata, sensazioni, dolori…" value={w.notes || ""} onChange={e => saveNotes(e.target.value)} />
       </div>
 
-      {!readOnly && !confirmEnd && <button className="btn block" type="button" onClick={() => setConfirmEnd(true)}>Termina la seduta</button>}
+      {!readOnly && !confirmEnd && <button className="btn lg block" type="button" onClick={() => setConfirmEnd(true)}>Termina la seduta</button>}
       {!readOnly && confirmEnd && (
-        <div className="card" style={{ display: "grid", gap: "0.5rem", marginBottom: 0 }}>
-          <p style={{ margin: 0 }}>{doneCount < totalSets ? `Hai segnato ${doneCount} serie su ${totalSets}. Vuoi chiudere lo stesso?` : "Chiudere la seduta?"}</p>
-          <button className="btn block" type="button" onClick={() => finish("done")}>Sì, termina</button>
+        <div className="gym-confirm" role="alertdialog" aria-label="Termina la seduta">
+          <p>{doneCount < totalSets ? `Hai segnato ${doneCount} serie su ${totalSets}. Vuoi chiudere lo stesso?` : "Chiudere la seduta?"}</p>
+          <button className="btn lg block" type="button" onClick={() => finish("done")}>Sì, termina</button>
           <button className="btn ghost block" type="button" onClick={() => setConfirmEnd(false)}>Continua ad allenarti</button>
         </div>
       )}

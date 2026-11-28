@@ -33,23 +33,22 @@ export default function WorkoutHistory({ athleteId }) {
         }
         const isOpen = open[w.id];
         return (
-          <li key={w.id} style={{ display: "grid", padding: 0 }}>
-            <button type="button" aria-expanded={Boolean(isOpen)} onClick={() => setOpen({ ...open, [w.id]: !isOpen })}
-              style={{ display: "flex", alignItems: "center", gap: "1rem", minHeight: 52, width: "100%", textAlign: "left", background: "none", border: 0, padding: 0, font: "inherit", color: "inherit", cursor: "pointer" }}>
-              <span style={{ flex: 1 }}>{formatDay(w.performed_on)} · {w.session_name || "Seduta"}</span>
+          <li key={w.id} className="history-item">
+            <button type="button" className="history-toggle" aria-expanded={Boolean(isOpen)} onClick={() => setOpen({ ...open, [w.id]: !isOpen })}>
+              <span className="day-name">{formatDay(w.performed_on)} · {w.session_name || "Seduta"}</span>
               <span className="muted">{STATUS[w.status]}{w.notes ? " · nota" : ""}</span>
             </button>
             {isOpen && (
-              <div style={{ padding: "0 0 1rem", display: "grid", gap: "0.75rem" }}>
-                {w.notes && <p style={{ margin: 0 }}><strong>Nota della seduta:</strong> {w.notes}</p>}
+              <div className="history-body">
+                {w.notes && <p><strong>Nota della seduta:</strong> {w.notes}</p>}
                 {byExercise.length === 0 && <span className="muted">Nessuna serie registrata.</span>}
                 {byExercise.map(g => (
                   <div key={g.key}>
-                    <div style={{ fontWeight: 600 }}>{g.name}</div>
-                    <ol style={{ margin: "0.25rem 0 0", paddingLeft: "1.25rem" }}>
+                    <div className="history-ex">{g.name}</div>
+                    <ol className="history-sets">
                       {g.sets.map(s => (
                         <li key={s.id}>
-                          {formatLoad(s.load, false)} × {s.reps ?? "—"}{s.note ? ` · ${s.note}` : ""}{!s.done_at ? " · non completata" : ""}
+                          <span className="num">{formatLoad(s.load, false)} × {s.reps ?? "—"}</span>{s.note ? ` · ${s.note}` : ""}{!s.done_at ? " · non completata" : ""}
                         </li>
                       ))}
                     </ol>
