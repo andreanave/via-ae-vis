@@ -26,25 +26,27 @@ export default function NotificationsPage() {
   const unread = (items || []).filter(n => !n.read_at).length;
 
   return (
-    <section style={{ display: "grid", gap: "1rem", maxWidth: 720 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <h1 style={{ margin: 0, flex: 1 }}>Notifiche</h1>
-        {unread > 0 && !actor.assisting && <button type="button" className="btn ghost" onClick={readAll}>Segna come lette</button>}
+    <section className="page narrow">
+      <div className="section-head">
+        <div className="page-head">
+          <span className="eyebrow">{unread ? `${unread} da leggere` : "Tutto letto"}</span>
+          <h1>Notifiche</h1>
+        </div>
+        {unread > 0 && !actor.assisting && <button type="button" className="btn link" onClick={readAll}>Segna come lette</button>}
       </div>
       {items === null && <p className="muted">Caricamento…</p>}
       {items?.length === 0 && <div className="notice">Nessuna notifica.</div>}
       {items?.length > 0 && (
         <ul className="lines">
           {items.map(n => (
-            <li key={n.id} style={{ padding: 0, minWidth: 0 }}>
-              <button type="button" onClick={() => open(n)}
-                style={{ display: "flex", gap: "0.75rem", alignItems: "center", width: "100%", minHeight: 64, padding: "0.5rem 0", background: "none", border: 0, font: "inherit", color: "inherit", textAlign: "left", cursor: "pointer" }}>
-                <span aria-hidden="true" style={{ width: 8, height: 8, borderRadius: 4, flex: "0 0 8px", background: n.read_at ? "transparent" : "var(--accent)" }} />
-                <span style={{ flex: 1, minWidth: 0 }}>
-                  <span style={{ display: "block", fontWeight: n.read_at ? undefined : 600 }}>{n.title}{n.read_at ? "" : <span style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)" }}> (non letta)</span>}</span>
-                  {n.body && <span className="muted" style={{ display: "block", fontSize: "0.9rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{n.body}</span>}
+            <li key={n.id} className={`convo${n.read_at ? "" : " unread"}`}>
+              <button type="button" onClick={() => open(n)}>
+                <span aria-hidden="true" className="unread-dot" />
+                <span className="convo-text">
+                  <span className="convo-name">{n.title}{n.read_at ? "" : <span className="sr-only"> (non letta)</span>}</span>
+                  {n.body && <span className="muted convo-last">{n.body}</span>}
                 </span>
-                <span className="muted" style={{ fontSize: "0.85rem" }}>{when(n.created_at)}</span>
+                <span className="muted num convo-time">{when(n.created_at)}</span>
               </button>
             </li>
           ))}

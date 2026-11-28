@@ -45,9 +45,9 @@ export default function AppShell() {
           <NavLink className="icon-btn" to="/messaggi" aria-label="Messaggi" title="Messaggi">
             <MessageCircle strokeWidth={1.5} aria-hidden="true" />
           </NavLink>
-          <NavLink className="icon-btn" to="/notifiche" aria-label={unread ? `Notifiche, ${unread} da leggere` : "Notifiche"} title="Notifiche" style={{ position: "relative" }}>
+          <NavLink className="icon-btn" to="/notifiche" aria-label={unread ? `Notifiche, ${unread} da leggere` : "Notifiche"} title="Notifiche">
             <Bell strokeWidth={1.5} aria-hidden="true" />
-            {unread > 0 && <span className="badge" aria-hidden="true" style={{ position: "absolute", top: 2, right: 2, minWidth: 18, height: 18, padding: "0 4px", fontSize: "0.65rem" }}>{unread > 9 ? "9+" : unread}</span>}
+            {unread > 0 && <span className="badge icon-badge" aria-hidden="true">{unread > 9 ? "9+" : unread}</span>}
           </NavLink>
           <button className="icon-btn" type="button" onClick={cycleTheme} aria-label={themeLabel[theme]} title={themeLabel[theme]}>
             {(() => { const I = ThemeIcon[theme]; return <I strokeWidth={1.5} aria-hidden="true" />; })()}

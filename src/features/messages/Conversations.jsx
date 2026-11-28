@@ -43,23 +43,26 @@ export default function Conversations() {
   }, [actor.id, isProfessional]);
 
   return (
-    <section style={{ display: "grid", gap: "1rem", maxWidth: 720 }}>
-      <h1 style={{ margin: 0 }}>Messaggi</h1>
+    <section className="page narrow">
+      <div className="page-head">
+        <span className="eyebrow">{items ? (items.length === 1 ? "1 conversazione" : `${items.length} conversazioni`) : "Chat"}</span>
+        <h1>Messaggi</h1>
+      </div>
       {items === null && <p className="muted">Caricamento…</p>}
       {items?.length === 0 && <div className="notice">{isProfessional ? "Nessun atleta collegato." : "Nessun professionista collegato."}</div>}
       {items?.length > 0 && (
         <ul className="lines">
           {items.map(c => (
-            <li key={c.id} style={{ padding: 0, minWidth: 0 }}>
-              <Link to={`/messaggi/${c.id}`} style={{ display: "flex", alignItems: "center", gap: "0.9rem", flex: 1, minHeight: 64, color: "inherit", textDecoration: "none", minWidth: 0 }}>
+            <li key={c.id} className={`convo${c.unread ? " unread" : ""}`}>
+              <Link to={`/messaggi/${c.id}`}>
                 <span className="avatar" aria-hidden="true">{initials(c.person?.full_name)}</span>
-                <span style={{ flex: 1, minWidth: 0 }}>
-                  <span style={{ display: "block", fontWeight: c.unread ? 600 : undefined }}>{c.person?.full_name || "Senza nome"}</span>
-                  <span className="muted" style={{ display: "block", fontSize: "0.9rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                <span className="convo-text">
+                  <span className="convo-name">{c.person?.full_name || "Senza nome"}</span>
+                  <span className="muted convo-last">
                     {c.last ? `${c.last.sender_id === actor.id ? "Tu: " : ""}${c.last.body}` : c.modules.map(m => MODULE_LABELS[m]).join(" · ")}
                   </span>
                 </span>
-                {c.last && <span className="muted" style={{ fontSize: "0.85rem" }}>{when(c.last.created_at)}</span>}
+                {c.last && <span className="muted num convo-time">{when(c.last.created_at)}</span>}
                 {c.unread > 0 && <span className="badge" aria-label={`${c.unread} da leggere`}>{c.unread}</span>}
                 <ChevronRight strokeWidth={1.5} color="var(--text-2)" aria-hidden="true" />
               </Link>

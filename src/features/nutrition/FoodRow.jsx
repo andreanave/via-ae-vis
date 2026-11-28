@@ -8,23 +8,23 @@ export default function FoodRow({ food, onClick, active }) {
     food.status !== "verified" && FOOD_STATUS[food.status]].filter(Boolean).join(" · ");
   const body = (
     <>
-      <span style={{ flex: "1 1 200px", display: "grid", gap: 2, textAlign: "left" }}>
+      <span className="food-name">
         <span>{title}</span>
-        <span className="muted" style={{ fontSize: "0.85rem" }}>{meta}</span>
+        <span className="muted hint">{meta}</span>
       </span>
       {food.kcal !== undefined && (
-        <span className="num muted" style={{ fontSize: "0.85rem", textAlign: "right" }}>
-          {formatAmount(food.kcal, 0)} kcal · P {formatAmount(food.protein_g)} · C {formatAmount(food.carbs_g)} · G {formatAmount(food.fat_g)}
-          <br />per 100 {food.basis || "g"}
+        <span className="num food-macros">
+          <span>{formatAmount(food.kcal, 0)} kcal</span>
+          <span className="muted">P {formatAmount(food.protein_g)} · C {formatAmount(food.carbs_g)} · G {formatAmount(food.fat_g)} / 100 {food.basis || "g"}</span>
         </span>
       )}
     </>
   );
   return (
-    <li className="row" style={{ flexWrap: "wrap", background: active ? "var(--surface-2)" : undefined }}>
+    <li className={`food-row${active ? " active" : ""}`}>
       {onClick
-        ? <button type="button" onClick={onClick} style={{ all: "unset", cursor: "pointer", display: "flex", flexWrap: "wrap", gap: 8, width: "100%", minHeight: 48, alignItems: "center" }}>{body}</button>
-        : body}
+        ? <button type="button" onClick={onClick}>{body}</button>
+        : <div>{body}</div>}
     </li>
   );
 }

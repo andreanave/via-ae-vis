@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Send } from "lucide-react";
+import { ChevronLeft, Send } from "lucide-react";
 import { supabase } from "../../lib/supabase.js";
 import { useActor } from "../../lib/assist.jsx";
 import { newId } from "../../lib/trainingOutbox.js";
@@ -78,10 +78,10 @@ export default function Chat() {
 
   let lastDay = "";
   return (
-    <section style={{ display: "grid", gap: "1rem", maxWidth: 720 }}>
-      <Link to="/messaggi" className="muted" style={{ textDecoration: "none" }}>← Messaggi</Link>
-      <h1 style={{ margin: 0 }}>{other?.full_name || "Conversazione"}</h1>
-      <div role="log" aria-live="polite" style={{ display: "grid", gap: "0.5rem" }}>
+    <section className="page narrow chat">
+      <Link to="/messaggi" className="back"><ChevronLeft size={18} strokeWidth={1.5} aria-hidden="true" />Messaggi</Link>
+      <h1>{other?.full_name || "Conversazione"}</h1>
+      <div role="log" aria-live="polite" className="chat-log">
         {messages.length === 0 && <p className="muted">Nessun messaggio. Scrivi il primo.</p>}
         {messages.map(m => {
           const mine = m.sender_id === actor.id;
@@ -89,15 +89,11 @@ export default function Chat() {
           const showDay = day !== lastDay;
           lastDay = day;
           return (
-            <div key={m.id} style={{ display: "grid" }}>
-              {showDay && <span className="eyebrow" style={{ justifySelf: "center", margin: "0.75rem 0 0.25rem" }}>{day}</span>}
-              <div style={{
-                justifySelf: mine ? "end" : "start", maxWidth: "85%", padding: "0.6rem 0.85rem", borderRadius: 14,
-                background: mine ? "var(--accent)" : "var(--surface)", color: mine ? "var(--on-accent, #fff)" : "inherit",
-                border: mine ? 0 : "1px solid var(--border)", whiteSpace: "pre-wrap", overflowWrap: "anywhere", opacity: m.pending ? 0.6 : 1,
-              }}>
+            <div key={m.id} className="msg-wrap">
+              {showDay && <span className="eyebrow chat-day">{day}</span>}
+              <div className={`msg${mine ? " mine" : ""}${m.pending ? " pending" : ""}`}>
                 {m.body}
-                <span style={{ display: "block", fontSize: "0.75rem", opacity: 0.75, textAlign: "right", marginTop: 2 }}>
+                <span className="msg-meta num">
                   {m.pending ? "Invio…" : time(m.created_at)}{mine && m.read_at ? " · letto" : ""}
                 </span>
               </div>
@@ -109,13 +105,12 @@ export default function Chat() {
       {error && <div className="notice error" role="alert">{error}</div>}
       {closed && <div className="notice">Il collegamento è chiuso: puoi leggere i messaggi ma non scriverne di nuovi.</div>}
       {!readOnly && !closed && (
-        <form onSubmit={send} style={{ display: "flex", gap: "0.5rem", alignItems: "end", position: "sticky", bottom: 0, padding: "0.5rem 0", background: "var(--bg)" }}>
+        <form onSubmit={send} className="composer">
           <textarea className="input" aria-label="Scrivi un messaggio" placeholder="Scrivi un messaggio" rows={1} value={text}
-            style={{ flex: 1, minWidth: 0, padding: "0.75rem", resize: "none", maxHeight: 160 }}
             onChange={e => setText(e.target.value)}
             onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey && window.matchMedia("(pointer: fine)").matches) { e.preventDefault(); send(e); } }} />
-          <button className="btn" type="submit" disabled={!text.trim()} aria-label="Invia" style={{ minWidth: 52 }}>
-            <Send strokeWidth={1.5} aria-hidden="true" />
+          <button className="btn" type="submit" disabled={!text.trim()} aria-label="Invia">
+            <Send size={20} strokeWidth={1.5} aria-hidden="true" />
           </button>
         </form>
       )}
