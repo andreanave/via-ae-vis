@@ -9,6 +9,7 @@ import InviteForm from "../coach/InviteForm.jsx";
 import { UserPlus } from "lucide-react";
 import FoodReview from "./FoodReview.jsx";
 import StudioManager from "./StudioManager.jsx";
+import MasterOverview from "./MasterOverview.jsx";
 
 const ROLE_LABEL = { athlete: "Atleta", professional: "Professionista" };
 
@@ -53,6 +54,8 @@ export default function MasterConsole() {
       </div>
       {inviting && <div className="card flat"><InviteForm kind="professional" onDone={() => setInviting(false)} /></div>}
       {error && <div className="notice error" role="alert">{error}</div>}
+      <MasterOverview profiles={people} onAssist={assist} />
+      <div className="section-head"><h2 className="eyebrow">Account</h2></div>
       <input className="input" type="search" placeholder="Cerca per nome" aria-label="Cerca account" value={query}
         onChange={e => setQuery(e.target.value)} />
       {people === null && <p className="muted">Caricamento…</p>}
