@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight, Check, ChevronRight } from "lucide-react";
 import { supabase } from "../../lib/supabase.js";
 import { useActor } from "../../lib/assist.jsx";
 import { weekEndFor } from "../../lib/checkinMath.js";
@@ -61,36 +62,50 @@ export default function AthleteHome() {
     : [];
   const doneLabel = k => (k === "weekly" ? state.weekly?.status === "confirmed" : state.today?.[k]?.status === "done") ? "Fatto" : null;
 
+  const dateLabel = new Date().toLocaleDateString("it-IT", { weekday: "short", day: "numeric", month: "short" });
+
   return (
-    <section style={{ display: "grid", gap: "1rem" }}>
-      <h1>{greeting()}{firstName ? `, ${firstName}` : ""}</h1>
+    <section className="stack" style={{ maxWidth: 560, margin: "0 auto", gap: "2rem" }}>
+      <div className="page-head">
+        <span className="eyebrow">{dateLabel}</span>
+        <h1>{greeting()}{firstName ? `, ${firstName}` : ""}</h1>
+      </div>
       {state && suggestion && (
-        <Link to={ACTIVITIES[suggestion].to} className="card" style={{ textDecoration: "none", color: "inherit", borderColor: "var(--accent)" }}>
-          <span className="muted" style={{ fontSize: "0.85rem", fontWeight: 600 }}>ADESSO</span>
-          <h2 style={{ margin: "0.25rem 0" }}>{ACTIVITIES[suggestion].title}</h2>
-          <p className="muted" style={{ margin: 0 }}>{ACTIVITIES[suggestion].text}</p>
-          <span className="btn" style={{ marginTop: "0.75rem" }}>Inizia</span>
+        <Link to={ACTIVITIES[suggestion].to} className="now">
+          <span className="eyebrow">Adesso</span>
+          <div>
+            <h2>{ACTIVITIES[suggestion].title}</h2>
+            <p className="muted" style={{ margin: "0.4rem 0 0" }}>{ACTIVITIES[suggestion].text}</p>
+          </div>
+          <span className="btn lg">Inizia<ArrowRight strokeWidth={1.5} aria-hidden="true" /></span>
         </Link>
       )}
       {state && !suggestion && (
-        <div className="card"><h2>Adesso</h2><p className="muted" style={{ margin: 0 }}>Niente in sospeso. Allenamento e pasti arriveranno qui.</p></div>
+        <div className="now">
+          <span className="eyebrow">Adesso</span>
+          <p className="muted" style={{ margin: 0 }}>Niente in sospeso. Allenamento e pasti arriveranno qui.</p>
+        </div>
       )}
       {available.length > 0 && (
         <div>
-          <h2>Tutte le attività</h2>
-          <ul className="list">
+          <div className="section-head">
+            <h2 className="eyebrow">La giornata</h2>
+          </div>
+          <ul className="lines">
             {available.map(k => (
-              <li key={k}>
-                <Link to={ACTIVITIES[k].to} className="row">
-                  <span style={{ flex: 1 }}>{ACTIVITIES[k].title}</span>
-                  {doneLabel(k) && <span className="muted">{doneLabel(k)}</span>}
+              <li key={k} style={{ padding: 0 }}>
+                <Link to={ACTIVITIES[k].to} style={{ display: "flex", alignItems: "center", gap: "1rem", flex: 1, minHeight: 52, color: "inherit", textDecoration: "none" }}>
+                  <span style={{ flex: 1, color: doneLabel(k) ? "var(--text-2)" : undefined }}>{ACTIVITIES[k].title}</span>
+                  {doneLabel(k)
+                    ? <Check strokeWidth={1.5} color="var(--success)" aria-label={doneLabel(k)} role="img" />
+                    : <ChevronRight strokeWidth={1.5} color="var(--text-2)" aria-hidden="true" />}
                 </Link>
               </li>
             ))}
           </ul>
         </div>
       )}
-      {team.length > 0 && <p className="muted">Ti seguono: {team.map(p => p.full_name || "un professionista").join(", ")}.</p>}
+      {team.length > 0 && <p className="muted" style={{ fontSize: "0.9rem" }}>Ti seguono: {team.map(p => p.full_name || "un professionista").join(", ")}.</p>}
     </section>
   );
 }
