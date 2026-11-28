@@ -30,8 +30,8 @@ export default function LoginPage() {
 
   return (
     <main className="center">
-      <div className="card auth-card">
-        <div style={{ display: "flex", justifyContent: "center", margin: "0.5rem 0 2rem" }}><BrandMark variant="logo" /></div>
+      <div className="auth-page">
+        <div className="auth-logo"><BrandMark variant="logo" /></div>
         <h1>{mode === "login" ? "Accedi" : "Recupera la password"}</h1>
         <p className="muted">{mode === "login" ? BRAND.tagline : "Ti mandiamo un link per sceglierne una nuova."}</p>
         {error && <div className="notice error" role="alert">{error}</div>}
@@ -49,15 +49,15 @@ export default function LoginPage() {
                 value={password} onChange={e => setPassword(e.target.value)} required />
             </div>
           )}
-          <button className="btn block" type="submit" disabled={busy || !email || (mode === "login" && !password)}>
+          <button className="btn lg block" type="submit" disabled={busy || !email || (mode === "login" && !password)}>
             {busy ? "Attendi…" : mode === "login" ? "Entra" : "Invia il link"}
           </button>
         </form>
-        <button type="button" className="btn ghost block" style={{ marginTop: "0.75rem" }}
+        <button type="button" className="btn ghost block"
           onClick={() => { setMode(mode === "login" ? "reset" : "login"); setError(""); setInfo(""); }}>
           {mode === "login" ? "Ho dimenticato la password" : "Torna all'accesso"}
         </button>
-        <p className="muted" style={{ marginTop: "1rem", fontSize: "0.9rem" }}>
+        <p className="muted auth-foot">
           Per iscriverti serve l'invito del tuo coach.
         </p>
       </div>

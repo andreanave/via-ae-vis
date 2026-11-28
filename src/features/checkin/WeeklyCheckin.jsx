@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 import { supabase } from "../../lib/supabase.js";
 import { useActor } from "../../lib/assist.jsx";
 import { FIELD_BY_KEY } from "../../lib/checkinFields.js";
@@ -136,15 +137,17 @@ export default function WeeklyCheckin() {
   };
 
   return (
-    <div style={{ display: "grid", gap: "1rem", maxWidth: 720 }}>
-    <form onSubmit={confirm} noValidate style={{ display: "grid", gap: "1rem" }}>
-      <Link to="/" className="muted" style={{ textDecoration: "none" }}>← Home</Link>
+    <div className="form-page" style={{ gap: "2.5rem" }}>
+    <form onSubmit={confirm} noValidate className="form-page" style={{ maxWidth: "none" }}>
       <div>
-        <h1 style={{ marginBottom: 4 }}>Check-in settimanale</h1>
-        <p className="muted" style={{ margin: 0 }}>
-          Dal {formatDay(days[0])} al {formatDay(days[6])}
-          {confirmed ? " · Inviato" : saveState === "saving" ? " · Salvataggio…" : saveState === "saved" ? " · Bozza salvata" : ""}
-        </p>
+        <Link to="/" className="back"><ChevronLeft strokeWidth={1.5} aria-hidden="true" />Home</Link>
+        <div className="page-head" style={{ marginTop: "0.5rem" }}>
+          <span className="eyebrow">
+            Dal {formatDay(days[0])} al {formatDay(days[6])}
+            {confirmed ? " · Inviato" : saveState === "saving" ? " · Salvataggio…" : saveState === "saved" ? " · Bozza salvata" : ""}
+          </span>
+          <h1>Check-in settimanale</h1>
+        </div>
       </div>
       {confirmed && <div className="notice" role="status">Resoconto inviato. Il tuo coach lo vede già.</div>}
       {!confirmed && (
@@ -164,12 +167,11 @@ export default function WeeklyCheckin() {
         const showInput = isText || editing[w.key] || r.aggregate.count === 0 || !["avg", "sum"].includes(field.agg);
         return (
           <div key={w.key} ref={el => { fieldRefs.current[w.key] = el; }}
-            className={`card field${isMissing ? " invalid" : ""}`}
-            style={{ marginBottom: 0, borderColor: isMissing ? "var(--danger)" : undefined }}>
+            className={`qfield field${isMissing ? " invalid" : ""}`}>
             <label id={`${id}-label`} htmlFor={id}>{field.label}{w.required ? " *" : ""}</label>
-            {summary && <span className="muted">{summary}</span>}
+            {summary && <span className="muted hint">{summary}</span>}
             {r.origin === "override" && r.computed !== null && (
-              <span className="muted" style={{ fontSize: "0.9rem" }}>
+              <span className="muted hint">
                 Nel resoconto: {formatNumber(r.value, field)} {field.unit || ""} (corretto da te; calcolato {formatNumber(r.computed, field)})
               </span>
             )}
@@ -186,7 +188,7 @@ export default function WeeklyCheckin() {
             ) : null}
 
             {!readOnly && !isText && r.aggregate.count > 0 && ["avg", "sum"].includes(field.agg) && (
-              <button type="button" className="btn ghost" style={{ justifySelf: "start" }}
+              <button type="button" className="btn link"
                 onClick={() => {
                   if (editing[w.key]) { const o = { ...overrides }; delete o[w.key]; setOverrides(o); setEditing({ ...editing, [w.key]: false }); }
                   else { setOverrides({ ...overrides, [w.key]: String(r.aggregate.value) }); setEditing({ ...editing, [w.key]: true }); }
@@ -198,18 +200,18 @@ export default function WeeklyCheckin() {
 
             {r.aggregate.count > 0 && (
               <>
-                <button type="button" className="btn ghost" style={{ justifySelf: "start" }} aria-expanded={Boolean(open[w.key])}
+                <button type="button" className="btn link" aria-expanded={Boolean(open[w.key])}
                   onClick={() => setOpen({ ...open, [w.key]: !open[w.key] })}>
                   {open[w.key] ? "Nascondi i giorni" : "Vedi i giorni"}
                 </button>
                 {open[w.key] && (
-                  <ul className="list">
+                  <ul className="lines days">
                     {days.map(d => {
                       const s = r.aggregate.sources.find(x => x.day === d);
                       return (
-                        <li key={d} className="row" style={{ minHeight: 44 }}>
+                        <li key={d}>
                           <span style={{ flex: 1 }}>{formatDay(d)}</span>
-                          <span>{s ? `${isText ? s.value : formatNumber(s.value, field)}${s.source === "health" ? " · Salute" : ""}${s.edited ? " · modificato" : ""}` : "—"}</span>
+                          <span className="num">{s ? `${isText ? s.value : formatNumber(s.value, field)}${s.source === "health" ? " · Salute" : ""}${s.edited ? " · modificato" : ""}` : "—"}</span>
                           {!readOnly && d <= todayIso() && (
                             <Link to={`/checkin/${field.moments.includes("morning") ? "morning" : "evening"}?giorno=${d}`}>
                               {s ? "Modifica" : "Completa"}
@@ -227,13 +229,13 @@ export default function WeeklyCheckin() {
         );
       })}
 
-      <div className="card field" style={{ marginBottom: 0 }}>
-        <label htmlFor="w-notes">Note per il coach (facoltative)</label>
-        <textarea id="w-notes" className="input" rows={4} readOnly={readOnly} style={{ width: "100%", padding: "0.75rem" }}
+      <div className="qfield field">
+        <label htmlFor="w-notes">Note per il coach <span className="muted" style={{ fontWeight: 400 }}>· facoltative</span></label>
+        <textarea id="w-notes" className="input" rows={4} readOnly={readOnly} style={{ width: "100%" }}
           value={notes} onChange={e => { setNotes(e.target.value); dirty(); }} />
       </div>
 
-      {!readOnly && <button className="btn block" type="submit">Conferma e invia</button>}
+      {!readOnly && <button className="btn lg block" type="submit">Conferma e invia</button>}
     </form>
     {weekly?.id && <WeekComments weeklyId={weekly.id} athleteId={actor.id} />}
     </div>

@@ -95,10 +95,10 @@ export default function AthleteCard() {
         <div className="card">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
             <h2 style={{ margin: 0 }}>Check-in</h2>
-            <div role="tablist" style={{ display: "flex", gap: 4 }}>
+            <div role="tablist" className="seg">
               {[["summary", "Resoconto"], ["settings", "Cosa chiedere"]].map(([key, label]) => (
                 <button key={key} type="button" role="tab" aria-selected={checkinTab === key}
-                  className={checkinTab === key ? "btn secondary" : "btn ghost"} onClick={() => setCheckinTab(key)}>{label}</button>
+                  className="seg-btn" onClick={() => setCheckinTab(key)}>{label}</button>
               ))}
             </div>
           </div>

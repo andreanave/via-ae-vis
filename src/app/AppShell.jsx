@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import BrandMark from "../ui/BrandMark.jsx";
 import { useAuth } from "../features/auth/AuthProvider.jsx";
@@ -6,7 +6,7 @@ import { useActor, useAssist } from "../lib/assist.jsx";
 import { useBrand } from "../lib/brand.jsx";
 import { Bell, LogOut, MessageCircle, Moon, Sun, SunMoon } from "lucide-react";
 import { useUnreadCount } from "../features/messages/useNotifications.js";
-import { applyTheme, loadThemePreference, nextTheme, themeLabel } from "../ui/theme.js";
+import { applyTheme, loadThemePreference, nextTheme, setStudioAccent, themeLabel } from "../ui/theme.js";
 
 const ThemeIcon = { dark: Moon, light: Sun, system: SunMoon };
 
@@ -18,6 +18,7 @@ export default function AppShell() {
   const unread = useUnreadCount(actor.id, !actor.assisting);
   const navigate = useNavigate();
   const [theme, setTheme] = useState(loadThemePreference());
+  useEffect(() => { setStudioAccent(brand?.accent); return () => setStudioAccent(null); }, [brand?.accent]);
   const cycleTheme = () => { const next = nextTheme(theme); applyTheme(next); setTheme(next); };
   const isProfessional = actor.role === "professional" || actor.isMaster;
   const exitAssist = () => { stop(); navigate("/gestione"); };
@@ -36,6 +37,7 @@ export default function AppShell() {
           <nav aria-label="Sezioni" className="topnav">
             <NavLink to="/" end>Atleti</NavLink>
             <NavLink to="/agenda">Agenda</NavLink>
+            <NavLink to="/catalogo">Catalogo</NavLink>
             {profile?.is_master && !viewAs && <NavLink to="/gestione">Gestione</NavLink>}
           </nav>
         )}
