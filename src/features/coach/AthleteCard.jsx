@@ -5,6 +5,7 @@ import { supabase } from "../../lib/supabase.js";
 import { useActor } from "../../lib/assist.jsx";
 import { MODULE_LABELS } from "../../lib/format.js";
 import TaskList from "./TaskList.jsx";
+import WeekKpis from "./WeekKpis.jsx";
 import AthleteList, { useCoachAthletes } from "./AthleteList.jsx";
 import CheckinSummary from "../checkin/CheckinSummary.jsx";
 import CheckinSettingsEditor from "../checkin/CheckinSettingsEditor.jsx";
@@ -133,16 +134,9 @@ export default function AthleteCard() {
 
       {current === "panoramica" && (
         <>
-          {link.modules.includes("checkin") && (
-            <div className="card">
-              <div className="section-head">
-                <h2 style={{ margin: 0 }}>Ultimo check-in</h2>
-                <button type="button" className="btn ghost" onClick={() => open("checkin")}>Vedi tutto</button>
-              </div>
-              <div style={{ marginTop: "1rem" }}><CheckinSummary athleteId={id} refreshKey={checkinVersion} /></div>
-            </div>
-          )}
+          {link.modules.includes("checkin") && <WeekKpis athleteId={id} onOpen={() => open("checkin")} />}
 
+          <div className="overview-cols">
           <div>
             <h2 className="eyebrow">Promemoria</h2>
             <TaskList professionalId={actor.id} athleteId={id} readOnly={readOnly} />
@@ -159,6 +153,8 @@ export default function AthleteCard() {
             <textarea className="input" rows={6} style={{ width: "100%", padding: "0.75rem", resize: "vertical" }}
               aria-label="Nota generale sull'atleta" value={note} readOnly={readOnly}
               onChange={e => { setNote(e.target.value); setNoteState("idle"); }} onBlur={saveNote} />
+          </div>
+
           </div>
 
           <div>

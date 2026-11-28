@@ -685,3 +685,18 @@ input[type="file"]::file-selector-button:hover { border-color: var(--border-stro
 .count-badge { min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px; display: grid; place-items: center; background: var(--accent); color: var(--on-accent); font-size: 0.75rem; }
 /* Icona dello studio al posto del monogramma nella barra in alto */
 .brand-icon { object-fit: cover; padding: 0; background: #f8f7f4; }
+
+/* Scheda "Settimana" nella Panoramica del coach, come nel design */
+.week-kpis { display: grid; gap: 1.5rem; }
+.week-kpis-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.5rem 1rem; }
+.week-kpis-head h2 { margin: 0; font-size: 1.15rem; font-weight: 500; letter-spacing: -0.01em; }
+.status-dot { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-2); }
+.status-dot::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--border-strong); }
+.status-dot.wait::before { background: var(--warning); }
+.status-dot.ok::before { background: var(--success); }
+.week-kpis-grid { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.5rem; }
+.week-kpis-grid dt { font-size: 0.82rem; color: var(--text-2); }
+.week-kpis-grid dd { margin: 0.25rem 0 0; font-size: 1.75rem; letter-spacing: -0.03em; line-height: 1.1; }
+.week-kpis-grid dd.sub { margin-top: 0.2rem; font-size: 0.75rem; letter-spacing: 0; color: var(--text-2); }
+.week-kpis .btn.link { justify-self: start; }
+.overview-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2.5rem; align-items: start; }
