@@ -34,6 +34,7 @@ export default function AppShell() {
           <nav aria-label="Sezioni" className="topnav">
             <NavLink to="/" end>Atleti</NavLink>
             <NavLink to="/agenda">Agenda</NavLink>
+            <NavLink to="/catalogo">Catalogo</NavLink>
             {profile?.is_master && !viewAs && <NavLink to="/gestione">Gestione</NavLink>}
           </nav>
         )}
