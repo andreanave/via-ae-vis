@@ -5,6 +5,7 @@ import { useActor } from "../../lib/assist.jsx";
 import { weekEndFor } from "../../lib/checkinMath.js";
 import { todayIso } from "../../lib/format.js";
 import { loadEntries, loadSettings, loadWeekly } from "../checkin/checkinApi.js";
+import TrainingTodayCard from "../training/TrainingTodayCard.jsx";
 
 const greeting = (date = new Date()) => {
   const h = date.getHours();
@@ -75,10 +76,10 @@ export default function AthleteHome() {
       {state && !suggestion && (
         <div className="card"><h2>Adesso</h2><p className="muted" style={{ margin: 0 }}>Niente in sospeso. Allenamento e pasti arriveranno qui.</p></div>
       )}
-      {available.length > 0 && (
-        <div>
-          <h2>Tutte le attività</h2>
-          <ul className="list">
+      <div>
+        <h2>Tutte le attività</h2>
+        <ul className="list">
+          <TrainingTodayCard />
             {available.map(k => (
               <li key={k}>
                 <Link to={ACTIVITIES[k].to} className="row">
@@ -87,9 +88,8 @@ export default function AthleteHome() {
                 </Link>
               </li>
             ))}
-          </ul>
-        </div>
-      )}
+        </ul>
+      </div>
       {team.length > 0 && <p className="muted">Ti seguono: {team.map(p => p.full_name || "un professionista").join(", ")}.</p>}
     </section>
   );
