@@ -306,3 +306,61 @@ join auth.users u on u.id = cl.athlete_id
 where cl.status = 'active' and 'nutrition' = any(cl.modules)
   and u.email like '%@test.it' and u.email <> 'atleta@test.it'
   and not exists (select 1 from public.nutrition_plans np where np.athlete_id = cl.athlete_id);
+
+
+-- Diario dei pasti degli ultimi 6 giorni per gli atleti di prova con un piano attivo.
+-- I pasti e le alternative si leggono dal piano già nel database (per Nave Test è il suo,
+-- importato dal PDF): qui non c'è nessun dato della dieta. Qualche pasto saltato e qualche nota
+-- per il coach. Senza notifiche, per non riempire la campanella del coach.
+alter table public.meal_logs disable trigger meal_note_notify;
+
+with ath as (
+  select np.athlete_id, np.id plan_id, np.content
+  from public.nutrition_plans np join auth.users u on u.id = np.athlete_id
+  where np.status = 'active' and u.email like '%@test.it'
+), days as (
+  select a.*, d::date as day,
+    coalesce(
+      (select t from jsonb_array_elements(a.content->'dayTypes') t
+        where jsonb_array_length(coalesce(a.content->'weekPattern', '[]')) = 7
+          and t->>'key' = a.content->'weekPattern'->>(extract(isodow from d)::int - 1) limit 1),
+      a.content->'dayTypes'->0) as dtype
+  from ath a cross join generate_series(current_date - 6, current_date - 1, interval '1 day') d
+), meals as (
+  select days.athlete_id, days.plan_id, days.day, m.meal, m.ord,
+    abs(hashtext(days.athlete_id::text || days.day::text || (m.meal->>'key'))) as h
+  from days cross join lateral jsonb_array_elements(days.dtype->'meals') with ordinality m(meal, ord)
+), picked as (
+  select meals.*, g.grp, g.gord,
+    g.grp->'options'->(abs(hashtext(meals.day::text || (g.grp->>'key'))) % greatest(jsonb_array_length(g.grp->'options'), 1)) as opt
+  from meals cross join lateral jsonb_array_elements(meals.meal->'groups') with ordinality g(grp, gord)
+)
+insert into public.meal_logs (athlete_id, day, kind, item_key, item_name, plan_id, status, choices, choice_names, note, created_by, created_at, updated_at)
+select p.athlete_id, p.day, 'meal', p.meal->>'key', p.meal->>'name', p.plan_id,
+  case when p.h % 13 = 0 then 'skipped' else 'done' end,
+  coalesce(jsonb_object_agg(p.grp->>'key', p.opt->>'key') filter (where p.opt is not null), '{}'),
+  array_agg((select string_agg(c->>'name', ' + ') from jsonb_array_elements(p.opt->'components') c) order by p.gord),
+  case when p.h % 13 = 0 then 'Riunione lunga, ho saltato il pasto e recuperato con uno spuntino.'
+       when p.h % 7 = 0 then (array['Porzione di verdura più piccola, non avevo fame.',
+                                    'Fuori casa: ho preso l''alternativa più simile che c''era.',
+                                    'Mi sono sentito gonfio dopo, da tenere d''occhio.',
+                                    'Ho aggiunto un caffè, nient''altro di diverso.'])[1 + (p.h / 7) % 4]
+       else '' end,
+  p.athlete_id,
+  p.day + time '08:00' + (p.ord * interval '3 hours'), p.day + time '08:00' + (p.ord * interval '3 hours')
+from picked p
+group by p.athlete_id, p.plan_id, p.day, p.meal, p.ord, p.h
+on conflict (athlete_id, day, kind, item_key) do nothing;
+
+-- Integratori presi negli stessi giorni (uno ogni tanto dimenticato).
+insert into public.meal_logs (athlete_id, day, kind, item_key, item_name, plan_id, status, created_by, created_at, updated_at)
+select np.athlete_id, d::date, 'supplement', s->>'name', s->>'name', np.id, 'done', np.athlete_id, d + time '21:00', d + time '21:00'
+from public.nutrition_plans np
+join auth.users u on u.id = np.athlete_id
+cross join generate_series(current_date - 6, current_date - 1, interval '1 day') d
+cross join lateral jsonb_array_elements(coalesce(np.content->'supplements', '[]')) s
+where np.status = 'active' and u.email like '%@test.it'
+  and abs(hashtext(np.athlete_id::text || d::text || (s->>'name'))) % 6 <> 0
+on conflict (athlete_id, day, kind, item_key) do nothing;
+
+alter table public.meal_logs enable trigger meal_note_notify;

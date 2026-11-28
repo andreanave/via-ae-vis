@@ -53,6 +53,9 @@ const totals = async () => ({
   messages: await count("select count(*) n from messages"),
   notifications: await count("select count(*) n from notifications"),
   tasks: await count("select count(*) n from coach_tasks"),
+  meals: await count("select count(*) n from meal_logs where kind = 'meal'"),
+  mealNotes: await count("select count(*) n from meal_logs where note <> ''"),
+  supplements: await count("select count(*) n from meal_logs where kind = 'supplement'"),
 });
 
 describe("seed dei dati di prova", () => {
@@ -67,13 +70,17 @@ describe("seed dei dati di prova", () => {
     expect(t.messages).toBe(16);
     expect(t.notifications).toBe(4);
     expect(t.tasks).toBe(5);
+    // Diario dei pasti dai piani di prova: 6 giorni, qualche nota, integratori.
+    expect(t.meals).toBeGreaterThan(40);
+    expect(t.mealNotes).toBeGreaterThan(0);
+    expect(t.supplements).toBeGreaterThan(5);
     const [snap] = (await db.query(`select snapshot from weekly_checkins w join auth.users u on u.id = w.athlete_id
       where u.email = 'atleta@test.it' order by week_end desc limit 1`)).rows;
     expect(snap.snapshot.weight.count).toBeGreaterThan(0);
     expect(snap.snapshot.workouts_done.origin).toBe("override");
     // I trigger delle notifiche tornano attivi.
-    const triggers = await count(`select count(*) n from pg_trigger where tgname in ('weekly_notify','messages_notify','checkin_comment_notify') and tgenabled = 'O'`);
-    expect(triggers).toBe(3);
+    const triggers = await count(`select count(*) n from pg_trigger where tgname in ('weekly_notify','messages_notify','checkin_comment_notify','meal_note_notify') and tgenabled = 'O'`);
+    expect(triggers).toBe(4);
   });
 
   it("rieseguito non crea doppioni", async () => {
@@ -87,5 +94,7 @@ describe("seed dei dati di prova", () => {
     expect(after.messages).toBe(before.messages);
     expect(after.notifications).toBe(before.notifications);
     expect(after.tasks).toBe(before.tasks);
+    expect(after.meals).toBe(before.meals);
+    expect(after.supplements).toBe(before.supplements);
   });
 });
