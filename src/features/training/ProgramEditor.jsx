@@ -29,7 +29,7 @@ const move = (list, i, d) => {
 };
 
 // Il professionista scrive la scheda: sedute in rotazione, esercizi, giorni di allenamento.
-export default function ProgramEditor() {
+export default function ProgramEditor({ embedded = false }) {
   const { id: athleteId } = useParams();
   const actor = useActor();
   const readOnly = actor.assisting;
@@ -110,9 +110,9 @@ export default function ProgramEditor() {
   };
 
   return (
-    <section className="page editor">
-      <Link to={`/atleti/${athleteId}`} className="back"><ChevronLeft size={18} strokeWidth={1.5} aria-hidden="true" />{athlete?.full_name || "Atleta"}</Link>
-      <h1>Allenamento</h1>
+    <section className={embedded ? "editor" : "page editor"}>
+      {!embedded && <Link to={`/atleti/${athleteId}`} className="back"><ChevronLeft size={18} strokeWidth={1.5} aria-hidden="true" />{athlete?.full_name || "Atleta"}</Link>}
+      {!embedded && <h1>Allenamento</h1>}
 
       <div role="tablist" className="seg">
         <button type="button" role="tab" aria-selected={tab === "program"} className="seg-btn" onClick={() => setTab("program")}>Scheda</button>

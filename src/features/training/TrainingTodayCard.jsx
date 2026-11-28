@@ -6,10 +6,22 @@ import { planForDay } from "../../lib/trainingRotation.js";
 import { useTrainingData } from "./useTrainingData.js";
 
 // Riga della Home dell'atleta con la seduta di oggi (anche offline, dalla copia sul telefono).
-export default function TrainingTodayCard() {
+// Con showEmpty la riga resta anche senza scheda, così l'atleta sa dove la troverà.
+export default function TrainingTodayCard({ showEmpty = false }) {
   const actor = useActor();
   const data = useTrainingData(actor.id);
-  if (!data.program) return null;
+  if (!data.program) {
+    if (!showEmpty || data.loading) return null;
+    return (
+      <li className="link-row">
+        <Link to="/allenamento">
+          <span className="day-name">Allenamento</span>
+          <span className="muted hint">La scheda non è ancora pronta</span>
+          <ChevronRight strokeWidth={1.5} color="var(--text-2)" aria-hidden="true" />
+        </Link>
+      </li>
+    );
+  }
   const plan = planForDay({ day: todayIso(), program: data.program, sessions: data.program.sessions, logs: data.workouts, overrides: data.overrides || [] });
   const text = {
     resume: `${plan.workout?.session_name} in corso: riprendi`,

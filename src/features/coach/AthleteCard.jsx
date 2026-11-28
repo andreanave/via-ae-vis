@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { ChevronLeft, Send } from "lucide-react";
+import { Link, useParams, useSearchParams } from "react-router-dom";
+import { ChevronLeft, MessageCircle, Send } from "lucide-react";
 import { supabase } from "../../lib/supabase.js";
 import { useActor } from "../../lib/assist.jsx";
 import { MODULE_LABELS } from "../../lib/format.js";
@@ -8,9 +8,17 @@ import TaskList from "./TaskList.jsx";
 import CheckinSummary from "../checkin/CheckinSummary.jsx";
 import CheckinSettingsEditor from "../checkin/CheckinSettingsEditor.jsx";
 import NutritionPanel from "../nutrition/NutritionPanel.jsx";
+import ProgramEditor from "../training/ProgramEditor.jsx";
 
-// Scheda dell'atleta vista dal professionista: nota generale, promemoria, collegamento Telegram.
-// Check-in, allenamento e alimentazione si aggiungono qui nelle fasi successive.
+// Scheda dell'atleta vista dal professionista, divisa in sezioni:
+// Panoramica (promemoria, nota, Telegram) e una sezione per ogni modulo del collegamento.
+const SECTIONS = [
+  { key: "panoramica", label: "Panoramica" },
+  { key: "checkin", label: "Check-in", module: "checkin" },
+  { key: "allenamento", label: "Allenamento", module: "training" },
+  { key: "alimentazione", label: "Alimentazione", module: "nutrition" },
+];
+
 export default function AthleteCard() {
   const { id } = useParams();
   const actor = useActor();
@@ -23,6 +31,7 @@ export default function AthleteCard() {
   const readOnly = actor.assisting;
   const [checkinTab, setCheckinTab] = useState("summary");
   const [checkinVersion, setCheckinVersion] = useState(0);
+  const [params, setParams] = useSearchParams();
 
   useEffect(() => {
     let active = true;
@@ -70,8 +79,12 @@ export default function AthleteCard() {
     );
   }
 
+  const sections = SECTIONS.filter(x => !x.module || link.modules.includes(x.module));
+  const current = sections.find(x => x.key === params.get("sezione"))?.key || "panoramica";
+  const open = key => setParams(key === "panoramica" ? {} : { sezione: key }, { replace: true });
+
   return (
-    <section className="stack" style={{ gap: "2rem" }}>
+    <section className="stack" style={{ gap: "1.5rem" }}>
       <div>
         <Link to="/" className="back"><ChevronLeft strokeWidth={1.5} aria-hidden="true" />Atleti</Link>
         <div style={{ display: "flex", alignItems: "flex-end", gap: "1rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
@@ -79,72 +92,80 @@ export default function AthleteCard() {
             <span className="eyebrow">{link.modules.map(m => MODULE_LABELS[m]).join(" · ")}</span>
             <h1 style={{ fontSize: "2.5rem" }}>{athlete.full_name || "Atleta"}</h1>
           </div>
-          {link.telegram_url && (
-            <a className="btn ghost" href={link.telegram_url} target="_blank" rel="noreferrer"><Send strokeWidth={1.5} aria-hidden="true" />Telegram</a>
-          )}
+          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            <Link className="btn" to={`/messaggi/${link.id}`}><MessageCircle strokeWidth={1.5} aria-hidden="true" />Apri la chat</Link>
+            {link.telegram_url && (
+              <a className="btn ghost" href={link.telegram_url} target="_blank" rel="noreferrer"><Send strokeWidth={1.5} aria-hidden="true" />Telegram</a>
+            )}
+          </div>
         </div>
       </div>
 
-      {link.modules.includes("training") && (
-        <Link to={`/atleti/${id}/allenamento`} className="card" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none", color: "inherit" }}>
-          <h2 style={{ margin: 0, flex: 1 }}>Allenamento</h2>
-          <span className="muted">Scheda e sedute svolte →</span>
-        </Link>
+      <nav aria-label="Sezioni della scheda" className="subnav">
+        {sections.map(x => (
+          <button key={x.key} type="button" aria-current={current === x.key ? "page" : undefined} onClick={() => open(x.key)}>{x.label}</button>
+        ))}
+      </nav>
+
+      {current === "checkin" && (
+        <div className="stack" style={{ gap: "1rem" }}>
+          <div role="tablist" className="seg">
+            {[["summary", "Resoconto"], ["settings", "Cosa chiedere"]].map(([key, label]) => (
+              <button key={key} type="button" role="tab" aria-selected={checkinTab === key}
+                className="seg-btn" onClick={() => setCheckinTab(key)}>{label}</button>
+            ))}
+          </div>
+          {checkinTab === "summary"
+            ? <CheckinSummary athleteId={id} refreshKey={checkinVersion} />
+            : <CheckinSettingsEditor athleteId={id} readOnly={readOnly} onSaved={() => setCheckinVersion(v => v + 1)} />}
+        </div>
       )}
 
-      {link.modules.includes("checkin") && (
-        <div className="card">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
-            <h2 style={{ margin: 0 }}>Check-in</h2>
-            <div role="tablist" className="seg">
-              {[["summary", "Resoconto"], ["settings", "Cosa chiedere"]].map(([key, label]) => (
-                <button key={key} type="button" role="tab" aria-selected={checkinTab === key}
-                  className="seg-btn" onClick={() => setCheckinTab(key)}>{label}</button>
-              ))}
+      {current === "allenamento" && <ProgramEditor embedded />}
+
+      {current === "alimentazione" && <NutritionPanel athleteId={id} actorId={actor.id} readOnly={readOnly} />}
+
+      {current === "panoramica" && (
+        <>
+          {link.modules.includes("checkin") && (
+            <div className="card">
+              <div className="section-head">
+                <h2 style={{ margin: 0 }}>Ultimo check-in</h2>
+                <button type="button" className="btn ghost" onClick={() => open("checkin")}>Vedi tutto</button>
+              </div>
+              <div style={{ marginTop: "1rem" }}><CheckinSummary athleteId={id} refreshKey={checkinVersion} /></div>
+            </div>
+          )}
+
+          <div>
+            <h2 className="eyebrow">Promemoria</h2>
+            <TaskList professionalId={actor.id} athleteId={id} readOnly={readOnly} />
+          </div>
+
+          <div>
+            <div className="section-head">
+              <h2 className="eyebrow">Nota generale</h2>
+              <span className="muted" role="status" style={{ fontSize: "0.9rem" }}>
+                {noteState === "saving" ? "Salvataggio…" : noteState === "saved" ? "Salvata" : noteState === "error" ? "Non salvata, riprova" : ""}
+              </span>
+            </div>
+            <p className="muted" style={{ fontSize: "0.9rem" }}>Visibile solo a te. Per scrivere all'atleta usa la chat.</p>
+            <textarea className="input" rows={6} style={{ width: "100%", padding: "0.75rem", resize: "vertical" }}
+              aria-label="Nota generale sull'atleta" value={note} readOnly={readOnly}
+              onChange={e => { setNote(e.target.value); setNoteState("idle"); }} onBlur={saveNote} />
+          </div>
+
+          <div>
+            <h2 className="eyebrow">Chat Telegram per i video</h2>
+            <div className={`field${telegramValid ? "" : " invalid"}`} style={{ marginBottom: 0 }}>
+              <label htmlFor="tg">Link alla chat (facoltativo)</label>
+              <input id="tg" className="input" placeholder="https://t.me/…" value={telegram} readOnly={readOnly}
+                aria-invalid={!telegramValid} onChange={e => setTelegram(e.target.value)} onBlur={saveTelegram} />
+              {!telegramValid && <span className="error">Il link deve iniziare con https://t.me/</span>}
             </div>
           </div>
-          <div style={{ marginTop: "1rem" }}>
-            {checkinTab === "summary"
-              ? <CheckinSummary athleteId={id} refreshKey={checkinVersion} />
-              : <CheckinSettingsEditor athleteId={id} readOnly={readOnly} onSaved={() => setCheckinVersion(v => v + 1)} />}
-          </div>
-        </div>
+        </>
       )}
-
-      {link.modules.includes("nutrition") && (
-        <div className="card">
-          <h2 style={{ marginTop: 0 }}>Alimentazione</h2>
-          <NutritionPanel athleteId={id} actorId={actor.id} readOnly={readOnly} />
-        </div>
-      )}
-
-      <div>
-        <h2 className="eyebrow">Promemoria</h2>
-        <TaskList professionalId={actor.id} athleteId={id} readOnly={readOnly} />
-      </div>
-
-      <div>
-        <div className="section-head">
-          <h2 className="eyebrow">Nota generale</h2>
-          <span className="muted" role="status" style={{ fontSize: "0.9rem" }}>
-            {noteState === "saving" ? "Salvataggio…" : noteState === "saved" ? "Salvata" : noteState === "error" ? "Non salvata, riprova" : ""}
-          </span>
-        </div>
-        <p className="muted" style={{ fontSize: "0.9rem" }}>Visibile solo a te. Per scrivere all'atleta usa la chat.</p>
-        <textarea className="input" rows={6} style={{ width: "100%", padding: "0.75rem", resize: "vertical" }}
-          aria-label="Nota generale sull'atleta" value={note} readOnly={readOnly}
-          onChange={e => { setNote(e.target.value); setNoteState("idle"); }} onBlur={saveNote} />
-      </div>
-
-      <div>
-        <h2 className="eyebrow">Chat Telegram per i video</h2>
-        <div className={`field${telegramValid ? "" : " invalid"}`} style={{ marginBottom: 0 }}>
-          <label htmlFor="tg">Link alla chat (facoltativo)</label>
-          <input id="tg" className="input" placeholder="https://t.me/…" value={telegram} readOnly={readOnly}
-            aria-invalid={!telegramValid} onChange={e => setTelegram(e.target.value)} onBlur={saveTelegram} />
-          {!telegramValid && <span className="error">Il link deve iniziare con https://t.me/</span>}
-        </div>
-      </div>
     </section>
   );
 }
