@@ -66,7 +66,7 @@ export default function AddFoodForm({ initialName = "", prefill, onDone, onPick 
   );
 
   return (
-    <form onSubmit={submit} noValidate>
+    <form className="add-food" onSubmit={submit} noValidate>
       {prefill && (
         <div className="notice" style={{ fontSize: "0.9rem" }}>
           Dati letti da Open Food Facts (licenza ODbL). Confrontali con l'etichetta che hai in mano prima di salvare.
@@ -77,35 +77,35 @@ export default function AddFoodForm({ initialName = "", prefill, onDone, onPick 
       {text("brand", "Marca", { autoComplete: "off" })}
       {text("name", "Nome del prodotto", { autoComplete: "off", required: true })}
       {similar.length > 0 && (
-        <div className="notice" style={{ display: "grid", gap: 4 }}>
+        <div className="notice similar">
           <span>Forse è già nel catalogo:</span>
-          <ul className="list">{similar.map(f => <FoodRow key={f.id} food={f} onClick={onPick ? () => onPick(f) : undefined} />)}</ul>
+          <ul className="lines">{similar.map(f => <FoodRow key={f.id} food={f} onClick={onPick ? () => onPick(f) : undefined} />)}</ul>
         </div>
       )}
       {text("variant", "Gusto o variante (facoltativo)", { autoComplete: "off" })}
       <div className="field">
-        <span style={{ fontWeight: 500 }}>I valori in etichetta sono riferiti a</span>
-        <div style={{ display: "flex", gap: 8 }}>
+        <span className="label">I valori in etichetta sono riferiti a</span>
+        <div className="seg" role="group" aria-label="Unità di riferimento">
           {["g", "ml"].map(b => (
-            <button key={b} type="button" className={food.basis === b ? "btn" : "btn secondary"} aria-pressed={food.basis === b}
+            <button key={b} type="button" className="seg-btn num" aria-selected={food.basis === b} aria-pressed={food.basis === b}
               onClick={() => set("basis", b)}>100 {b}</button>
           ))}
         </div>
       </div>
       <FoodValuesForm values={values} onChange={setValues} basis={food.basis} />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "0 1rem", marginTop: "1.25rem" }}>
+      <div className="ex-grid label-grid">
         {text("unit_weight_g", "Peso di un pezzo (g)", { inputMode: "decimal" })}
         {text("portion_g", "Porzione in etichetta (g)", { inputMode: "decimal" })}
         {text("drained_weight_g", "Peso sgocciolato (g)", { inputMode: "decimal" })}
         {text("barcode", "Codice a barre", { inputMode: "numeric" })}
       </div>
-      <p className="muted" style={{ fontSize: "0.9rem" }}>
+      <p className="muted hint">
         Il prodotto si può usare subito. Resterà segnato come da verificare finché non viene controllato.
       </p>
       {error && <div className="notice error" role="alert">{error}</div>}
-      <div style={{ display: "flex", gap: 8 }}>
+      <div className="actions">
         <button className="btn" type="submit" disabled={saving}>{saving ? "Salvataggio…" : "Aggiungi al catalogo"}</button>
-        {onDone && <button className="btn secondary" type="button" onClick={() => onDone(null)}>Annulla</button>}
+        {onDone && <button className="btn ghost" type="button" onClick={() => onDone(null)}>Annulla</button>}
       </div>
     </form>
   );

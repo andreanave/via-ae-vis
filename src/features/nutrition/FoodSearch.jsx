@@ -55,13 +55,13 @@ export default function FoodSearch({ onPick, onAdd, autoFocus, selectedId }) {
   };
 
   return (
-    <div style={{ display: "grid", gap: "0.75rem" }}>
+    <div className="stack">
       <input className="input" type="search" placeholder="Cerca un alimento, una marca o un codice a barre" aria-label="Cerca nel catalogo"
         autoFocus={autoFocus} value={q} onChange={e => setQ(e.target.value)} />
       {error && <div className="notice error" role="alert">{error}</div>}
       {results && results.length === 0 && <p className="muted">Nessun risultato nel catalogo per «{q.trim()}».</p>}
       {results?.length > 0 && (
-        <ul className="list">
+        <ul className="lines">
           {results.map(f => <FoodRow key={f.id} food={f} active={f.id === selectedId} onClick={onPick ? () => onPick(f) : undefined} />)}
         </ul>
       )}
@@ -72,10 +72,10 @@ export default function FoodSearch({ onPick, onAdd, autoFocus, selectedId }) {
       )}
       {offState === "error" && <div className="notice error" role="alert">Open Food Facts non risponde. Riprova tra poco o inserisci i valori a mano.</div>}
       {off && (
-        <div style={{ display: "grid", gap: 4 }}>
+        <div className="stack" style={{ gap: "0.5rem" }}>
           <span className="eyebrow">Da Open Food Facts</span>
           {off.length === 0 && <p className="muted" style={{ margin: 0 }}>Nessun prodotto trovato.</p>}
-          <ul className="list">
+          <ul className="lines">
             {off.map(h => (
               <FoodRow key={h.code} food={{ name: h.name, brand: h.brand, variant: h.quantity, source: "off", status: "verified" }}
                 onClick={() => pickOff(h)} />
@@ -85,7 +85,7 @@ export default function FoodSearch({ onPick, onAdd, autoFocus, selectedId }) {
         </div>
       )}
       {onAdd && q.trim().length >= 2 && (
-        <button className="btn secondary" type="button" onClick={() => onAdd(isBarcode(q.trim()) ? "" : q.trim())}>Non c'è: inserisci a mano</button>
+        <button className="btn link" type="button" onClick={() => onAdd(isBarcode(q.trim()) ? "" : q.trim())}>Non c'è: aggiungi un prodotto</button>
       )}
     </div>
   );

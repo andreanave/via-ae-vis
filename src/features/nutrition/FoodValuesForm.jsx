@@ -11,21 +11,21 @@ export default function FoodValuesForm({ values, onChange, basis = "g", unreadab
   const toggle = key => onUnreadable(unreadable.includes(key) ? unreadable.filter(k => k !== key) : [...unreadable, key]);
 
   return (
-    <fieldset style={{ border: 0, padding: 0, margin: 0 }}>
-      <legend style={{ fontWeight: 600, marginBottom: "0.75rem" }}>Valori per 100 {basis}</legend>
-      <div style={{ display: "grid", gap: "0.5rem" }}>
+    <fieldset className="plain values-form">
+      <legend>Valori per 100 {basis}</legend>
+      <div className="lines">
         {NUTRIENTS.map(({ key, label, unit, sub }) => {
           const bad = Number.isNaN(parsed[key]);
           return (
-            <div key={key} style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", paddingLeft: sub ? 16 : 0 }}>
-              <label htmlFor={`fv-${key}`} style={{ flex: "1 1 140px", color: sub ? "var(--text-2)" : undefined }}>{label}</label>
+            <div key={key} className={`value-row${sub ? " sub" : ""}`}>
+              <label htmlFor={`fv-${key}`}>{label}</label>
               <input id={`fv-${key}`} className="input num" inputMode="decimal" autoComplete="off" aria-invalid={bad || undefined}
-                style={{ width: 110 }} value={values[key] ?? ""} disabled={unreadable.includes(key)}
+                value={values[key] ?? ""} disabled={unreadable.includes(key)}
                 onChange={e => set(key, e.target.value)} />
-              <span className="muted" style={{ width: 36 }}>{unit}</span>
+              <span className="muted unit">{unit}</span>
               {showUnreadable && (
-                <label style={{ display: "flex", alignItems: "center", gap: 6, minHeight: 48, fontSize: "0.85rem" }}>
-                  <input type="checkbox" checked={unreadable.includes(key)} onChange={() => toggle(key)} /> illeggibile
+                <label className="inline-check hint">
+                  <input type="checkbox" className="check" checked={unreadable.includes(key)} onChange={() => toggle(key)} /> illeggibile
                 </label>
               )}
             </div>
@@ -33,12 +33,12 @@ export default function FoodValuesForm({ values, onChange, basis = "g", unreadab
         })}
       </div>
       {check && !check.ok && (
-        <div className="notice warning" style={{ marginTop: "0.75rem" }}>
+        <div className="notice warning">
           Con 4/4/9 da proteine, carboidrati e grassi verrebbero circa {formatAmount(check.estimate, 0)} kcal.
           Controlla le cifre: se l'etichetta riporta proprio {formatAmount(clean.kcal, 0)} kcal, va bene così.
         </div>
       )}
-      {problems.map(p => <div key={p} className="notice error" style={{ marginTop: "0.5rem" }}>{p}</div>)}
+      {problems.map(p => <div key={p} className="notice error">{p}</div>)}
     </fieldset>
   );
 }

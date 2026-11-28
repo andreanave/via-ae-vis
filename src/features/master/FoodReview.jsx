@@ -36,16 +36,16 @@ export default function FoodReview() {
   const merge = target => run(async () => { await mergeFood(selected, target.id); setSelected(null); });
 
   return (
-    <section style={{ display: "grid", gap: "1rem" }}>
+    <section className="stack master-section">
       <div className="section-head">
-        <h2 style={{ margin: 0 }}>Catalogo da verificare</h2>
+        <h2>Catalogo da verificare</h2>
         {items && <span className="muted num">{items.length}</span>}
       </div>
       {error && <div className="notice error" role="alert">{error}</div>}
       {items?.length === 0 && <p className="muted">Nessuna voce da controllare.</p>}
-      <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", alignItems: "start" }}>
+      <div className="split">
         {items?.length > 0 && (
-          <ul className="list">
+          <ul className="lines">
             {items.map(f => (
               <FoodRow key={f.id} active={f.id === selected}
                 food={{ ...f, kcal: f.current?.kcal, protein_g: f.current?.protein_g, carbs_g: f.current?.carbs_g, fat_g: f.current?.fat_g }}
@@ -54,30 +54,30 @@ export default function FoodReview() {
           </ul>
         )}
         {item && (
-          <div className="card">
+          <div className="editor-card split-detail">
             <FoodDetail id={item.id} reloadKey={reloadKey}>
               {mode === null && (
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                <div className="actions">
                   <button className="btn" type="button" onClick={verify}>Confermo i valori</button>
-                  <button className="btn secondary" type="button" onClick={startEdit}>Correggi</button>
-                  <button className="btn secondary" type="button" onClick={() => setMode("merge")}>È un doppione</button>
+                  <button className="btn ghost" type="button" onClick={startEdit}>Correggi</button>
+                  <button className="btn ghost" type="button" onClick={() => setMode("merge")}>È un doppione</button>
                 </div>
               )}
               {mode === "edit" && (
-                <div style={{ display: "grid", gap: "0.75rem" }}>
+                <div className="stack">
                   <FoodValuesForm values={values} onChange={setValues} basis={item.basis} />
-                  <p className="muted" style={{ fontSize: "0.85rem", margin: 0 }}>La correzione vale per gli utilizzi successivi; i pasti già registrati restano invariati.</p>
-                  <div style={{ display: "flex", gap: 8 }}>
+                  <p className="muted hint">La correzione vale per gli utilizzi successivi; i pasti già registrati restano invariati.</p>
+                  <div className="actions">
                     <button className="btn" type="button" onClick={saveEdit}>Salva correzione</button>
-                    <button className="btn secondary" type="button" onClick={() => setMode(null)}>Annulla</button>
+                    <button className="btn ghost" type="button" onClick={() => setMode(null)}>Annulla</button>
                   </div>
                 </div>
               )}
               {mode === "merge" && (
-                <div style={{ display: "grid", gap: "0.75rem" }}>
-                  <p style={{ margin: 0 }}>Scegli la voce principale a cui ricondurre questo prodotto.</p>
+                <div className="stack">
+                  <p>Scegli la voce principale a cui ricondurre questo prodotto.</p>
                   <FoodSearch autoFocus onPick={f => f.id !== item.id && merge(f)} />
-                  <button className="btn secondary" type="button" onClick={() => setMode(null)}>Annulla</button>
+                  <button className="btn ghost" type="button" onClick={() => setMode(null)}>Annulla</button>
                 </div>
               )}
             </FoodDetail>
