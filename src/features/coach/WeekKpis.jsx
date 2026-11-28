@@ -61,6 +61,8 @@ export default function WeekKpis({ athleteId, onOpen }) {
       return `${sign}${formatNumber(Math.abs(d), FIELD_BY_KEY.weight)} kg · ${v.count} ${v.count === 1 ? "pesata" : "pesate"}`;
     }
     if (key === "workouts_done") return "nella settimana";
+    // Voto da 0 a 10: nel resoconto settimanale lo dà l'atleta, senza giorni da contare.
+    if (key === "diet_adherence") return v.count ? `su 10 · media di ${v.count} ${v.count === 1 ? "giorno" : "giorni"}` : "su 10";
     return `su ${v.count} ${v.count === 1 ? "giorno" : "giorni"}`;
   };
   const value = key => (now[key].value == null ? "—" : formatNumber(now[key].value, FIELD_BY_KEY[key]));
