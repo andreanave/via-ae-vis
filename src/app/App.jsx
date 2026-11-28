@@ -22,6 +22,7 @@ import ExerciseCatalog from "../features/training/ExerciseCatalog.jsx";
 import Conversations from "../features/messages/Conversations.jsx";
 import Chat from "../features/messages/Chat.jsx";
 import NotificationsPage from "../features/messages/NotificationsPage.jsx";
+import AthletePlan from "../features/nutrition/AthletePlan.jsx";
 
 function Home() {
   const actor = useActor();
@@ -59,6 +60,7 @@ function Routed() {
         <Route path="/messaggi" element={<Conversations />} />
         <Route path="/messaggi/:linkId" element={<Chat />} />
         <Route path="/notifiche" element={<NotificationsPage />} />
+        <Route path="/alimentazione" element={<AthletePlan />} />
         {isProfessional && <Route path="/atleti/:id" element={<AthleteCard />} />}
         {isProfessional && <Route path="/atleti/:id/allenamento" element={<ProgramEditor />} />}
         {isProfessional && <Route path="/esercizi" element={<ExerciseCatalog />} />}

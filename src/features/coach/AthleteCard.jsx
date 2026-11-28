@@ -7,6 +7,7 @@ import { MODULE_LABELS } from "../../lib/format.js";
 import TaskList from "./TaskList.jsx";
 import CheckinSummary from "../checkin/CheckinSummary.jsx";
 import CheckinSettingsEditor from "../checkin/CheckinSettingsEditor.jsx";
+import NutritionPanel from "../nutrition/NutritionPanel.jsx";
 
 // Scheda dell'atleta vista dal professionista: nota generale, promemoria, collegamento Telegram.
 // Check-in, allenamento e alimentazione si aggiungono qui nelle fasi successive.
@@ -107,6 +108,13 @@ export default function AthleteCard() {
               ? <CheckinSummary athleteId={id} refreshKey={checkinVersion} />
               : <CheckinSettingsEditor athleteId={id} readOnly={readOnly} onSaved={() => setCheckinVersion(v => v + 1)} />}
           </div>
+        </div>
+      )}
+
+      {link.modules.includes("nutrition") && (
+        <div className="card">
+          <h2 style={{ marginTop: 0 }}>Alimentazione</h2>
+          <NutritionPanel athleteId={id} actorId={actor.id} readOnly={readOnly} />
         </div>
       )}
 
