@@ -7,6 +7,7 @@ const MESSAGES = {
   not_authenticated: "Devi prima accedere.",
   forbidden: "Non hai i permessi per questa operazione.",
   label_photo_required: "Per l'approvazione da etichetta serve la foto dell'etichetta.",
+  label_photo_not_found: "La foto dell'etichetta non risulta caricata: riprova a scattarla.",
   invalid_provenance: "Provenienza dei valori non valida.",
   same_food: "Scegli una voce diversa da quella da accorpare.",
   target_merged: "Quella voce è già stata accorpata a un'altra: scegli la voce principale.",

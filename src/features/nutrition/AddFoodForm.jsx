@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { ScanBarcode } from "lucide-react";
+import { cameraAvailable } from "../../lib/barcodeScan.js";
+import { isBarcode } from "../../lib/openFoodFacts.js";
 import { addFood, searchFoods } from "../../lib/foodApi.js";
 import { MACROS, valueProblems } from "../../lib/foodMath.js";
 import { rpcErrorMessage } from "../../lib/rpcErrors.js";
 import { parseNumber } from "../checkin/FieldInput.jsx";
 import FoodValuesForm, { valuesToNumbers } from "./FoodValuesForm.jsx";
 import FoodRow from "./FoodRow.jsx";
+import BarcodeScanner from "./BarcodeScanner.jsx";
+import LabelPhotoField from "./LabelPhotoField.jsx";
 
 const num = text => { const v = parseNumber(text); return v === "" || Number.isNaN(v) ? null : v; };
 
@@ -15,14 +20,19 @@ const toText = v => (v === null || v === undefined ? "" : String(v).replace(".",
 // prefill (facoltativo): dati già letti da Open Food Facts, vedi offToFood().
 export default function AddFoodForm({ initialName = "", prefill, onDone, onPick }) {
   const [food, setFood] = useState({
-    brand: prefill?.food.brand || "", name: prefill?.food.name || initialName, variant: "", basis: prefill?.food.basis || "g",
-    unit_weight_g: "", portion_g: toText(prefill?.food.portion_g), drained_weight_g: "", barcode: prefill?.food.barcode || "",
+    brand: prefill?.food.brand || "", name: prefill?.food.name || (isBarcode(initialName) ? "" : initialName), variant: "",
+    basis: prefill?.food.basis || "g", unit_weight_g: "", portion_g: toText(prefill?.food.portion_g), drained_weight_g: "",
+    barcode: prefill?.food.barcode || (isBarcode(initialName) ? initialName : ""),
   });
   const [values, setValues] = useState(() =>
     Object.fromEntries(Object.entries(prefill?.values || {}).map(([k, v]) => [k, toText(v)])));
   const [similar, setSimilar] = useState([]);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
+  const [photo, setPhoto] = useState("");
+  const [unreadable, setUnreadable] = useState([]);
+  const [scanning, setScanning] = useState(false);
+  const onScan = useCallback(code => { setFood(f => ({ ...f, barcode: code })); setScanning(false); }, []);
   const set = (k, v) => setFood(f => ({ ...f, [k]: v }));
 
   useEffect(() => {
@@ -37,7 +47,7 @@ export default function AddFoodForm({ initialName = "", prefill, onDone, onPick 
     setError("");
     const vals = valuesToNumbers(values);
     if (!food.name.trim()) { setError("Scrivi il nome del prodotto."); return; }
-    const missing = MACROS.filter(k => vals[k] === null);
+    const missing = MACROS.filter(k => vals[k] === null && !(photo && unreadable.includes(k)));
     if (missing.length) { setError("Servono almeno energia, proteine, carboidrati e grassi per 100 " + food.basis + "."); return; }
     if (valueProblems(vals).length) { setError("Controlla i valori segnalati."); return; }
     setSaving(true);
@@ -46,7 +56,8 @@ export default function AddFoodForm({ initialName = "", prefill, onDone, onPick 
         ...food, unit_weight_g: num(food.unit_weight_g), portion_g: num(food.portion_g), drained_weight_g: num(food.drained_weight_g),
         portion_label: prefill?.food.portion_label || null,
       }, {
-        ...vals, provenance: "manual",
+        ...vals, provenance: photo ? "label" : "manual",
+        ...(photo ? { label_photo_path: photo, unreadable } : {}),
         ...(prefill ? { kj: prefill.values.kj, polyols_g: prefill.values.polyols_g, ingredients: prefill.ingredients,
           allergens: prefill.allergens, note: prefill.note } : {}),
       });
@@ -92,15 +103,29 @@ export default function AddFoodForm({ initialName = "", prefill, onDone, onPick 
           ))}
         </div>
       </div>
+      <LabelPhotoField path={photo} onPath={setPhoto} unreadable={unreadable} onUnreadable={setUnreadable} />
       <FoodValuesForm values={values} onChange={setValues} basis={food.basis} />
       <div className="ex-grid label-grid">
         {text("unit_weight_g", "Peso di un pezzo (g)", { inputMode: "decimal" })}
         {text("portion_g", "Porzione in etichetta (g)", { inputMode: "decimal" })}
         {text("drained_weight_g", "Peso sgocciolato (g)", { inputMode: "decimal" })}
-        {text("barcode", "Codice a barre", { inputMode: "numeric" })}
+        <div className="field">
+          <label htmlFor="af-barcode">Codice a barre</label>
+          <div className="search-row">
+            <input id="af-barcode" className="input" value={food.barcode} inputMode="numeric" onChange={e => set("barcode", e.target.value)} />
+            {cameraAvailable() && (
+              <button className="icon-btn" type="button" onClick={() => setScanning(true)} aria-label="Leggi il codice con la fotocamera">
+                <ScanBarcode aria-hidden="true" />
+              </button>
+            )}
+          </div>
+        </div>
       </div>
+      {scanning && <BarcodeScanner onDetected={onScan} onClose={() => setScanning(false)} />}
       <p className="muted hint">
-        Il prodotto si può usare subito. Resterà segnato come da verificare finché non viene controllato.
+        {photo && unreadable.length === 0
+          ? "Il prodotto si può usare subito ed è approvato in base alla foto dell'etichetta."
+          : "Il prodotto si può usare subito. Resterà segnato come da verificare finché non viene controllato."}
       </p>
       {error && <div className="notice error" role="alert">{error}</div>}
       <div className="actions">

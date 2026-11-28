@@ -21,6 +21,13 @@ const rows = async (key, sql, params) => as(key, async () => (await db.query(sql
 const addFood = (key, food, vals) =>
   rows(key, "select add_food($1, $2) as id", [JSON.stringify(food), JSON.stringify(vals)]).then(r => r[0].id);
 
+// Foto di un'etichetta caricata dall'utente nella propria cartella del bucket food-labels.
+const upload = async (key, file) => {
+  const path = `${ids[key]}/${file}`;
+  await rows(key, "insert into storage.objects (bucket_id, name) values ('food-labels', $1)", [path]);
+  return path;
+};
+
 const piadina = { name: "Piadina", brand: "Marca Prova", variant: "Classica", unit_weight_g: 120 };
 const piadinaVals = { kcal: 300, protein_g: 8, carbs_g: 48, fat_g: 8.5, salt_g: 1.6, provenance: "manual" };
 
@@ -79,13 +86,29 @@ describe("catalogo: lettura e inserimento", () => {
 
   it("con etichetta leggibile l'approvazione è automatica, con una cifra illeggibile no", async () => {
     const ok = await addFood("athlete", { name: "Miele millefiori", brand: "Apicoltura Prova" },
-      { kcal: 304, carbs_g: 80, provenance: "label", label_photo_path: "etichette/miele.jpg" });
+      { kcal: 304, carbs_g: 80, provenance: "label", label_photo_path: await upload("athlete", "miele.jpg") });
     const dubbio = await addFood("athlete", { name: "Marmellata albicocche", brand: "Prova" },
-      { kcal: 150, carbs_g: 36, provenance: "label", label_photo_path: "etichette/marm.jpg", unreadable: ["fat_g"] });
+      { kcal: 150, carbs_g: 36, provenance: "label", label_photo_path: await upload("athlete", "marm.jpg"), unreadable: ["fat_g"] });
     const st = Object.fromEntries((await rows("master", `select id, status from foods where id in ('${ok}', '${dubbio}')`)).map(r => [r.id, r.status]));
     expect(st[ok]).toBe("auto_approved");
     expect(st[dubbio]).toBe("to_verify");
     await expect(addFood("athlete", { name: "Senza foto" }, { kcal: 1, provenance: "label" })).rejects.toThrow(/label_photo_required/);
+  });
+
+  it("le foto delle etichette: ognuno carica nella sua cartella e non usa le foto altrui", async () => {
+    await expect(rows("athlete", "insert into storage.objects (bucket_id, name) values ('food-labels', $1)",
+      [`${ids.coach}/finta.jpg`])).rejects.toThrow();
+    const altrui = await upload("coach", "biscotti.jpg");
+    await expect(addFood("athlete", { name: "Biscotti", brand: "Prova" },
+      { kcal: 450, provenance: "label", label_photo_path: altrui })).rejects.toThrow(/label_photo_not_found/);
+    await expect(addFood("athlete", { name: "Biscotti", brand: "Prova" },
+      { kcal: 450, provenance: "label", label_photo_path: `${ids.athlete}/mai-caricata.jpg` })).rejects.toThrow(/label_photo_not_found/);
+    // Tutti gli utenti collegati vedono le foto, nessuno le cancella.
+    expect(await rows("athlete", "select name from storage.objects where name = $1", [altrui])).toHaveLength(1);
+    await expect(rows("coach", "delete from storage.objects where name = $1 returning name", [altrui])).resolves.toEqual([]);
+    await db.exec("set role anon;");
+    await expect(db.query("select * from storage.objects where bucket_id = 'food-labels'")).rejects.toThrow();
+    await db.exec("reset role;");
   });
 
   it("la ricerca ignora accenti e maiuscole e trova i sinonimi", async () => {
@@ -111,7 +134,7 @@ describe("catalogo: verifica, duplicati, versioni", () => {
     // Voce verificata: chi l'ha creata non la modifica più, il master sì.
     await expect(rows("athlete", "select add_food_version($1, $2)", [id, JSON.stringify({ ...piadinaVals, fat_g: 9 })])).rejects.toThrow(/forbidden/);
     const [{ add_food_version: v2 }] = await rows("master", "select add_food_version($1, $2)",
-      [id, JSON.stringify({ ...piadinaVals, fat_g: 9.2, provenance: "label", label_photo_path: "etichette/p2.jpg" })]);
+      [id, JSON.stringify({ ...piadinaVals, fat_g: 9.2, provenance: "label", label_photo_path: await upload("master", "p2.jpg") })]);
     expect(v2).not.toBe(v1);
     const versions = await rows("athlete", "select id, version, fat_g from food_versions where food_id = $1 order by version", [id]);
     expect(versions.map(v => [v.version, Number(v.fat_g)])).toEqual([[1, 8.5], [2, 9.2]]);
@@ -127,6 +150,7 @@ describe("catalogo: verifica, duplicati, versioni", () => {
     await rows("athlete", "select add_food_version($1, $2)", [id, JSON.stringify({ kcal: 460, fat_g: 18, provenance: "manual" })]);
     await expect(rows("coach", "select add_food_version($1, $2)", [id, JSON.stringify({ kcal: 1, provenance: "manual" })])).rejects.toThrow(/forbidden/);
     await expect(rows("athlete", "select add_food_version($1, $2)", [id, JSON.stringify({ kcal: 1, provenance: "import" })])).rejects.toThrow(/invalid_provenance/);
+    await expect(rows("athlete", "select add_food_version($1, $2)", [id, JSON.stringify({ kcal: 1, provenance: "label" })])).rejects.toThrow(/label_photo_required/);
   });
 
   it("il master riconduce un duplicato alla voce principale", async () => {

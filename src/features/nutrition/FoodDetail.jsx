@@ -2,6 +2,23 @@ import { Fragment, useEffect, useState } from "react";
 import { foodVersions, getFood } from "../../lib/foodApi.js";
 import { NUTRIENTS, formatAmount } from "../../lib/foodMath.js";
 import { FOOD_SOURCES, FOOD_STATES, FOOD_STATUS } from "../../lib/foodSources.js";
+import { labelPhotoUrl } from "../../lib/labelPhoto.js";
+
+// Foto dell'etichetta della versione: si scarica solo quando la si apre (link firmato, valido pochi minuti).
+function LabelPhoto({ path }) {
+  const [url, setUrl] = useState("");
+  const [error, setError] = useState(false);
+  useEffect(() => { setUrl(""); setError(false); }, [path]);
+  if (url) return <img className="label-thumb" src={url} alt="Foto dell'etichetta" />;
+  return (
+    <>
+      <button className="btn link" type="button" onClick={() => labelPhotoUrl(path).then(setUrl).catch(() => setError(true))}>
+        Vedi la foto dell'etichetta
+      </button>
+      {error && <span className="error">Non riesco ad aprire la foto.</span>}
+    </>
+  );
+}
 
 // Scheda di una voce: valori per 100 g/ml della versione corrente, fonte con citazione, storico delle etichette.
 export default function FoodDetail({ id, reloadKey, children }) {
@@ -51,6 +68,7 @@ export default function FoodDetail({ id, reloadKey, children }) {
           ))}
         </tbody>
       </table>
+      {v.label_photo_path && <LabelPhoto path={v.label_photo_path} />}
       {v.is_estimate && <div className="notice warning">Valori stimati: {v.estimate_note}</div>}
       {facts.length > 0 && (
         <dl className="facts">
@@ -61,6 +79,7 @@ export default function FoodDetail({ id, reloadKey, children }) {
         Fonte: {src.citation || src.label || food.source}{food.source_ref ? `, codice ${food.source_ref}` : ""}
         {src.url && <> · <a href={src.url} target="_blank" rel="noreferrer">{src.url.replace(/^https?:\/\//, "")}</a></>}
         {v.provenance === "manual" && " · valori trascritti a mano"}
+        {v.provenance === "label" && " · valori dalla foto dell'etichetta"}
       </p>
       {versions.length > 1 && (
         <details>
