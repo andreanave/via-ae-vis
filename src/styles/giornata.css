@@ -1,0 +1,50 @@
+/* Giornata dell'atleta, pagina del pasto e andamento. Solo token esistenti di base.css. */
+.day-macros { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.5rem; }
+.day-macros .num { font-size: 1.1rem; display: block; }
+.day-macros small { color: var(--text-2); font-size: 0.75rem; }
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.timeline > li { border-bottom: 1px solid var(--border); }
+.timeline .row { display: flex; align-items: center; gap: 1rem; min-height: 52px; color: inherit; text-decoration: none;
+  width: 100%; background: none; border: 0; padding: 0.35rem 0; font: inherit; text-align: left; cursor: pointer; }
+.timeline .time { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.82rem; color: var(--text-2); width: 3rem; flex: none; }
+.timeline .what { flex: 1; min-width: 0; }
+.timeline .what small { display: block; color: var(--text-2); font-size: 0.82rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.timeline .done .what > span { text-decoration: line-through; text-decoration-color: var(--border); color: var(--text-2); }
+.timeline .tick { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--border); display: grid; place-items: center; flex: none; }
+.timeline .done .tick { border-color: var(--success); color: var(--success); }
+.meal-group { border-top: 1px solid var(--border); }
+.meal-group > button { display: flex; align-items: center; gap: 0.75rem; width: 100%; min-height: 56px; padding: 0.4rem 0;
+  background: none; border: 0; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.meal-group .qty { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.95rem; white-space: nowrap; }
+.meal-alts { background: var(--surface-2); border-radius: var(--radius-md, 14px); padding: 0.25rem 0.9rem; margin-bottom: 0.9rem; }
+.meal-alts button { display: flex; flex-direction: column; gap: 2px; width: 100%; min-height: 48px; justify-content: center;
+  padding: 0.5rem 0; border: 0; border-top: 1px solid var(--border); background: none; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.meal-alts button:first-child { border-top: 0; }
+.meal-alts button[aria-pressed="true"] { font-weight: 600; }
+.meal-alts .line { display: flex; justify-content: space-between; gap: 1rem; }
+.freq-warn { font-size: 0.82rem; color: var(--warning); }
+.sticky-actions { position: sticky; bottom: 0; display: flex; gap: 0.5rem; padding: 1rem 0 calc(1rem + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--bg) 75%, transparent); }
+.sticky-actions .btn { min-height: 56px; }
+.chart { width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { font-family: var(--font-mono); font-size: 11px; fill: var(--text-2); }
+.chart .grid { stroke: var(--border); stroke-width: 1; }
+.chart .line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart .dots circle { fill: var(--accent); }
+.chart .raw { fill: var(--text-2); opacity: 0.35; }
+.chart .bar { fill: var(--accent); opacity: 0.85; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.25rem; }
+.stat-grid .num-lg { display: block; margin-top: 0.25rem; }
+.stat-grid .delta { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-2); }
+.stat-grid .delta.good { color: var(--success); }
+.timeline > li { min-width: 0; overflow: hidden; }
+.timeline .row { min-width: 0; max-width: 100%; }
+.lift-row .name { flex: 1; min-width: 0; font-size: 0.95rem; }
+@media (max-width: 480px) { .lift-row .spark { display: none; } }
+
+/* Colonna unica che non si allarga oltre lo schermo per una riga lunga senza a capo. */
+.stack { grid-template-columns: minmax(0, 1fr); }
+/* Sopra la barra delle schede (alta circa 69px), non dietro. */
+.with-tabs .sticky-actions { bottom: calc(4.4rem + env(safe-area-inset-bottom)); padding-bottom: 0.75rem; }
+.chart-grid { display: grid; gap: 1.5rem; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 1000px) { .chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

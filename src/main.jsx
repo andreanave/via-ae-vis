@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "@fontsource-variable/plus-jakarta-sans";
 import "@fontsource-variable/jetbrains-mono";
 import "./styles/base.css";
+import "./styles/giornata.css";
 import { applyTheme, loadThemePreference } from "./ui/theme.js";
 import App from "./app/App.jsx";
 import { BRAND } from "./config/brand.js";

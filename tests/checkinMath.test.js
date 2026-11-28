@@ -88,20 +88,3 @@ describe("correzioni e obbligatori", () => {
     expect(missingRequired(cfg, { weight: { value: 72 }, stress: { value: 0 } }, { workouts_comment: "ok" })).toEqual([]);
   });
 });
-
-import { pickSuggestion } from "../src/features/athlete/AthleteHome.jsx";
-describe("proposta della Home", () => {
-  const config = { morning: ["weight"], evening: ["steps"], weekly: [{ key: "weight" }] };
-  it("al mattino propone il check-in del mattino", () => {
-    expect(pickSuggestion({ hour: 7, config, today: {}, weekly: null, isWeeklyDay: false })).toBe("morning");
-  });
-  it("se il mattino è fatto e sono le 10, non propone nulla", () => {
-    expect(pickSuggestion({ hour: 10, config, today: { morning: { status: "done" } }, weekly: null, isWeeklyDay: false })).toBe(null);
-  });
-  it("la sera propone il check-out", () => {
-    expect(pickSuggestion({ hour: 21, config, today: {}, weekly: null, isWeeklyDay: false })).toBe("evening");
-  });
-  it("nel giorno del resoconto propone il settimanale", () => {
-    expect(pickSuggestion({ hour: 15, config, today: {}, weekly: null, isWeeklyDay: true })).toBe("weekly");
-  });
-});

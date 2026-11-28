@@ -11,6 +11,8 @@ import CheckinSummary from "../checkin/CheckinSummary.jsx";
 import CheckinSettingsEditor from "../checkin/CheckinSettingsEditor.jsx";
 import NutritionPanel from "../nutrition/NutritionPanel.jsx";
 import ProgramEditor from "../training/ProgramEditor.jsx";
+import AthleteProgress from "../progress/AthleteProgress.jsx";
+import ToAnswer from "./ToAnswer.jsx";
 
 // Scheda dell'atleta vista dal professionista, divisa in sezioni:
 // Panoramica (promemoria, nota, Telegram) e una sezione per ogni modulo del collegamento.
@@ -19,6 +21,7 @@ const SECTIONS = [
   { key: "checkin", label: "Check-in", module: "checkin" },
   { key: "allenamento", label: "Allenamento", module: "training" },
   { key: "alimentazione", label: "Alimentazione", module: "nutrition" },
+  { key: "andamento", label: "Andamento" },
 ];
 
 export default function AthleteCard() {
@@ -132,11 +135,18 @@ export default function AthleteCard() {
 
       {current === "alimentazione" && <NutritionPanel athleteId={id} actorId={actor.id} readOnly={readOnly} />}
 
+      {current === "andamento" && <AthleteProgress athleteId={id} />}
+
       {current === "panoramica" && (
         <>
           {link.modules.includes("checkin") && <WeekKpis athleteId={id} onOpen={() => open("checkin")} />}
 
           <div className="overview-cols">
+          <div>
+            <h2 className="eyebrow">Da rispondere</h2>
+            <ToAnswer athleteId={id} professionalId={actor.id} chatLinkId={link.id} readOnly={readOnly} />
+          </div>
+
           <div>
             <h2 className="eyebrow">Promemoria</h2>
             <TaskList professionalId={actor.id} athleteId={id} readOnly={readOnly} />
