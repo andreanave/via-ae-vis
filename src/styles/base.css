@@ -653,3 +653,33 @@ input[type="file"]::file-selector-button:hover { border-color: var(--border-stro
 .wizard-foot { position: sticky; bottom: 0; z-index: 5; display: flex; gap: 0.5rem; padding: 1rem 0 calc(1rem + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--border); }
 .wizard-foot .btn { min-height: var(--tap-gym); }
 .wizard-foot .btn:last-child { flex: 1; }
+
+/* Console del coach a due colonne come nel design: atleti a sinistra, scheda a destra (da 1024px) */
+.coach-split { display: block; }
+.coach-aside, .coach-pick { display: none; }
+.coach-main { min-width: 0; }
+@media (min-width: 1024px) {
+  .content:has(> .coach-split) { max-width: 1440px; }
+  .coach-split { display: grid; grid-template-columns: minmax(260px, 320px) minmax(0, 1fr); gap: 3rem; align-items: start; }
+  .coach-aside { display: block; position: sticky; top: 1.5rem; }
+  .coach-phone-only, .coach-phone-head { display: none; }
+  .coach-pick { display: grid; justify-items: start; gap: 1rem; padding: 2.5rem; border: 1px dashed var(--border-strong); border-radius: var(--radius-lg); color: var(--text-2); }
+  .coach-pick p { margin: 0; }
+}
+.athlete-list { display: grid; gap: 1rem; }
+.search-pill { display: flex; align-items: center; gap: 0.6rem; min-height: 44px; padding: 0 0.9rem; border-radius: var(--radius-sm); background: var(--surface-2); color: var(--text-2); }
+.search-pill input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; font-size: 0.95rem; }
+.search-pill:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
+.athlete-list-head { display: flex; justify-content: space-between; align-items: baseline; }
+.athlete-list-head .btn.link { min-height: 32px; color: var(--accent); }
+.athlete-items { list-style: none; margin: 0; padding: 0; display: grid; }
+.athlete-items a { display: flex; align-items: center; gap: 0.75rem; min-height: 56px; padding: 0.75rem; margin: 0 -0.75rem; border: 1px solid transparent; border-radius: var(--radius); color: inherit; text-decoration: none; }
+.athlete-items li + li a { border-top-color: var(--border); border-radius: 0; }
+.athlete-items a:hover { background: var(--surface-2); }
+.athlete-items a[aria-current="page"], .athlete-items li + li a[aria-current="page"] { background: var(--surface); border-color: var(--border); border-radius: var(--radius); }
+.athlete-items li:has(+ li a[aria-current="page"]) + li a { border-top-color: var(--border); }
+.athlete-item-text { flex: 1; min-width: 0; display: grid; gap: 0.1rem; }
+.athlete-item-text .muted { font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.athlete-item-name { font-size: 0.95rem; }
+.athlete-items a[aria-current="page"] .athlete-item-name { font-weight: 500; }
+.count-badge { min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px; display: grid; place-items: center; background: var(--accent); color: var(--on-accent); font-size: 0.75rem; }
