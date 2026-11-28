@@ -511,13 +511,13 @@ input[type="file"]::file-selector-button:hover { border-color: var(--border-stro
 .overview { display: grid; gap: 2rem; }
 .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: 0; }
 .kpi { border-top: 1px solid var(--border); padding-top: 0.75rem; }
-.kpi dt { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.kpi dt { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-2); }
 .kpi dd { margin: 0.25rem 0 0; font-size: 2rem; line-height: 1.1; }
 .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
 .pair, .invite-row, .activity { display: flex; align-items: center; gap: 0.75rem; min-height: 56px; flex-wrap: wrap; }
 .pair { justify-content: space-between; }
 .pair-names { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 500; }
-.pair-names svg { color: var(--muted); }
+.pair-names svg { color: var(--text-2); }
 .pair .hint { flex: 1 1 100%; margin-top: -0.5rem; }
 .invite-row { justify-content: space-between; }
 .activity svg { color: var(--accent); flex: none; }
@@ -548,3 +548,10 @@ input[type="file"]::file-selector-button:hover { border-color: var(--border-stro
   color: var(--text-2); font: 500 0.9rem var(--font); white-space: nowrap; cursor: pointer;
 }
 .subnav button[aria-current="page"] { color: var(--text); font-weight: 600; border-bottom-color: var(--text); }
+/* Rifinitura: voce attiva della barra con la pillola dietro l'icona, sezioni scorrevoli con margine */
+.tabbar a svg { box-sizing: content-box; padding: 0.25rem 1.1rem; border-radius: 999px; transition: background-color 0.15s var(--ease); }
+.tabbar a.active svg { background: var(--surface-2); color: var(--accent); }
+.tabbar a:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: var(--radius-sm); }
+.subnav::-webkit-scrollbar { display: none; }
+.subnav button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.subnav button:hover { color: var(--text); }
