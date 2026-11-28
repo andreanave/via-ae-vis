@@ -373,3 +373,34 @@ textarea.input { padding: 0.75rem 0.9rem; line-height: 1.5; resize: vertical; }
 .history-sets .num { color: var(--text); }
 .sync-line { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; font-size: 0.9rem; margin: 0; }
 .sync-line > span { flex: 1 1 200px; }
+
+/* Editor della scheda e catalogo esercizi (coach, da PC) */
+.editor .input { width: 100%; min-width: 0; }
+.actions > [data-grow] { flex: 1 1 200px; width: auto; }
+.actions > [data-w] { flex: none; }
+.actions > [data-w="xs"] { width: 72px; }
+.actions > [data-w="s"] { width: 96px; }
+.actions > [data-w="m"] { width: 120px; }
+.input[data-strong] { font-weight: 600; }
+.editor-body { display: grid; gap: 1.5rem; }
+.editor-card { display: grid; gap: 1rem; padding: 1.5rem; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); }
+.editor-card h2 { margin: 0; }
+.editor-card .field { margin-bottom: 0; }
+.editor-ex { display: grid; gap: 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.editor-ex .icon-btn, .editor-card .actions > .btn.ghost:has(svg:only-child) { width: 44px; min-height: 44px; padding: 0; }
+.ex-grid { display: grid; gap: 0.5rem; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+.ex-grid.wide { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.set-details { display: grid; gap: 0.5rem; padding: 1rem; border-radius: var(--radius-sm); background: var(--surface-2); }
+.set-label { width: 72px; font-size: 0.85rem; color: var(--text-2); }
+.inline-check { display: flex; align-items: center; gap: 0.6rem; min-height: 44px; }
+.fieldset.plain, fieldset.plain { border: 0; padding: 0; margin: 0; }
+fieldset.plain > legend { padding: 0; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.95rem; }
+.weekdays { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.day-chip { min-width: 56px; min-height: 44px; padding: 0 0.75rem; border-radius: 999px; border: 1px solid var(--border-strong); background: transparent; color: var(--text-2); font: 500 0.85rem var(--font-mono); text-transform: lowercase; cursor: pointer; transition: background var(--ease), color var(--ease); }
+.day-chip[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: var(--bg); }
+.day-chip:disabled { cursor: default; }
+.add-session { justify-self: start; }
+.save-bar { position: sticky; bottom: 0; padding: 1rem 0; background: var(--bg); border-top: 1px solid var(--border); z-index: 4; }
+.btn.link.danger { color: var(--danger); }
+.editor > p.muted { margin: 0; }
+.page > .seg { justify-self: start; }
