@@ -7,6 +7,7 @@ import { initials } from "../../lib/format.js";
 import { rpcErrorMessage } from "../../lib/rpcErrors.js";
 import InviteForm from "../coach/InviteForm.jsx";
 import { UserPlus } from "lucide-react";
+import StudioManager from "./StudioManager.jsx";
 
 const ROLE_LABEL = { athlete: "Atleta", professional: "Professionista" };
 
@@ -71,6 +72,7 @@ export default function MasterConsole() {
           </li>
         ))}
       </ul>
+      {people && <StudioManager professionals={people.filter(p => p.role === "professional")} />}
     </section>
   );
 }

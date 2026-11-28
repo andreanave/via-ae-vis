@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import BrandMark from "../ui/BrandMark.jsx";
 import { useAuth } from "../features/auth/AuthProvider.jsx";
 import { useActor, useAssist } from "../lib/assist.jsx";
+import { useBrand } from "../lib/brand.jsx";
 import { LogOut, Moon, Sun, SunMoon } from "lucide-react";
-import { applyTheme, loadThemePreference, nextTheme, themeLabel } from "../ui/theme.js";
+import { applyTheme, loadThemePreference, nextTheme, setStudioAccent, themeLabel } from "../ui/theme.js";
 
 const ThemeIcon = { dark: Moon, light: Sun, system: SunMoon };
 
@@ -12,8 +13,10 @@ export default function AppShell() {
   const { signOut, profile } = useAuth();
   const { viewAs, stop } = useAssist();
   const actor = useActor();
+  const { brand } = useBrand();
   const navigate = useNavigate();
   const [theme, setTheme] = useState(loadThemePreference());
+  useEffect(() => { setStudioAccent(brand?.accent); return () => setStudioAccent(null); }, [brand?.accent]);
   const cycleTheme = () => { const next = nextTheme(theme); applyTheme(next); setTheme(next); };
   const isProfessional = actor.role === "professional" || actor.isMaster;
   const exitAssist = () => { stop(); navigate("/gestione"); };
@@ -27,7 +30,7 @@ export default function AppShell() {
         </div>
       )}
       <header className="topbar">
-        <BrandMark />
+        <BrandMark brand={brand} />
         {isProfessional && (
           <nav aria-label="Sezioni" className="topnav">
             <NavLink to="/" end>Atleti</NavLink>

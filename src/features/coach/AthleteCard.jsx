@@ -84,6 +84,13 @@ export default function AthleteCard() {
         </div>
       </div>
 
+      {link.modules.includes("training") && (
+        <Link to={`/atleti/${id}/allenamento`} className="card" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none", color: "inherit" }}>
+          <h2 style={{ margin: 0, flex: 1 }}>Allenamento</h2>
+          <span className="muted">Scheda e sedute svolte →</span>
+        </Link>
+      )}
+
       {link.modules.includes("checkin") && (
         <div className="card">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
