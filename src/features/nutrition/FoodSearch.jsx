@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { ScanBarcode } from "lucide-react";
+import { cameraAvailable } from "../../lib/barcodeScan.js";
 import { searchFoods } from "../../lib/foodApi.js";
 import { getOffProduct, isBarcode, offToFood, searchOff } from "../../lib/openFoodFacts.js";
 import FoodRow from "./FoodRow.jsx";
+import BarcodeScanner from "./BarcodeScanner.jsx";
 
 // Ricerca nel catalogo comune. onPick riceve la voce scelta; onAdd(nome, prefill?) apre l'inserimento
 // di un prodotto nuovo, eventualmente già compilato con i dati di Open Food Facts.
@@ -11,6 +14,8 @@ export default function FoodSearch({ onPick, onAdd, autoFocus, selectedId }) {
   const [off, setOff] = useState(null);
   const [offState, setOffState] = useState("");
   const [error, setError] = useState("");
+  const [scanning, setScanning] = useState(false);
+  const onScan = useCallback(code => { setScanning(false); setQ(code); }, []);
 
   useEffect(() => {
     const text = q.trim();
@@ -56,8 +61,17 @@ export default function FoodSearch({ onPick, onAdd, autoFocus, selectedId }) {
 
   return (
     <div className="stack">
-      <input className="input" type="search" placeholder="Cerca un alimento, una marca o un codice a barre" aria-label="Cerca nel catalogo"
-        autoFocus={autoFocus} value={q} onChange={e => setQ(e.target.value)} />
+      <div className="search-row">
+        <input className="input" type="search" placeholder="Cerca un alimento, una marca o un codice a barre" aria-label="Cerca nel catalogo"
+          autoFocus={autoFocus} value={q} onChange={e => setQ(e.target.value)} />
+        {cameraAvailable() && (
+          <button className="icon-btn" type="button" onClick={() => setScanning(s => !s)} aria-label="Leggi il codice a barre con la fotocamera"
+            aria-pressed={scanning}>
+            <ScanBarcode aria-hidden="true" />
+          </button>
+        )}
+      </div>
+      {scanning && <BarcodeScanner onDetected={onScan} onClose={() => setScanning(false)} />}
       {error && <div className="notice error" role="alert">{error}</div>}
       {results && results.length === 0 && <p className="muted">Nessun risultato nel catalogo per «{q.trim()}».</p>}
       {results?.length > 0 && (
@@ -85,7 +99,7 @@ export default function FoodSearch({ onPick, onAdd, autoFocus, selectedId }) {
         </div>
       )}
       {onAdd && q.trim().length >= 2 && (
-        <button className="btn link" type="button" onClick={() => onAdd(isBarcode(q.trim()) ? "" : q.trim())}>Non c'è: aggiungi un prodotto</button>
+        <button className="btn link" type="button" onClick={() => onAdd(q.trim())}>Non c'è: aggiungi un prodotto</button>
       )}
     </div>
   );
