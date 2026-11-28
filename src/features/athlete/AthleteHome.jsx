@@ -7,6 +7,7 @@ import { weekEndFor } from "../../lib/checkinMath.js";
 import { todayIso } from "../../lib/format.js";
 import { loadEntries, loadSettings, loadWeekly } from "../checkin/checkinApi.js";
 import TrainingTodayCard from "../training/TrainingTodayCard.jsx";
+import NutritionShortcut from "../nutrition/NutritionShortcut.jsx";
 
 const greeting = (date = new Date()) => {
   const h = date.getHours();
@@ -93,6 +94,7 @@ export default function AthleteHome() {
           </div>
           <ul className="lines">
             <TrainingTodayCard />
+            <NutritionShortcut athleteId={actor.id} />
             {available.map(k => (
               <li key={k} style={{ padding: 0 }}>
                 <Link to={ACTIVITIES[k].to} style={{ display: "flex", alignItems: "center", gap: "1rem", flex: 1, minHeight: 52, color: "inherit", textDecoration: "none" }}>
