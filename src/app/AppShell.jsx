@@ -1,14 +1,35 @@
 import { useEffect, useState } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import BrandMark from "../ui/BrandMark.jsx";
 import { useAuth } from "../features/auth/AuthProvider.jsx";
 import { useActor, useAssist } from "../lib/assist.jsx";
 import { useBrand } from "../lib/brand.jsx";
-import { Bell, LogOut, MessageCircle, Moon, Sun, SunMoon } from "lucide-react";
+import { Bell, Dumbbell, House, LogOut, MessageCircle, Moon, Sun, SunMoon, UtensilsCrossed } from "lucide-react";
+import { supabase } from "../lib/supabase.js";
 import { useUnreadCount } from "../features/messages/useNotifications.js";
 import { applyTheme, loadThemePreference, nextTheme, setStudioAccent, themeLabel } from "../ui/theme.js";
 
 const ThemeIcon = { dark: Moon, light: Sun, system: SunMoon };
+
+// Moduli attivi dell'atleta (unione dei collegamenti): decidono quali schede mostrare in basso.
+function useAthleteModules(athleteId, enabled) {
+  const [modules, setModules] = useState(null);
+  useEffect(() => {
+    if (!enabled || !athleteId) return;
+    let active = true;
+    supabase.from("care_links").select("modules").eq("athlete_id", athleteId).eq("status", "active")
+      .then(({ data }) => active && setModules(new Set((data || []).flatMap(r => r.modules || []))));
+    return () => { active = false; };
+  }, [athleteId, enabled]);
+  return modules;
+}
+
+const TABS = [
+  { to: "/", label: "Oggi", icon: House, end: true },
+  { to: "/allenamento", label: "Allenamento", icon: Dumbbell, module: "training" },
+  { to: "/alimentazione", label: "Alimentazione", icon: UtensilsCrossed, module: "nutrition" },
+  { to: "/messaggi", label: "Chat", icon: MessageCircle },
+];
 
 export default function AppShell() {
   const { signOut, profile } = useAuth();
@@ -22,6 +43,11 @@ export default function AppShell() {
   const cycleTheme = () => { const next = nextTheme(theme); applyTheme(next); setTheme(next); };
   const isProfessional = actor.role === "professional" || actor.isMaster;
   const exitAssist = () => { stop(); navigate("/gestione"); };
+  const modules = useAthleteModules(actor.id, !isProfessional);
+  const { pathname } = useLocation();
+  // In palestra lo schermo resta tutto alla seduta.
+  const showTabs = !isProfessional && !pathname.startsWith("/allenamento/seduta/");
+  const tabs = TABS.filter(t => !t.module || !modules || modules.has(t.module));
 
   return (
     <div className="shell">
@@ -37,14 +63,13 @@ export default function AppShell() {
           <nav aria-label="Sezioni" className="topnav">
             <NavLink to="/" end>Atleti</NavLink>
             <NavLink to="/agenda">Agenda</NavLink>
-            <NavLink to="/catalogo">Catalogo</NavLink>
+            <NavLink to="/messaggi">Chat</NavLink>
+            <NavLink to="/esercizi">Esercizi</NavLink>
+            <NavLink to="/catalogo">Alimenti</NavLink>
             {profile?.is_master && !viewAs && <NavLink to="/gestione">Gestione</NavLink>}
           </nav>
         )}
         <div style={{ display: "flex", gap: "0.25rem" }}>
-          <NavLink className="icon-btn" to="/messaggi" aria-label="Messaggi" title="Messaggi">
-            <MessageCircle strokeWidth={1.5} aria-hidden="true" />
-          </NavLink>
           <NavLink className="icon-btn" to="/notifiche" aria-label={unread ? `Notifiche, ${unread} da leggere` : "Notifiche"} title="Notifiche">
             <Bell strokeWidth={1.5} aria-hidden="true" />
             {unread > 0 && <span className="badge icon-badge" aria-hidden="true">{unread > 9 ? "9+" : unread}</span>}
@@ -57,9 +82,19 @@ export default function AppShell() {
           </button>
         </div>
       </header>
-      <main className="content">
+      <main className={showTabs ? "content with-tabs" : "content"}>
         <Outlet />
       </main>
+      {showTabs && (
+        <nav aria-label="Navigazione principale" className="tabbar">
+          {tabs.map(({ to, label, icon: Icon, end }) => (
+            <NavLink key={to} to={to} end={end}>
+              <Icon strokeWidth={1.5} aria-hidden="true" />
+              <span>{label}</span>
+            </NavLink>
+          ))}
+        </nav>
+      )}
     </div>
   );
 }
