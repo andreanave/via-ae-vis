@@ -88,5 +88,5 @@ export const formatNumber = (value, field) => {
   const n = Number(value);
   if (!Number.isFinite(n)) return String(value);
   const decimals = field?.type === "scale" ? 1 : field?.step && field.step < 1 ? 1 : 0;
-  return n.toLocaleString("it-IT", { minimumFractionDigits: 0, maximumFractionDigits: decimals });
+  return n.toLocaleString("it-IT", { minimumFractionDigits: 0, maximumFractionDigits: decimals, useGrouping: "always" });
 };
