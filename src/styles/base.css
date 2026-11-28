@@ -209,3 +209,25 @@ a.row:hover { border-color: var(--border-strong); }
 .brand-logo .on-dark { display: none; }
 :root[data-theme="dark"] .brand-logo .on-light { display: none; }
 :root[data-theme="dark"] .brand-logo .on-dark { display: block; }
+
+/* Moduli (check-in): domande separate da filetti, nessuna card per campo. */
+.form-page { display: grid; gap: 2rem; max-width: 640px; margin: 0 auto; width: 100%; }
+.qfield { display: grid; gap: 0.6rem; margin: 0; padding: 1.5rem 0 0; border-top: 1px solid var(--border); }
+.qfield > label, .qfield > legend { font-size: 1.05rem; font-weight: 500; letter-spacing: -0.01em; }
+.qfield.invalid > label { color: var(--danger); }
+.qfield .error { font-weight: 500; }
+.hint { font-size: 0.875rem; }
+[role="radiogroup"][aria-invalid="true"] > div:first-child { outline: 1.5px solid var(--danger); outline-offset: 4px; border-radius: 12px; }
+.btn.link { justify-self: start; min-height: 44px; padding: 0; background: none; border: 0; color: var(--accent); font-size: 0.9rem; }
+.btn.link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.lines.days > li { min-height: 44px; font-size: 0.9rem; }
+.lines.days > li > span:first-child { flex: 1; }
+
+/* Accesso, nuova password, invito: pagina editoriale senza riquadro */
+.auth-page { width: 100%; max-width: 400px; display: grid; gap: 1rem; }
+.auth-page h1 { margin: 0; font-size: 2rem; font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; }
+.auth-page > p { margin: 0; }
+.auth-page form { display: grid; margin-top: 1rem; }
+.auth-page .btn.ghost { margin-top: 0.5rem; }
+.auth-logo { display: flex; justify-content: center; margin: 0 0 2.5rem; }
+.auth-foot { margin-top: 1rem !important; padding-top: 1.25rem; border-top: 1px solid var(--border); font-size: 0.875rem; }
