@@ -6,6 +6,10 @@ const MESSAGES = {
   invite_email_mismatch: "Sei entrato con un'e-mail diversa da quella dell'invito. Esci ed entra con l'e-mail giusta.",
   not_authenticated: "Devi prima accedere.",
   forbidden: "Non hai i permessi per questa operazione.",
+  label_photo_required: "Per l'approvazione da etichetta serve la foto dell'etichetta.",
+  invalid_provenance: "Provenienza dei valori non valida.",
+  same_food: "Scegli una voce diversa da quella da accorpare.",
+  target_merged: "Quella voce è già stata accorpata a un'altra: scegli la voce principale.",
 };
 
 export const rpcErrorMessage = error => {
