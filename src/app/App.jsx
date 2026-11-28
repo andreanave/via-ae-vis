@@ -1,6 +1,7 @@
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider, useAuth } from "../features/auth/AuthProvider.jsx";
 import { AssistProvider, useActor } from "../lib/assist.jsx";
+import { BrandProvider } from "../lib/brand.jsx";
 import LoginPage from "../features/auth/LoginPage.jsx";
 import NewPasswordPage from "../features/auth/NewPasswordPage.jsx";
 import InvitePage from "../features/invite/InvitePage.jsx";
@@ -12,6 +13,11 @@ import AthleteHome from "../features/athlete/AthleteHome.jsx";
 import MasterConsole from "../features/master/MasterConsole.jsx";
 import DailyCheckin from "../features/checkin/DailyCheckin.jsx";
 import WeeklyCheckin from "../features/checkin/WeeklyCheckin.jsx";
+import TrainingHome from "../features/training/TrainingHome.jsx";
+import GymSession from "../features/training/GymSession.jsx";
+import MyWorkouts from "../features/training/MyWorkouts.jsx";
+import ProgramEditor from "../features/training/ProgramEditor.jsx";
+import ExerciseCatalog from "../features/training/ExerciseCatalog.jsx";
 import AthletePlan from "../features/nutrition/AthletePlan.jsx";
 
 function Home() {
@@ -43,8 +49,13 @@ function Routed() {
         <Route index element={<Home />} />
         <Route path="/checkin/:moment" element={<DailyCheckin />} />
         <Route path="/settimanale" element={<WeeklyCheckin />} />
+        <Route path="/allenamento" element={<TrainingHome />} />
+        <Route path="/allenamento/seduta/:workoutId" element={<GymSession />} />
+        <Route path="/allenamento/storico" element={<MyWorkouts />} />
         <Route path="/alimentazione" element={<AthletePlan />} />
         {isProfessional && <Route path="/atleti/:id" element={<AthleteCard />} />}
+        {isProfessional && <Route path="/atleti/:id/allenamento" element={<ProgramEditor />} />}
+        {isProfessional && <Route path="/esercizi" element={<ExerciseCatalog />} />}
         {isProfessional && <Route path="/agenda" element={<Agenda />} />}
         {profile?.is_master && <Route path="/gestione" element={<MasterConsole />} />}
         <Route path="*" element={<Navigate to="/" replace />} />
@@ -59,7 +70,9 @@ export default function App() {
     <HashRouter>
       <AuthProvider>
         <AssistProvider>
-          <Routed />
+          <BrandProvider>
+            <Routed />
+          </BrandProvider>
         </AssistProvider>
       </AuthProvider>
     </HashRouter>

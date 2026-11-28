@@ -6,6 +6,7 @@ import { useActor } from "../../lib/assist.jsx";
 import { weekEndFor } from "../../lib/checkinMath.js";
 import { todayIso } from "../../lib/format.js";
 import { loadEntries, loadSettings, loadWeekly } from "../checkin/checkinApi.js";
+import TrainingTodayCard from "../training/TrainingTodayCard.jsx";
 import NutritionShortcut from "../nutrition/NutritionShortcut.jsx";
 
 const greeting = (date = new Date()) => {
@@ -87,12 +88,13 @@ export default function AthleteHome() {
           <p className="muted" style={{ margin: 0 }}>Niente in sospeso. Allenamento e pasti arriveranno qui.</p>
         </div>
       )}
-      {available.length > 0 && (
-        <div>
+      <div>
           <div className="section-head">
             <h2 className="eyebrow">La giornata</h2>
           </div>
           <ul className="lines">
+            <TrainingTodayCard />
+            <NutritionShortcut athleteId={actor.id} />
             {available.map(k => (
               <li key={k} style={{ padding: 0 }}>
                 <Link to={ACTIVITIES[k].to} style={{ display: "flex", alignItems: "center", gap: "1rem", flex: 1, minHeight: 52, color: "inherit", textDecoration: "none" }}>
@@ -104,9 +106,7 @@ export default function AthleteHome() {
               </li>
             ))}
           </ul>
-        </div>
-      )}
-      <NutritionShortcut athleteId={actor.id} />
+      </div>
       {team.length > 0 && <p className="muted" style={{ fontSize: "0.9rem" }}>Ti seguono: {team.map(p => p.full_name || "un professionista").join(", ")}.</p>}
     </section>
   );
