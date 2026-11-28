@@ -31,6 +31,7 @@ create or replace function public.link_party(link uuid) returns boolean
 language sql stable security definer set search_path = public as $$
   select exists (select 1 from care_links l where l.id = link and auth.uid() in (l.athlete_id, l.professional_id));
 $$;
+revoke execute on function public.link_party(uuid) from public, anon;
 grant execute on function public.link_party(uuid) to authenticated;
 
 -- Le due parti leggono e scrivono la propria chat; il master legge (assistenza, sola lettura).
@@ -129,6 +130,10 @@ end;
 $$;
 create trigger program_notify after update on public.programs
   for each row execute function public.on_program_active();
+
+-- Le funzioni dei trigger non si chiamano direttamente.
+revoke execute on function public.on_message(), public.on_weekly_confirmed(), public.on_checkin_comment(), public.on_program_active()
+  from public, anon, authenticated;
 
 -- Aggiornamenti in tempo reale (dove esiste la pubblicazione di Supabase Realtime).
 do $$
