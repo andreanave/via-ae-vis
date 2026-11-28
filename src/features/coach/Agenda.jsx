@@ -15,11 +15,12 @@ export default function Agenda() {
   }, [actor.id]);
 
   return (
-    <section>
-      <h1>Agenda</h1>
-      <div className="card">
-        <TaskList professionalId={actor.id} athleteNames={names} readOnly={actor.assisting} />
+    <section className="page">
+      <div className="page-head">
+        <span className="eyebrow">Promemoria aperti</span>
+        <h1>Agenda</h1>
       </div>
+      <TaskList professionalId={actor.id} athleteNames={names} readOnly={actor.assisting} />
     </section>
   );
 }

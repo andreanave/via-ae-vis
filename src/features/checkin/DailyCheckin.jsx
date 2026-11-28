@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 import { useActor } from "../../lib/assist.jsx";
 import { FIELD_BY_KEY, MOMENT_LABELS } from "../../lib/checkinFields.js";
 import { formatDay, todayIso } from "../../lib/format.js";
@@ -99,16 +100,19 @@ export default function DailyCheckin() {
 
   const isToday = day === todayIso();
   return (
-    <form onSubmit={finish} noValidate style={{ display: "grid", gap: "1rem", maxWidth: 640 }}>
-      <Link to="/" className="muted" style={{ textDecoration: "none" }}>← Home</Link>
+    <form onSubmit={finish} noValidate className="form-page">
       <div>
-        <h1 style={{ marginBottom: 4 }}>{TITLES[moment]}</h1>
-        <p className="muted" style={{ margin: 0 }}>
-          {isToday ? "Oggi" : formatDay(day)} · tutti i campi sono facoltativi
-          <span role="status" style={{ marginLeft: 8 }}>
-            {saveState === "saving" ? "· Salvataggio…" : saveState === "saved" ? "· Bozza salvata" : saveState === "error" ? "· Non salvato, riprova" : ""}
+        <Link to="/" className="back"><ChevronLeft strokeWidth={1.5} aria-hidden="true" />Home</Link>
+        <div className="page-head" style={{ marginTop: "0.5rem" }}>
+          <span className="eyebrow">
+            {isToday ? "Oggi" : formatDay(day)}
+            <span role="status">
+              {saveState === "saving" ? " · Salvataggio…" : saveState === "saved" ? " · Bozza salvata" : saveState === "error" ? " · Non salvato, riprova" : ""}
+            </span>
           </span>
-        </p>
+          <h1>{TITLES[moment]}</h1>
+          <p className="muted" style={{ margin: 0 }}>Tutti i campi sono facoltativi.</p>
+        </div>
       </div>
       {keys.length === 0 && (
         <div className="notice">Il tuo coach non ha ancora scelto cosa chiederti per il {MOMENT_LABELS[moment].toLowerCase()}.</div>
@@ -118,20 +122,20 @@ export default function DailyCheckin() {
         const id = `f-${key}`;
         const cell = stored[key];
         return (
-          <div key={key} className={`card field${errors[key] ? " invalid" : ""}`} style={{ marginBottom: 0 }}>
+          <div key={key} className={`qfield field${errors[key] ? " invalid" : ""}`}>
             <label id={`${id}-label`} htmlFor={id}>{field.label}</label>
             <FieldInput field={field} id={id} value={form[key]} readOnly={readOnly}
               invalid={Boolean(errors[key])} describedBy={errors[key] ? `${id}-err` : undefined}
               onChange={v => update(key, v)} />
             {cell?.source === "health" && (
-              <span className="muted" style={{ fontSize: "0.85rem" }}>Da Salute{cell.edited ? " · modificato a mano" : ""}</span>
+              <span className="muted hint">Da Salute{cell.edited ? " · modificato a mano" : ""}</span>
             )}
             {errors[key] && <span id={`${id}-err`} className="error">{errors[key]}</span>}
           </div>
         );
       })}
       {keys.length > 0 && !readOnly && (
-        <button className="btn block" type="submit" style={{ position: "sticky", bottom: 16 }}>
+        <button className="btn lg block" type="submit">
           {status === "done" ? "Salva" : "Ho finito"}
         </button>
       )}

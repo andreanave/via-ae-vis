@@ -6,6 +6,7 @@ import { authErrorMessage } from "../auth/authErrors.js";
 import { rpcErrorMessage } from "../../lib/rpcErrors.js";
 import { inviteLink } from "../../lib/format.js";
 import BrandMark from "../../ui/BrandMark.jsx";
+import { loadInviteBrand } from "../../lib/brand.jsx";
 
 // Link d'invito: l'atleta crea l'account (o entra con quello che ha) e accetta il collegamento.
 export default function InvitePage() {
@@ -30,6 +31,10 @@ export default function InvitePage() {
       setInfo("La tua e-mail è confermata. Entra con la password che hai scelto per accettare l'invito.");
     }
   }, [session]);
+
+  // Marchio dello studio di chi invita (null = marchio della piattaforma).
+  const [studioBrand, setStudioBrand] = useState(null);
+  useEffect(() => { loadInviteBrand(token).then(setStudioBrand).catch(() => {}); }, [token]);
 
   useEffect(() => {
     supabase.rpc("invite_preview", { invite_token: token }).then(({ data, error: err }) => {
@@ -83,8 +88,8 @@ export default function InvitePage() {
 
   return (
     <main className="center">
-      <div className="card auth-card">
-        <div style={{ display: "flex", justifyContent: "center", margin: "0.5rem 0 2rem" }}><BrandMark variant="logo" /></div>
+      <div className="auth-page">
+        <div className="auth-logo"><BrandMark variant="logo" brand={studioBrand} /></div>
         {!invite && <><h1>Invito non trovato</h1><p className="muted">Controlla il link o chiedine uno nuovo.</p></>}
         {invite && invite.status !== "valid" && (
           <>
@@ -108,10 +113,10 @@ export default function InvitePage() {
                 {user.email?.toLowerCase() !== invite.email.toLowerCase() && (
                   <div className="notice">Sei entrato come {user.email}. L'invito è per un'altra e-mail.</div>
                 )}
-                <button className="btn block" type="button" onClick={accept} disabled={busy}>
+                <button className="btn lg block" type="button" onClick={accept} disabled={busy}>
                   {busy ? "Attendi…" : "Accetta l'invito"}
                 </button>
-                <button className="btn ghost block" type="button" style={{ marginTop: "0.75rem" }} onClick={signOut}>
+                <button className="btn ghost block" type="button" onClick={signOut}>
                   Esci e usa un altro account
                 </button>
               </>
@@ -133,12 +138,12 @@ export default function InvitePage() {
                   <label htmlFor="pw">Scegli una password</label>
                   <input id="pw" className="input" type="password" autoComplete="new-password" value={password}
                     onChange={e => setPassword(e.target.value)} aria-describedby="pw-hint" />
-                  <span id="pw-hint" className="muted" style={{ fontSize: "0.9rem" }}>Almeno 8 caratteri.</span>
+                  <span id="pw-hint" className="muted hint">Almeno 8 caratteri.</span>
                 </div>
-                <button className="btn block" type="submit" disabled={busy || !password || !fullName.trim()}>
+                <button className="btn lg block" type="submit" disabled={busy || !password || !fullName.trim()}>
                   {busy ? "Attendi…" : "Crea l'account"}
                 </button>
-                <button className="btn ghost block" type="button" style={{ marginTop: "0.75rem" }}
+                <button className="btn ghost block" type="button" 
                   onClick={() => { setMode("login"); setError(""); }}>
                   Ho già un account
                 </button>
@@ -152,10 +157,10 @@ export default function InvitePage() {
                   <input id="pw2" className="input" type="password" autoComplete="current-password" value={password}
                     onChange={e => setPassword(e.target.value)} />
                 </div>
-                <button className="btn block" type="submit" disabled={busy || !password}>
+                <button className="btn lg block" type="submit" disabled={busy || !password}>
                   {busy ? "Attendi…" : "Entra"}
                 </button>
-                <button className="btn ghost block" type="button" style={{ marginTop: "0.75rem" }}
+                <button className="btn ghost block" type="button" 
                   onClick={() => { setMode("signup"); setError(""); }}>
                   Non ho ancora un account
                 </button>

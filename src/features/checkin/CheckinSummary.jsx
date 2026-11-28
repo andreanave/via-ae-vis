@@ -57,18 +57,16 @@ export default function CheckinSummary({ athleteId, refreshKey }) {
   const status = sel?.status === "confirmed" ? "Confermato dall'atleta" : sel ? "Bozza in corso" : "Non ancora iniziato";
 
   return (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <div style={{ overflowX: "auto" }}>
-        <table style={{ borderCollapse: "collapse", width: "100%", minWidth: 520, fontVariantNumeric: "tabular-nums" }}>
-          <caption className="muted" style={{ textAlign: "left", paddingBottom: 6 }}>Settimana per settimana (tocca una colonna per i dettagli)</caption>
+    <div className="summary">
+      <div className="table-scroll">
+        <table className="data-table">
+          <caption className="muted">Settimana per settimana (tocca una colonna per i dettagli)</caption>
           <thead>
             <tr>
-              <th style={{ textAlign: "left", padding: 6 }}>Parametro</th>
+              <th>Parametro</th>
               {weekEnds.map(end => (
-                <th key={end} style={{ padding: 6, textAlign: "right" }}>
-                  <button type="button" className="btn ghost" aria-pressed={selected === end}
-                    style={{ minHeight: 36, padding: "0 0.5rem", fontWeight: selected === end ? 600 : 400,
-                      borderColor: selected === end ? "var(--accent)" : undefined }}
+                <th key={end} className="n">
+                  <button type="button" className="week-tab" aria-pressed={selected === end}
                     onClick={() => setSelected(end)}>
                     {end === currentEnd ? "Questa" : formatDay(end)}
                     {weeklyOf(end)?.status === "confirmed" ? " ✓" : ""}
@@ -81,16 +79,16 @@ export default function CheckinSummary({ athleteId, refreshKey }) {
             {numericKeys.map(key => {
               const f = FIELD_BY_KEY[key];
               return (
-                <tr key={key} style={{ borderTop: "1px solid var(--border)" }}>
-                  <th scope="row" style={{ textAlign: "left", padding: 6, fontWeight: 500 }}>{f.label}{f.unit ? ` (${f.unit})` : ""}</th>
+                <tr key={key}>
+                  <th scope="row">{f.label}{f.unit ? ` (${f.unit})` : ""}</th>
                   {weekEnds.map(end => {
                     const r = valueOf(end, key);
                     return (
-                      <td key={end} style={{ padding: 6, textAlign: "right" }}
+                      <td key={end} className={`n${selected === end ? " sel" : ""}`}
                         title={r.origin === "override" ? `Corretto dall'atleta (calcolato ${formatNumber(r.computed, f)})` : r.count ? `Da ${r.count} rilevazioni` : ""}>
                         {formatNumber(r.value, f)}
                         {r.origin === "override" && <span aria-label="corretto dall'atleta"> *</span>}
-                        {r.origin === "computed" && r.count > 0 && <span className="muted" style={{ fontSize: "0.8rem" }}> /{r.count}</span>}
+                        {r.origin === "computed" && r.count > 0 && <span className="muted count"> /{r.count}</span>}
                       </td>
                     );
                   })}
@@ -99,12 +97,12 @@ export default function CheckinSummary({ athleteId, refreshKey }) {
             })}
           </tbody>
         </table>
-        <p className="muted" style={{ fontSize: "0.85rem" }}>/n = numero di rilevazioni usate · * = valore corretto dall'atleta · ✓ = confermato</p>
+        <p className="muted hint">/n = numero di rilevazioni usate · * = valore corretto dall'atleta · ✓ = confermato</p>
       </div>
 
-      <div>
-        <h3 style={{ marginBottom: 4 }}>Settimana dal {formatDay(weekDays(selected)[0])} al {formatDay(selected)}</h3>
-        <p className="muted" style={{ marginTop: 0 }}>{status}</p>
+      <div className="week-detail">
+        <span className="eyebrow">{status}</span>
+        <h3>Settimana dal {formatDay(weekDays(selected)[0])} al {formatDay(selected)}</h3>
         {textKeys.map(key => (
           <p key={key}><strong>{FIELD_BY_KEY[key].label}:</strong> {sel?.answers?.[key] || <span className="muted">—</span>}</p>
         ))}

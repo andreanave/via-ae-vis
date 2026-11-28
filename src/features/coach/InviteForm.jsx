@@ -39,11 +39,12 @@ export default function InviteForm({ kind = "athlete", onDone }) {
 
   if (link) {
     return (
-      <div>
-        <h2>Invito pronto</h2>
+      <div className="invite-form">
+        <span className="eyebrow">Invito pronto</span>
+        <h2>Manda il link</h2>
         <p className="muted">Manda questo link a {fullName || email}. Vale 7 giorni.</p>
-        <input className="input" readOnly value={link} onFocus={e => e.target.select()} style={{ width: "100%", marginBottom: "0.75rem" }} />
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+        <input className="input num link-box" readOnly value={link} onFocus={e => e.target.select()} aria-label="Link d'invito" />
+        <div className="actions">
           <button className="btn" type="button" onClick={copy}>{copied ? "Copiato" : "Copia il link"}</button>
           {navigator.share && <button className="btn secondary" type="button" onClick={share}>Condividi</button>}
           <button className="btn ghost" type="button" onClick={onDone}>Chiudi</button>
@@ -53,7 +54,7 @@ export default function InviteForm({ kind = "athlete", onDone }) {
   }
 
   return (
-    <form onSubmit={submit} noValidate>
+    <form className="invite-form" onSubmit={submit} noValidate>
       <h2>{kind === "professional" ? "Invita un professionista" : "Invita un atleta"}</h2>
       {error && <div className="notice error" role="alert">{error}</div>}
       <div className="field">
@@ -65,17 +66,17 @@ export default function InviteForm({ kind = "athlete", onDone }) {
         <input id="inv-email" className="input" type="email" inputMode="email" value={email} onChange={e => setEmail(e.target.value)} />
       </div>
       {kind === "athlete" && (
-        <fieldset className="field" style={{ border: 0, padding: 0, margin: "0 0 1rem" }}>
-          <legend style={{ fontWeight: 600, marginBottom: "0.35rem" }}>Cosa segui per questo atleta</legend>
+        <fieldset className="field checks">
+          <legend>Cosa segui per questo atleta</legend>
           {Object.entries(MODULE_LABELS).map(([key, label]) => (
-            <label key={key} style={{ display: "flex", alignItems: "center", gap: "0.6rem", minHeight: 40 }}>
-              <input type="checkbox" checked={modules.includes(key)} onChange={() => toggle(key)} style={{ width: 20, height: 20 }} />
+            <label key={key}>
+              <input type="checkbox" className="check" checked={modules.includes(key)} onChange={() => toggle(key)} />
               {label}
             </label>
           ))}
         </fieldset>
       )}
-      <div style={{ display: "flex", gap: "0.5rem" }}>
+      <div className="actions">
         <button className="btn" type="submit" disabled={busy || !email}>{busy ? "Attendi…" : "Crea l'invito"}</button>
         <button className="btn ghost" type="button" onClick={onDone}>Annulla</button>
       </div>

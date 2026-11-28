@@ -40,31 +40,30 @@ export default function TaskList({ professionalId, athleteId, athleteNames = {},
 
   const today = todayIso();
   return (
-    <div>
+    <div className="tasks">
       {error && <div className="notice error" role="alert">{error}</div>}
       {!readOnly && (
-        <form onSubmit={add} style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
-          <input className="input" style={{ flex: "1 1 220px" }} placeholder="Es. aggiornare la prossima scheda"
+        <form onSubmit={add} className="task-add">
+          <input className="input" placeholder="Es. aggiornare la prossima scheda"
             aria-label="Nuovo promemoria" value={title} onChange={e => setTitle(e.target.value)} />
-          <input className="input" type="date" aria-label="Scadenza (facoltativa)" value={due} onChange={e => setDue(e.target.value)} />
-          <button className="btn" type="submit" disabled={!title.trim()}>Aggiungi</button>
+          <input className="input num" type="date" aria-label="Scadenza (facoltativa)" value={due} onChange={e => setDue(e.target.value)} />
+          <button className="btn secondary" type="submit" disabled={!title.trim()}>Aggiungi</button>
         </form>
       )}
       {tasks === null && <p className="muted">Caricamento…</p>}
       {tasks?.length === 0 && <p className="muted">Niente in sospeso.</p>}
-      <ul className="list">
+      <ul className="lines">
         {tasks?.map(t => (
-          <li key={t.id} className="row" style={{ minHeight: 56 }}>
+          <li key={t.id} className="task">
             {!readOnly && (
-              <input type="checkbox" aria-label={`Segna come fatto: ${t.title}`} onChange={() => complete(t.id)}
-                style={{ width: 22, height: 22, flex: "none" }} />
+              <input type="checkbox" className="check" aria-label={`Segna come fatto: ${t.title}`} onChange={() => complete(t.id)} />
             )}
             <span style={{ flex: 1 }}>
               {t.title}
               {!athleteId && t.athlete_id && <span className="muted"> · {athleteNames[t.athlete_id] || "Atleta"}</span>}
             </span>
             {t.due_on && (
-              <span className="muted" style={{ color: t.due_on < today ? "var(--danger)" : undefined, whiteSpace: "nowrap" }}>
+              <span className={`num due${t.due_on < today ? " late" : ""}`}>
                 {t.due_on < today ? "Scaduto " : ""}{formatDay(t.due_on)}
               </span>
             )}
