@@ -6,6 +6,7 @@ import { useAuth } from "../auth/AuthProvider.jsx";
 import { initials } from "../../lib/format.js";
 import { rpcErrorMessage } from "../../lib/rpcErrors.js";
 import InviteForm from "../coach/InviteForm.jsx";
+import FoodReview from "./FoodReview.jsx";
 
 const ROLE_LABEL = { athlete: "Atleta", professional: "Professionista" };
 
@@ -63,6 +64,7 @@ export default function MasterConsole() {
           </li>
         ))}
       </ul>
+      <FoodReview />
     </section>
   );
 }

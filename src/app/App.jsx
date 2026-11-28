@@ -12,6 +12,7 @@ import AthleteHome from "../features/athlete/AthleteHome.jsx";
 import MasterConsole from "../features/master/MasterConsole.jsx";
 import DailyCheckin from "../features/checkin/DailyCheckin.jsx";
 import WeeklyCheckin from "../features/checkin/WeeklyCheckin.jsx";
+import CatalogPage from "../features/nutrition/CatalogPage.jsx";
 
 function Home() {
   const actor = useActor();
@@ -42,6 +43,7 @@ function Routed() {
         <Route index element={<Home />} />
         <Route path="/checkin/:moment" element={<DailyCheckin />} />
         <Route path="/settimanale" element={<WeeklyCheckin />} />
+        <Route path="/catalogo" element={<CatalogPage />} />
         {isProfessional && <Route path="/atleti/:id" element={<AthleteCard />} />}
         {isProfessional && <Route path="/agenda" element={<Agenda />} />}
         {profile?.is_master && <Route path="/gestione" element={<MasterConsole />} />}
