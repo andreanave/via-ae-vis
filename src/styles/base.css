@@ -447,3 +447,29 @@ fieldset.plain > legend { padding: 0; margin-bottom: 0.5rem; font-weight: 500; f
 input[type="file"] { font: inherit; font-size: 0.875rem; color: var(--text-2); }
 input[type="file"]::file-selector-button { min-height: 40px; margin-right: 0.75rem; padding: 0 1rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); font: 500 0.875rem var(--font); cursor: pointer; }
 input[type="file"]::file-selector-button:hover { border-color: var(--border-strong); }
+
+/* Messaggi, chat e notifiche */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.icon-btn { position: relative; }
+.icon-badge { position: absolute; top: 4px; right: 2px; margin: 0; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; font-size: 0.65rem; background: var(--accent); color: var(--on-accent); }
+.lines > .convo { padding: 0; min-width: 0; }
+.convo > a, .convo > button { display: flex; align-items: center; gap: 0.9rem; width: 100%; min-width: 0; min-height: 68px; padding: 0.5rem 0; background: none; border: 0; font: inherit; color: inherit; text-align: left; text-decoration: none; cursor: pointer; }
+.convo svg { color: var(--text-2); flex: none; }
+.convo-text { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.convo-name { display: block; }
+.convo.unread .convo-name { font-weight: 600; }
+.convo-last { display: block; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.convo-time { font-size: 0.8rem; white-space: nowrap; }
+.unread-dot { width: 8px; height: 8px; border-radius: 4px; flex: 0 0 8px; background: transparent; }
+.convo.unread .unread-dot { background: var(--accent); }
+.chat { gap: 1rem; }
+.chat-log { display: grid; gap: 0.4rem; padding-bottom: 0.5rem; }
+.msg-wrap { display: grid; }
+.chat-day { justify-self: center; margin: 1rem 0 0.4rem; }
+.msg { justify-self: start; max-width: 82%; padding: 0.6rem 0.9rem; border-radius: 18px 18px 18px 6px; background: var(--surface); border: 1px solid var(--border); white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.45; }
+.msg.mine { justify-self: end; border-radius: 18px 18px 6px 18px; background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.msg.pending { opacity: 0.6; }
+.msg-meta { display: block; margin-top: 2px; font-size: 0.7rem; opacity: 0.7; text-align: right; }
+.composer { position: sticky; bottom: 0; display: flex; align-items: end; gap: 0.5rem; padding: 0.75rem 0 max(0.75rem, env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--border); }
+.composer textarea.input { flex: 1; min-width: 0; resize: none; max-height: 160px; }
+.composer .btn { width: var(--tap); padding: 0; flex: none; }
