@@ -5,6 +5,7 @@ import { supabase } from "../../lib/supabase.js";
 import { useActor } from "../../lib/assist.jsx";
 import { MODULE_LABELS } from "../../lib/format.js";
 import TaskList from "./TaskList.jsx";
+import AthleteList, { useCoachAthletes } from "./AthleteList.jsx";
 import CheckinSummary from "../checkin/CheckinSummary.jsx";
 import CheckinSettingsEditor from "../checkin/CheckinSettingsEditor.jsx";
 import NutritionPanel from "../nutrition/NutritionPanel.jsx";
@@ -32,6 +33,7 @@ export default function AthleteCard() {
   const [checkinTab, setCheckinTab] = useState("summary");
   const [checkinVersion, setCheckinVersion] = useState(0);
   const [params, setParams] = useSearchParams();
+  const { athletes } = useCoachAthletes(actor.id);
 
   useEffect(() => {
     let active = true;
@@ -84,9 +86,13 @@ export default function AthleteCard() {
   const open = key => setParams(key === "panoramica" ? {} : { sezione: key }, { replace: true });
 
   return (
-    <section className="stack" style={{ gap: "1.5rem" }}>
+    <div className="coach-split">
+    <aside className="coach-aside" aria-label="Elenco atleti">
+      <AthleteList athletes={athletes} current={id} />
+    </aside>
+    <section className="stack coach-main" style={{ gap: "1.5rem" }}>
       <div>
-        <Link to="/" className="back"><ChevronLeft strokeWidth={1.5} aria-hidden="true" />Atleti</Link>
+        <Link to="/" className="back coach-phone-only"><ChevronLeft strokeWidth={1.5} aria-hidden="true" />Atleti</Link>
         <div style={{ display: "flex", alignItems: "flex-end", gap: "1rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
           <div className="page-head" style={{ flex: 1, minWidth: 220, marginBottom: 0 }}>
             <span className="eyebrow">{link.modules.map(m => MODULE_LABELS[m]).join(" · ")}</span>
@@ -167,5 +173,6 @@ export default function AthleteCard() {
         </>
       )}
     </section>
+    </div>
   );
 }

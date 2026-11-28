@@ -30,9 +30,12 @@ export default function RestTimer({ rest, onChange }) {
         <div className="muted rest-label">{left === 0 ? "Recupero finito" : `Recupero · ${rest.label || ""}`}</div>
         <div className="num rest-clock">{formatClock(left)}</div>
       </div>
-      <button type="button" className="btn ghost num" onClick={() => shift(-15)} aria-label="Togli 15 secondi">−15</button>
-      <button type="button" className="btn ghost num" onClick={() => shift(15)} aria-label="Aggiungi 15 secondi">+15</button>
-      <button type="button" className="btn" onClick={() => onChange(null)}>{left === 0 ? "Chiudi" : "Salta"}</button>
+      <button type="button" className="btn ghost num" onClick={() => shift(-15)} aria-label="Togli 15 secondi">−15 s</button>
+      <button type="button" className="btn ghost num" onClick={() => shift(15)} aria-label="Aggiungi 15 secondi">+15 s</button>
+      <button type="button" className="btn ghost" onClick={() => onChange(null)}>{left === 0 ? "Chiudi" : "Salta"}</button>
+      {rest.total > 0 && (
+        <div className="rest-bar" aria-hidden="true"><span style={{ width: `${Math.min(100, Math.round((1 - left / rest.total) * 100))}%` }} /></div>
+      )}
     </div>
   );
 }

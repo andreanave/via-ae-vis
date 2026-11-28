@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { X } from "lucide-react";
 import { supabase } from "../../lib/supabase.js";
 import { useActor } from "../../lib/assist.jsx";
 import { FIELD_BY_KEY } from "../../lib/checkinFields.js";
@@ -26,6 +26,7 @@ export default function WeeklyCheckin() {
   const [missing, setMissing] = useState([]);
   const [saveState, setSaveState] = useState("idle");
   const [error, setError] = useState("");
+  const [step, setStep] = useState(0);
   const timer = useRef(null);
   const fieldRefs = useRef({});
 
@@ -77,6 +78,28 @@ export default function WeeklyCheckin() {
     }));
   }, [config, overrides, editing, byDay, weekEnd]);
 
+  // A passi, come nel design: prima i numeri raccolti dai giorni, poi le sensazioni, infine note e invio.
+  const steps = useMemo(() => {
+    if (!config) return [];
+    const of = test => config.weekly.filter(w => test(FIELD_BY_KEY[w.key])).map(w => w.key);
+    return [
+      { title: "Numeri della settimana", keys: of(f => f.type === "number") },
+      { title: "Come ti sei sentito", keys: of(f => f.type === "scale" || f.type === "bristol") },
+      { title: "Note e invio", keys: of(f => f.type === "text"), final: true },
+    ].filter(x => x.keys.length || x.final);
+  }, [config]);
+  const goTo = i => { setStep(i); setError(""); window.scrollTo({ top: 0 }); };
+  const next = () => {
+    const miss = missingRequired(config.weekly.filter(w => steps[step].keys.includes(w.key)), resolved, answers);
+    setMissing(miss);
+    if (miss.length) {
+      setError(`Manca ${miss.length === 1 ? "un campo obbligatorio" : `${miss.length} campi obbligatori`}: ${miss.map(k => FIELD_BY_KEY[k].label).join(", ")}.`);
+      fieldRefs.current[miss[0]]?.querySelector("input, textarea, button")?.focus();
+      return;
+    }
+    goTo(step + 1);
+  };
+
   const payload = status => {
     const base = {
       athlete_id: actor.id, week_end: weekEnd, overrides: parsedOverrides(), answers, notes,
@@ -107,6 +130,8 @@ export default function WeeklyCheckin() {
     setMissing(miss);
     if (miss.length) {
       setError(`Manca ${miss.length === 1 ? "un campo obbligatorio" : `${miss.length} campi obbligatori`}: ${miss.map(k => FIELD_BY_KEY[k].label).join(", ")}.`);
+      const at = steps.findIndex(x => x.keys.includes(miss[0]));
+      if (at >= 0 && at !== step) { setStep(at); return; }
       const first = fieldRefs.current[miss[0]];
       first?.scrollIntoView({ behavior: "smooth", block: "center" });
       first?.querySelector("input, textarea, button")?.focus({ preventScroll: true });
@@ -139,25 +164,29 @@ export default function WeeklyCheckin() {
   return (
     <div className="form-page" style={{ gap: "2.5rem" }}>
     <form onSubmit={confirm} noValidate className="form-page" style={{ maxWidth: "none" }}>
-      <div>
-        <Link to="/" className="back"><ChevronLeft strokeWidth={1.5} aria-hidden="true" />Home</Link>
-        <div className="page-head" style={{ marginTop: "0.5rem" }}>
+      <div className="wizard-head">
+        <div className="wizard-top">
+          <Link to="/" className="round-btn" aria-label="Chiudi, la bozza resta salvata"><X size={20} strokeWidth={1.5} aria-hidden="true" /></Link>
+          {!readOnly && <span className="num muted">{step + 1} / {steps.length}</span>}
+        </div>
+        {!readOnly && <div className="progress thin" aria-hidden="true"><span style={{ "--value": `${Math.round(((step + 1) / steps.length) * 100)}%` }} /></div>}
+        <div className="page-head">
           <span className="eyebrow">
-            Dal {formatDay(days[0])} al {formatDay(days[6])}
-            {confirmed ? " · Inviato" : saveState === "saving" ? " · Salvataggio…" : saveState === "saved" ? " · Bozza salvata" : ""}
+            {formatDay(days[0])} – {formatDay(days[6])}
+            {confirmed ? " · Inviato" : saveState === "saving" ? " · Salvataggio…" : saveState === "saved" || weekly?.status === "draft" ? " · Bozza salvata" : ""}
           </span>
-          <h1>Check-in settimanale</h1>
+          <h1>{readOnly ? "Check-in settimanale" : steps[step]?.title}</h1>
         </div>
       </div>
       {confirmed && <div className="notice" role="status">Resoconto inviato. Il tuo coach lo vede già.</div>}
-      {!confirmed && (
+      {!confirmed && step === 0 && (
         <p className="muted" style={{ margin: 0 }}>
           I valori sono calcolati dai giorni che hai registrato. Controllali, correggili se serve e conferma. I campi con * sono obbligatori.
         </p>
       )}
       {error && <div className="notice error" role="alert">{error}</div>}
 
-      {config.weekly.map(w => {
+      {config.weekly.filter(w => readOnly || steps[step]?.keys.includes(w.key)).map(w => {
         const field = FIELD_BY_KEY[w.key];
         const r = resolved[w.key];
         const id = `w-${w.key}`;
@@ -168,8 +197,16 @@ export default function WeeklyCheckin() {
         return (
           <div key={w.key} ref={el => { fieldRefs.current[w.key] = el; }}
             className={`qfield field${isMissing ? " invalid" : ""}`}>
-            <label id={`${id}-label`} htmlFor={id}>{field.label}{w.required ? " *" : ""}</label>
-            {summary && <span className="muted hint">{summary}</span>}
+            <div className="sum-head">
+              <div>
+                <label id={`${id}-label`} htmlFor={id}>{field.label}{w.required ? " *" : ""}</label>
+                {summary && !(field.type === "number" && !showInput) && <span className="muted hint">{summary}</span>}
+                {summary && field.type === "number" && !showInput && <span className="muted hint">{field.agg === "sum" ? "Totale" : "Media"} di {r.aggregate.count} {field.countLabel || (r.aggregate.count === 1 ? "giorno" : "giorni")}</span>}
+              </div>
+              {field.type === "number" && !showInput && r.value != null && (
+                <span className="num sum-value">{formatNumber(r.value, field)}{field.unit && <small> {field.unit}</small>}</span>
+              )}
+            </div>
             {r.origin === "override" && r.computed !== null && (
               <span className="muted hint">
                 Nel resoconto: {formatNumber(r.value, field)} {field.unit || ""} (corretto da te; calcolato {formatNumber(r.computed, field)})
@@ -229,13 +266,20 @@ export default function WeeklyCheckin() {
         );
       })}
 
-      <div className="qfield field">
+      {(readOnly || steps[step]?.final) && <div className="qfield field">
         <label htmlFor="w-notes">Note per il coach <span className="muted" style={{ fontWeight: 400 }}>· facoltative</span></label>
         <textarea id="w-notes" className="input" rows={4} readOnly={readOnly} style={{ width: "100%" }}
           value={notes} onChange={e => { setNotes(e.target.value); dirty(); }} />
-      </div>
+      </div>}
 
-      {!readOnly && <button className="btn lg block" type="submit">Conferma e invia</button>}
+      {!readOnly && (
+        <div className="wizard-foot">
+          {step > 0 && <button className="btn secondary lg" type="button" onClick={() => goTo(step - 1)}>Indietro</button>}
+          {steps[step]?.final
+            ? <button className="btn lg" type="submit">Conferma e invia</button>
+            : <button className="btn lg" type="button" onClick={next}>Continua</button>}
+        </div>
+      )}
     </form>
     {weekly?.id && <WeekComments weeklyId={weekly.id} athleteId={actor.id} />}
     </div>

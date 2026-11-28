@@ -556,5 +556,132 @@ input[type="file"]::file-selector-button:hover { border-color: var(--border-stro
 .subnav button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .subnav button:hover { color: var(--text); }
 
+/* Atleta su telefono: niente barra in alto (come nel design), profilo nel cerchio della Home */
+.profile-menu { position: relative; }
+.avatar-btn {
+  position: relative; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); font: 500 0.875rem var(--font); cursor: pointer;
+}
+.avatar-btn .unread-dot { position: absolute; top: 1px; right: 1px; background: var(--accent); border: 2px solid var(--bg); box-sizing: content-box; }
+.avatar-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.profile-pop {
+  position: absolute; right: 0; top: calc(100% + 0.5rem); z-index: 30; min-width: 220px;
+  display: grid; padding: 0.375rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.profile-pop a, .profile-pop button {
+  display: flex; align-items: center; gap: 0.75rem; min-height: var(--tap); padding: 0 0.75rem; border: 0; border-radius: var(--radius-sm);
+  background: none; color: var(--text); font: 500 0.95rem var(--font); text-decoration: none; text-align: left; cursor: pointer;
+}
+.profile-pop a:hover, .profile-pop button:hover { background: var(--surface-2); }
+.profile-pop svg { width: 20px; height: 20px; color: var(--text-2); }
+.profile-pop .badge { margin-left: auto; }
+.home-profile { display: none; }
+@media (max-width: 899px) {
+  .athlete-topbar { display: none; }
+  .athlete-content { padding-top: calc(2.5rem + env(safe-area-inset-top)); }
+  .content.athlete-content { position: relative; }
+  .home-profile { display: block; position: absolute; top: calc(2.5rem + env(safe-area-inset-top)); right: 1.25rem; z-index: 5; }
+  .athlete-content .page-head:first-child { padding-right: 3.5rem; }
+}
+@media (min-width: 900px) { .only-phone { display: none; } }
+
+/* Seduta in palestra come nel design: un blocco alla volta, recupero e "Registra serie" fissi in basso */
+.round-btn { width: 44px; height: 44px; flex: none; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--border-strong); color: var(--text); background: transparent; text-decoration: none; }
+.round-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.gym { gap: 1.5rem; padding-bottom: 13rem; }
+.gym-top { display: flex; align-items: center; gap: 0.75rem; }
+.gym-where { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gym-status { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: var(--text-2); white-space: nowrap; }
+.gym-status .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
+.gym-status.off .dot { background: var(--warning); }
+.gym-block { border-top: 0; padding-top: 0; }
+.gym-ex { gap: 1.25rem; }
+.gym-ex-head { gap: 0.5rem; }
+.gym-ex-head h1 { margin: 0; font-size: 1.75rem; font-weight: 500; letter-spacing: -0.02em; line-height: 1.15; }
+.gym-ex-head .tag { font-size: 0.8rem; color: var(--text-2); }
+.gym-links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
+.gym-links a, .gym-links .btn.link { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; color: var(--accent); font-size: 0.9rem; text-decoration: none; }
+.gym-spec { margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.gym-spec > div { padding: 0.75rem 0; }
+.gym-spec dt { font-size: 0.7rem; color: var(--text-2); }
+.gym-spec dd { margin: 0.25rem 0 0; font-size: 0.95rem; }
+.coach-cue { display: flex; gap: 0.75rem; align-items: flex-start; line-height: 1.5; color: var(--text-2); }
+.coach-cue svg { flex: none; margin-top: 2px; color: var(--accent); }
+.coach-cue strong { color: var(--text); font-weight: 500; }
+.set-table { display: grid; }
+.set-table .set { position: relative; padding: 0.4rem 0; border-top: 1px solid var(--border); gap: 0.25rem; }
+.set-table .set:last-child { border-bottom: 1px solid var(--border); }
+.set-table .set-row { grid-template-columns: 24px minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) var(--tap-gym); align-items: center; }
+.set-table .set-row.head { padding-bottom: 0.5rem; font-size: 0.7rem; color: var(--text-2); }
+.set-table .set-n { padding-top: 0; }
+.set-prev { font-size: 0.8rem; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.set-table .gym-input { min-height: 52px; font-size: 1.25rem; padding: 0 0.25rem; }
+.set-table .set.next .gym-input:placeholder-shown { border-color: var(--accent); border-width: 1.5px; }
+.set-table .set.done .gym-input { border-color: transparent; background: transparent; }
+.set-table .set-sub { margin-left: 32px; display: grid; gap: 0.35rem; font-size: 0.8rem; }
+.set-table .set-note { width: 100%; }
+.set-sub-line { display: flex; align-items: center; gap: 1rem; }
+.set-note-btn { display: inline-flex; align-items: center; gap: 0.3rem; min-height: 32px; padding: 0; border: 0; background: none; color: var(--text-2); font: 400 0.8rem var(--font); cursor: pointer; }
+.set-note-btn:hover { color: var(--text); }
+.gym-steps { display: flex; justify-content: space-between; gap: 0.5rem; }
+.gym-steps .btn { min-height: var(--tap-gym); }
+.gym-dock {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: grid; gap: 0.75rem;
+  padding: 0.75rem max(1.25rem, calc((100% - 640px) / 2)) calc(1rem + env(safe-area-inset-bottom));
+  background: var(--bg); border-top: 1px solid var(--border);
+}
+.gym-dock:empty { display: none; }
+.gym-dock .rest { position: static; transform: none; width: auto; padding: 0; border: 0; background: none; flex-wrap: wrap; row-gap: 0.5rem; }
+.gym-dock .rest .btn { min-height: 48px; padding: 0 0.85rem; }
+.gym-dock .rest-clock { font-size: 2.1rem; letter-spacing: -0.04em; }
+.rest-bar { flex-basis: 100%; height: 2px; border-radius: 1px; background: var(--border); overflow: hidden; }
+.rest-bar span { display: block; height: 100%; background: var(--accent); transition: width 0.25s linear; }
+.gym-dock > .btn.lg { min-height: var(--tap-gym); justify-content: center; gap: 0.5rem; }
+.gym-end { gap: 1.5rem; }
+.gym { grid-template-columns: minmax(0, 1fr); }
+.gym > * { min-width: 0; }
+.gym-steps .btn { white-space: nowrap; }
+
+/* Check-in settimanale a passi, come nel design */
+.wizard-head { display: grid; gap: 1.25rem; }
+.wizard-top { display: flex; align-items: center; justify-content: space-between; }
+.wizard-top .num { font-size: 0.8rem; }
+.sum-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.sum-head > div { display: grid; gap: 0.25rem; min-width: 0; }
+.sum-value { font-size: 1.35rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.sum-value small { font-size: 0.8rem; color: var(--text-2); }
+.wizard-foot { position: sticky; bottom: 0; z-index: 5; display: flex; gap: 0.5rem; padding: 1rem 0 calc(1rem + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--border); }
+.wizard-foot .btn { min-height: var(--tap-gym); }
+.wizard-foot .btn:last-child { flex: 1; }
+
+/* Console del coach a due colonne come nel design: atleti a sinistra, scheda a destra (da 1024px) */
+.coach-split { display: block; }
+.coach-aside, .coach-pick { display: none; }
+.coach-main { min-width: 0; }
+@media (min-width: 1024px) {
+  .content:has(> .coach-split) { max-width: 1440px; }
+  .coach-split { display: grid; grid-template-columns: minmax(260px, 320px) minmax(0, 1fr); gap: 3rem; align-items: start; }
+  .coach-aside { display: block; position: sticky; top: 1.5rem; }
+  .coach-phone-only, .coach-phone-head { display: none; }
+  .coach-pick { display: grid; justify-items: start; gap: 1rem; padding: 2.5rem; border: 1px dashed var(--border-strong); border-radius: var(--radius-lg); color: var(--text-2); }
+  .coach-pick p { margin: 0; }
+}
+.athlete-list { display: grid; gap: 1rem; }
+.search-pill { display: flex; align-items: center; gap: 0.6rem; min-height: 44px; padding: 0 0.9rem; border-radius: var(--radius-sm); background: var(--surface-2); color: var(--text-2); }
+.search-pill input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; font-size: 0.95rem; }
+.search-pill:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
+.athlete-list-head { display: flex; justify-content: space-between; align-items: baseline; }
+.athlete-list-head .btn.link { min-height: 32px; color: var(--accent); }
+.athlete-items { list-style: none; margin: 0; padding: 0; display: grid; }
+.athlete-items a { display: flex; align-items: center; gap: 0.75rem; min-height: 56px; padding: 0.75rem; margin: 0 -0.75rem; border: 1px solid transparent; border-radius: var(--radius); color: inherit; text-decoration: none; }
+.athlete-items li + li a { border-top-color: var(--border); border-radius: 0; }
+.athlete-items a:hover { background: var(--surface-2); }
+.athlete-items a[aria-current="page"], .athlete-items li + li a[aria-current="page"] { background: var(--surface); border-color: var(--border); border-radius: var(--radius); }
+.athlete-items li:has(+ li a[aria-current="page"]) + li a { border-top-color: var(--border); }
+.athlete-item-text { flex: 1; min-width: 0; display: grid; gap: 0.1rem; }
+.athlete-item-text .muted { font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.athlete-item-name { font-size: 0.95rem; }
+.athlete-items a[aria-current="page"] .athlete-item-name { font-weight: 500; }
+.count-badge { min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px; display: grid; place-items: center; background: var(--accent); color: var(--on-accent); font-size: 0.75rem; }
 /* Icona dello studio al posto del monogramma nella barra in alto */
 .brand-icon { object-fit: cover; padding: 0; background: #f8f7f4; }
