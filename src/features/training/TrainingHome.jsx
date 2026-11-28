@@ -7,6 +7,7 @@ import { newId } from "../../lib/trainingOutbox.js";
 import { isTrainingDay, planForDay, upcomingDays } from "../../lib/trainingRotation.js";
 import { useTrainingData } from "./useTrainingData.js";
 import SyncNotice from "./SyncNotice.jsx";
+import { ArrowRight, Check, ChevronLeft, ChevronRight } from "lucide-react";
 
 // Allenamento dell'atleta: seduta di oggi, calendario dei prossimi giorni, spostamenti.
 export default function TrainingHome() {
@@ -25,9 +26,9 @@ export default function TrainingHome() {
   if (data.loading && !program) return <p className="muted">Caricamento…</p>;
   if (!program) {
     return (
-      <section style={{ display: "grid", gap: "1rem", maxWidth: 720 }}>
-        <Link to="/" className="muted" style={{ textDecoration: "none" }}>← Home</Link>
-        <h1 style={{ margin: 0 }}>Allenamento</h1>
+      <section className="page narrow">
+        <Link to="/" className="back"><ChevronLeft size={18} strokeWidth={1.5} aria-hidden="true" />Home</Link>
+        <h1>Allenamento</h1>
         <div className="notice">{data.offline ? "Sei offline e la scheda non è ancora salvata su questo telefono." : "Il tuo coach non ha ancora attivato una scheda."}</div>
       </section>
     );
@@ -64,48 +65,48 @@ export default function TrainingHome() {
   const chosen = sessions.find(s => s.id === choice) || plan.session;
 
   return (
-    <section style={{ display: "grid", gap: "1rem", maxWidth: 720 }}>
-      <Link to="/" className="muted" style={{ textDecoration: "none" }}>← Home</Link>
-      <div>
-        <h1 style={{ marginBottom: 4 }}>Allenamento</h1>
-        <p className="muted" style={{ margin: 0 }}>{program.name}</p>
+    <section className="page narrow">
+      <Link to="/" className="back"><ChevronLeft size={18} strokeWidth={1.5} aria-hidden="true" />Home</Link>
+      <div className="page-head">
+        <span className="eyebrow">{program.name}</span>
+        <h1>Allenamento</h1>
       </div>
       <SyncNotice pending={data.pending} offline={data.offline} onSync={() => data.sync().then(data.reload)} />
 
-      <div className="card" style={{ display: "grid", gap: "0.75rem", marginBottom: 0 }}>
-        <span className="muted" style={{ fontSize: "0.85rem", fontWeight: 600 }}>OGGI</span>
+      <div className="now">
+        <span className="eyebrow">Oggi</span>
         {plan.kind === "resume" && (
           <>
-            <h2 style={{ margin: 0 }}>{plan.workout.session_name} in corso</h2>
-            <Link className="btn block" to={`/allenamento/seduta/${plan.workout.id}`}>Riprendi la seduta</Link>
+            <h2>{plan.workout.session_name} in corso</h2>
+            <Link className="btn lg block" to={`/allenamento/seduta/${plan.workout.id}`}>Riprendi la seduta<ArrowRight size={20} strokeWidth={1.5} aria-hidden="true" /></Link>
           </>
         )}
-        {plan.kind === "done" && <h2 style={{ margin: 0 }}>Seduta completata. Ottimo lavoro.</h2>}
+        {plan.kind === "done" && <h2>Seduta completata. Ottimo lavoro.</h2>}
         {plan.kind === "skipped" && (
           <>
-            <h2 style={{ margin: 0 }}>Oggi salti l'allenamento</h2>
-            <p className="muted" style={{ margin: 0 }}>{plan.session?.name} slitta al prossimo giorno di allenamento.</p>
+            <h2>Oggi salti l'allenamento</h2>
+            <p className="muted">{plan.session?.name} slitta al prossimo giorno di allenamento.</p>
           </>
         )}
         {(plan.kind === "training" || plan.kind === "rest") && (
           <>
-            <h2 style={{ margin: 0 }}>{plan.kind === "training" ? chosen?.name : "Giorno di riposo"}</h2>
-            {plan.kind === "rest" && <p className="muted" style={{ margin: 0 }}>Se vuoi allenarti comunque, la prossima seduta è {plan.session?.name}.</p>}
+            <h2>{plan.kind === "training" ? chosen?.name : "Giorno di riposo"}</h2>
+            {plan.kind === "rest" && <p className="muted">Se vuoi allenarti comunque, la prossima seduta è {plan.session?.name}.</p>}
             {sessions.length > 1 && !readOnly && (
-              <div className="field" style={{ margin: 0 }}>
+              <div className="field">
                 <label htmlFor="pick-session">Seduta</label>
-                <select id="pick-session" className="input" style={{ width: "100%", minWidth: 0 }} value={chosen?.id || ""} onChange={e => setChoice(e.target.value)}>
+                <select id="pick-session" className="input" value={chosen?.id || ""} onChange={e => setChoice(e.target.value)}>
                   {sessions.map(s => <option key={s.id} value={s.id}>{s.name}{s.id === plan.session?.id ? " (prevista)" : ""}</option>)}
                 </select>
               </div>
             )}
             {!readOnly && chosen && (
               <>
-                <button className="btn block" type="button" onClick={() => start(chosen)}>
-                  {plan.kind === "training" ? "Inizia la seduta" : "Allenati oggi"}
+                <button className="btn lg block" type="button" onClick={() => start(chosen)}>
+                  {plan.kind === "training" ? "Inizia la seduta" : "Allenati oggi"}<ArrowRight size={20} strokeWidth={1.5} aria-hidden="true" />
                 </button>
                 {plan.kind === "training" && (
-                  <button className="btn ghost block" type="button" onClick={() => start(chosen, "skipped")}>Salta oggi (la seduta slitta al prossimo allenamento)</button>
+                  <button className="btn link" type="button" onClick={() => start(chosen, "skipped")}>Salta oggi, la seduta slitta al prossimo allenamento</button>
                 )}
               </>
             )}
@@ -113,30 +114,30 @@ export default function TrainingHome() {
         )}
       </div>
 
-      {program.notes && <div className="card" style={{ marginBottom: 0 }}><h2>Indicazioni del coach</h2><p style={{ margin: 0, whiteSpace: "pre-wrap" }}>{program.notes}</p></div>}
+      {program.notes && <div className="coach-note"><h2 className="eyebrow">Indicazioni del coach</h2><p className="pre">{program.notes}</p></div>}
 
-      <div>
-        <h2>Prossimi giorni</h2>
-        <p className="muted" style={{ marginTop: 0 }}>Tocca un giorno per renderlo di allenamento o di riposo: le sedute si riorganizzano da sole.</p>
+      <div className="stack">
+        <h2 className="eyebrow">Prossimi giorni</h2>
+        <p className="muted hint">Tocca un giorno per renderlo di allenamento o di riposo: le sedute si riorganizzano da sole.</p>
         {calendarError && <div className="notice error" role="alert">{calendarError}</div>}
         <ul className="lines">
           {days.map(d => (
-            <li key={d.day} style={{ padding: 0 }}>
+            <li key={d.day} className="day-row">
               <button type="button" disabled={readOnly || d.kind === "done" || d.kind === "skipped"}
                 aria-label={`${formatDay(d.day)}: ${d.kind === "rest" ? "riposo" : d.session?.name}. Cambia`}
-                onClick={() => toggleDay(d.day)}
-                style={{ display: "flex", alignItems: "center", width: "100%", minHeight: 52, textAlign: "left", font: "inherit", color: "inherit", background: "none", border: 0, padding: 0, cursor: readOnly ? "default" : "pointer" }}>
-                <span style={{ flex: 1 }}>{d.day === today ? "Oggi" : formatDay(d.day)}</span>
+                onClick={() => toggleDay(d.day)}>
+                <span className="day-name">{d.day === today ? "Oggi" : formatDay(d.day)}</span>
                 <span className={d.kind === "rest" || d.kind === "skipped" ? "muted" : ""}>
-                  {d.kind === "rest" ? "Riposo" : d.kind === "skipped" ? "Saltato" : d.kind === "done" ? `${d.session?.name || "Seduta"} ✓` : d.session?.name}
+                  {d.kind === "rest" ? "Riposo" : d.kind === "skipped" ? "Saltato" : d.session?.name || "Seduta"}
                 </span>
+                {d.kind === "done" && <Check size={18} strokeWidth={1.5} aria-label="fatta" />}
               </button>
             </li>
           ))}
         </ul>
       </div>
 
-      <Link to="/allenamento/storico" className="btn ghost">Le mie sedute</Link>
+      <Link to="/allenamento/storico" className="row-link">Le mie sedute<ChevronRight size={20} strokeWidth={1.5} aria-hidden="true" /></Link>
     </section>
   );
 }
