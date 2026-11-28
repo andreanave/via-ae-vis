@@ -106,3 +106,46 @@ describe("suggerimenti sul piano per il coach", () => {
     expect(s[0].minor).toBe(true);
   });
 });
+
+describe("intolleranze e allergie nei suggerimenti", () => {
+  const dairy = { "Yogurt bianco": { kcal: 60, sugars_g: 4.5 }, "Latte parzialmente scremato": { kcal: 46, sugars_g: 5 },
+    "Latte senza lattosio": { kcal: 46, sugars_g: 0.1 }, "Parmigiano": { kcal: 390, sugars_g: 0 } };
+
+  it("riconosce latticini e allergeni dal nome", async () => {
+    const { isLactoseSource, allergensInName } = await import("../src/lib/planSuggestions.js");
+    expect(isLactoseSource("Yogurt greco 0%")).toBe(true);
+    expect(isLactoseSource("Latte senza lattosio")).toBe(false);
+    expect(isLactoseSource("Latte di soia")).toBe(false);
+    expect(allergensInName("Pasta integrale")).toEqual(["glutine"]);
+    expect(allergensInName("Filetto di tonno")).toEqual(["pesce"]);
+    expect(allergensInName("Mandorle tostate")).toEqual(["frutta_a_guscio"]);
+  });
+
+  it("lattosio oltre 12 g in un pasto solo se l'atleta è intollerante", () => {
+    const content = { dayTypes: [{ key: "A", printed: { kcal: 2000 }, meals: [
+      meal("Colazione", 300, comp("Latte parzialmente scremato", 250), comp("Yogurt bianco", 125)),
+    ] }] };
+    expect(planSuggestions(content, dairy).suggestions.filter(s => s.topic === "lactose")).toEqual([]);
+    const s = planSuggestions(content, dairy, { lactose_intolerant: true }).suggestions.filter(x => x.topic === "lactose");
+    expect(s).toHaveLength(1);
+    expect(s[0].title).toContain("18 g"); // 12,5 + 5,6
+  });
+
+  it("latte senza lattosio non conta", () => {
+    const content = { dayTypes: [{ key: "A", printed: { kcal: 2000 }, meals: [meal("Colazione", 300, comp("Latte senza lattosio", 500))] }] };
+    expect(planSuggestions(content, dairy, { lactose_intolerant: true }).suggestions.filter(s => s.topic === "lactose")).toEqual([]);
+  });
+
+  it("segnala gli allergeni dell'atleta anche nelle alternative", () => {
+    const content = { dayTypes: [{ key: "A", printed: { kcal: 2000 }, meals: [
+      { key: "Pranzo", name: "Pranzo", printed: { kcal: 0 }, groups: [{ key: "g1", options: [
+        { key: "o1", isDefault: true, components: [comp("Petto di pollo", 100)] },
+        { key: "o2", isDefault: false, components: [comp("Gamberi", 150)] },
+      ] }] },
+    ] }] };
+    expect(planSuggestions(content, {}, { allergens: ["pesce"] }).suggestions).toEqual([]);
+    const s = planSuggestions(content, {}, { allergens: ["crostacei"] }).suggestions;
+    expect(s).toHaveLength(1);
+    expect(s[0].title).toMatch(/Gamberi.*alternativa.*allergia a crostacei/);
+  });
+});

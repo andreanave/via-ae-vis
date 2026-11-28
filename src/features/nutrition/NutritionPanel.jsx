@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FileUp } from "lucide-react";
 import { formatDay } from "../../lib/format.js";
+import DietNotes from "./DietNotes.jsx";
 import PlanSuggestions from "./PlanSuggestions.jsx";
 import PlanView from "./PlanView.jsx";
 import { activatePlan, deleteDraft, listPlans, pdfUrl, readFiberPdf, saveDraft } from "./nutritionApi.js";
@@ -14,6 +15,7 @@ export default function NutritionPanel({ athleteId, actorId, readOnly }) {
   const [busy, setBusy] = useState(false);
   const [draft, setDraft] = useState(null); // { plan, file, title, validFrom }
   const [openId, setOpenId] = useState(null);
+  const [diet, setDiet] = useState(null);
   const fileRef = useRef(null);
 
   const reload = () => listPlans(athleteId).then(setPlans).catch(() => setError("Non riesco a caricare i piani."));
@@ -82,7 +84,7 @@ export default function NutritionPanel({ athleteId, actorId, readOnly }) {
             Settimana: {["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"].map((d, i) => `${d} ${plan.weekPattern[i]}`).join(" · ")}
           </p>
         )}
-        <PlanSuggestions content={plan} planKey={`bozza:${draft.file?.name || ""}`} />
+        <PlanSuggestions content={plan} diet={diet} planKey={`bozza:${draft.file?.name || ""}`} />
         <PlanView content={plan} />
         {error && <p className="notice error" role="alert">{error}</p>}
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
@@ -97,6 +99,7 @@ export default function NutritionPanel({ athleteId, actorId, readOnly }) {
   const open = plans?.find(p => p.id === openId);
   return (
     <div className="stack" style={{ gap: "1rem" }}>
+      <DietNotes athleteId={athleteId} actorId={actorId} readOnly={readOnly} onChange={setDiet} />
       {!readOnly && (
         <div>
           <input ref={fileRef} type="file" accept="application/pdf,.pdf" hidden onChange={onFile} />
@@ -130,7 +133,7 @@ export default function NutritionPanel({ athleteId, actorId, readOnly }) {
       )}
       {open && (
         <>
-          <PlanSuggestions key={`s-${open.id}`} content={open.content} planKey={open.id} />
+          <PlanSuggestions key={`s-${open.id}`} content={open.content} diet={diet} planKey={open.id} />
           <PlanView key={open.id} content={open.content} />
         </>
       )}
